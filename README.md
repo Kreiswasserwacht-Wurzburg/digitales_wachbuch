@@ -1,4 +1,4 @@
-Digitale Wachbuch
+Digitales Wachbuch
 =================
 
 Überblick
@@ -20,3 +20,4 @@ Wesentliche Features
 - Dokumentation besonderer Vorkommnisse
 - Meldungen an die Kreiswasserwacht (z.B. Defekte, Mängel, ...)
 - Auswertungen der geleisteten Dienste
+- Erweiterbar um neue Exporte und Module
