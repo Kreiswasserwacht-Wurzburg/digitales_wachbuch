@@ -1,0 +1,21 @@
+@startuml
+
+program : pm.function1
+program : pm.function2
+plugin_Manager : function1
+plugin_Manager : function2
+
+plugin1 : function1
+plugin2 : function1
+plugin3 : function2
+plugin4 : function2
+
+program --> plugin_Manager
+plugin_Manager ---> plugin1
+plugin_Manager ---> plugin2
+
+plugin_Manager ---> plugin3
+plugin_Manager ---> plugin4
+
+
+@enduml
