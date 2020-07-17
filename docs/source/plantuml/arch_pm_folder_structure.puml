@@ -1,0 +1,8 @@
+@startmindmap
+* wachbuch
+** plugin_mgr.py
+** plugins
+*** plugin1
+*** plugin2
+*** plugin3
+@endmindmap

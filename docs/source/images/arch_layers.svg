@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="23cm" height="14cm" viewBox="489 317 460 270" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs/>
+  <g id="Hintergrund">
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="491.934" y="485" width="455.999" height="40" rx="0" ry="0"/>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" d="M 761.074 548.333 C 770.644,542.833 775.429,541 784.999,541 C 794.569,541 799.354,542.833 808.924,548.333 L 808.924,577.667 C 799.354,583.167 794.569,585 784.999,585 C 775.429,585 770.644,583.167 761.074,577.667 L 761.074,548.333z"/>
+      <path style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" d="M 761.074 548.333 C 770.644,553.833 775.429,555.667 784.999,555.667 C 794.569,555.667 799.354,553.833 808.924,548.333"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="784.999" y="570.667">
+        <tspan x="784.999" y="570.667">SQLite</tspan>
+      </text>
+    </g>
+    <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="712.5,541.5 705,541.5 720,526.5 735,541.5 727.5,541.5 727.5,556.5 742.5,556.5 742.5,549 757.5,564 742.5,579 742.5,571.5 712.5,571.5 "/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="490.934" y="318" width="457.999" height="48" rx="0" ry="0"/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="491.434" y="370" width="254.566" height="107" rx="0" ry="0"/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="748.934" y="369.648" width="199" height="107.351" rx="0" ry="0"/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="757" y="377.5" width="40" height="37" rx="0" ry="0"/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="806.4" y="377.2" width="40" height="37" rx="0" ry="0"/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="855.3" y="376.9" width="40" height="37" rx="0" ry="0"/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="904.2" y="377.6" width="40" height="37" rx="0" ry="0"/>
+    <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="757.934" y="424.648" width="184" height="31.4999" rx="0" ry="0"/>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="849.932" y="444.823">
+      <tspan x="849.932" y="444.823">Plugin Manager</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="848.432" y="473.95">
+      <tspan x="848.432" y="473.95">Plugin System</tspan>
+    </text>
+    <text font-size="11.2889" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="777" y="392.844">
+      <tspan x="777" y="392.844">Plugin</tspan>
+      <tspan x="777" y="406.956">1</tspan>
+    </text>
+    <text font-size="11.2889" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="826.4" y="392.544">
+      <tspan x="826.4" y="392.544">Plugin</tspan>
+      <tspan x="826.4" y="406.656">2</tspan>
+    </text>
+    <text font-size="11.2889" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="875.3" y="392.244">
+      <tspan x="875.3" y="392.244">Plugin</tspan>
+      <tspan x="875.3" y="406.356">3</tspan>
+    </text>
+    <text font-size="11.2889" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="924.2" y="392.944">
+      <tspan x="924.2" y="392.944">Plugin</tspan>
+      <tspan x="924.2" y="407.056">n</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="719.934" y="346.238">
+      <tspan x="719.934" y="346.238">Benutzeroberfläche</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="719.934" y="509.238">
+      <tspan x="719.934" y="509.238">Daten Management</tspan>
+    </text>
+  </g>
+</svg>
