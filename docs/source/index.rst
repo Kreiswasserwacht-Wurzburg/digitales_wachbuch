@@ -8,6 +8,7 @@ Wachdienste an einer Wasserrettungsstation.
    :maxdepth: 1
    :caption: Contents:
 
+   overview/index
    architecture/index
    plugins/index
    user_manual/index
