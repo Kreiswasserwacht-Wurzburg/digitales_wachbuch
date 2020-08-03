@@ -9,6 +9,7 @@ Wachdienste an einer Wasserrettungsstation.
    :caption: Contents:
 
    overview/index
+   requirements/index
    architecture/index
    plugins/index
    user_manual/index

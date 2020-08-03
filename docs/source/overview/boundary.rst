@@ -24,3 +24,6 @@ Datensparsamkeit
 
 Umsetzung im Ehrenamt
     Die Umsetzung erfolgt durch die Entwickler ehrenamtlich, daher kann es immer wieder zu Verzögerungen kommen.
+
+Teamerfahrung nicht homogen
+    Die Erfahrung des Teams mit Programmiersprachen ist nicht homogen. So gibt es keine Sprache oder Framework, welches von allen Mitglieder gut beherrscht wird.
