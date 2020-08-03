@@ -8,6 +8,9 @@ Folgende Aspekte eines Wachdienstes sollen durch das digitale Wachbuch abgebilde
 * Dokumentation von Behandlungen
 * Dokumentation von Tauchgängen
 * Dokumentation von Bootsfahrten im Rahmen des Wachdienstes
+* Personensuche
+* Allgemeine Vorkommnisse
+* Meldungen an die Kreiswasserwacht / die Ortsgruppenleitung
 
 Das digitale Wachbuch soll in mehrere Wachstationen eingesetzt werden, wobei nicht jede Wachstation sämtliche Anforderungen besitzt. So ist in der Wachstation Erlabrunn kein Boot vor Ort und somit auch keine Bootsfahrten zu dokumentieren. In der Wachstation Würzburg ist eine direkte Zuführung von Patienten nicht gegeben, so dass keine Dokumentation von Behandlungen von Nöten ist.
 
