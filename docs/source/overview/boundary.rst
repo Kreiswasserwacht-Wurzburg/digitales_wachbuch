@@ -27,3 +27,6 @@ Umsetzung im Ehrenamt
 
 Teamerfahrung nicht homogen
     Die Erfahrung des Teams mit Programmiersprachen ist nicht homogen. So gibt es keine Sprache oder Framework, welches von allen Mitglieder gut beherrscht wird.
+    
+Prozessorarchitektur
+    Die Applikation sollte sowohl auf x86/x64 als auch auf armv7 (RasPi) lauffähig sein.
