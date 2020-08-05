@@ -51,6 +51,18 @@ Akzeptanzkriterien
 
 ---------------------------------------------------------------------
 
+Plugin-System
+-------------
+
+    Es soll ein System entwickelt werden, mit dessen Hilfe es möglich ist die Fuktionalität mittels Plugin zu erweitern bzw. zu verändern.
+    
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+*tbd*
+
+---------------------------------------------------------------------
+
 Anmelden am Wachbuch
 --------------------
 

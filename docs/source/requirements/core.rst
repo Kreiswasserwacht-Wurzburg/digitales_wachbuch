@@ -181,3 +181,15 @@ Akzeptanzkriterien
 *tbd*
 
 -------------------------------------------------------------------------------
+
+Hinzufügen von Notizen
+----------------------
+
+    Als Wachleiter möchte ich besondere Vorkommnisse im Rahmen des Wachdienstes im Wachbuch erfassen können, um diese zu dokumentieren.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+*tbd*
+
+-------------------------------------------------------------------------------
