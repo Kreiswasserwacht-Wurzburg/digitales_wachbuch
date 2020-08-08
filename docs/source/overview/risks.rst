@@ -5,7 +5,7 @@ Zu hoher Implementierungsaufwand
     Durch die Umsetzung im Ehrenamt ist eine hoher Aufwand bei der Implementierung zeitlich nur schwer zu stemmen.
 
 Konflikte im Team
-    Das das Team aus ehrenamtlichen Mitwirkenden besteht, kann ein Konflikt innerhalb des Teams zu erheblichen Problemen bei der Entwicklung führen.
+    Da das Team aus ehrenamtlichen Mitwirkenden besteht, kann ein Konflikt innerhalb des Teams zu erheblichen Problemen bei der Entwicklung führen.
 
 Akzeptanz der Anwender
     Wenn bei den Anwender keine hinreichende Akzeptanz geschaffen werden kann, ist eine Einführung nur schwer möglich.
