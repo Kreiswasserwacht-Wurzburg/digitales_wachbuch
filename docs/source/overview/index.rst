@@ -1,5 +1,5 @@
 Digitales Wachbuch
-=================
+==================
 
 Überblick
 ---------
@@ -21,3 +21,17 @@ Wesentliche Features
 - Meldungen an die Kreiswasserwacht (z.B. Defekte, Mängel, ...)
 - Auswertungen der geleisteten Dienste
 - Erweiterbar um neue Exporte und Module
+- Hohe Datensicherheit
+- Einfache Aktualisierung (Auto-Updater)
+
+Weitere Informationen
+---------------------
+
+.. toctree::
+    :maxdepth: 1
+
+    context
+    boundary
+    quality
+    persona
+    risks

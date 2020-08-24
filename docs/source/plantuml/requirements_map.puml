@@ -1,0 +1,20 @@
+@startmindmap
+
+*[#white] Digitales Wachbuch
+**[#violet] Grundsystem
+***[#lightgreen] UX-Konzept entwickeln
+***[#lightgreen] Rechtesystem
+***[#lightgreen] Anmelden am Wachbuch
+***[#lightgreen] Abmelden vom Wachbuch
+**[#violet] Basisfunktionalität
+***[#lightgreen] Anlegen einer Ortsgruppe
+***[#lightgreen] Bearbeiten einer Ortsgruppe
+***[#lightgreen] Anlegen eines Wachgängers
+***[#lightgreen] Bearbeiten eines Wachgängers
+***[#lightgreen] Duplikate von Wachgängern zusammenfassen
+***[#lightgreen] Anlegen eines Wachdienstes
+***[#lightgreen] Hinzufügen eines Wachgängers zu einem Wachdienstes
+***[#lightgreen] Dienstenede eines Wachgängers erfassen
+***[#lightgreen] Dienstende erfassen
+
+@endmindmap

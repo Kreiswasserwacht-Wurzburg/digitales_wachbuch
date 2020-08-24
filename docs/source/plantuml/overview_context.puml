@@ -1,0 +1,14 @@
+@startuml
+skinparam componentStyle uml2
+
+[Digitales Wachbuch] <<system>> as DW
+node HiOrg as HO
+
+actor Wachleiter as WL
+actor "Technischer Leiter" as TL
+
+DW -right- HO
+DW -left- WL
+DW -down- TL
+
+@enduml
