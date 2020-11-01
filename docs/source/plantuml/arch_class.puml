@@ -1,0 +1,55 @@
+@startuml
+
+package Base
+{
+    class Organisation
+    class Person
+
+    class TechnicalLead
+
+    class Station
+
+    class LogBook
+    interface ILogBookEntry
+}
+
+package Identity
+{
+    class User
+    class Group
+}
+
+package Core
+{
+    class Guard
+    class GuardSentryService
+    class Sentry
+    class SentryLogBookEntry
+}
+
+Person "1" -- "0..1" User
+Person ^-- TechnicalLead
+Person ^-- Guard
+
+Organisation "0..1" -- "1..*" Group
+Organisation "1" o-- "*" Organisation : has
+Organisation "*" -- "1..*" TechnicalLead : leads
+Organisation "1..*" o-- "*" Person : member of
+Organisation "1" -- "0..1" Station : responsible
+
+Station "1" -- "1" LogBook
+
+LogBook "1" o-- "1..*" ILogBookEntry
+
+ILogBookEntry "1" -- "1" Person : author
+ILogBookEntry ^-- SentryLogBookEntry
+
+Sentry "*" -- "1" Organisation
+Sentry "*" -- "1..*" Guard : lead
+Sentry "*" -- "1" Station
+Sentry "1" -- "1..*" GuardSentryService
+Sentry "1" -- "1..*" SentryLogBookEntry
+
+GuardSentryService "*" -- "1" Guard
+
+@enduml

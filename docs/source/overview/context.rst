@@ -19,3 +19,6 @@ Externe Systeme
 
 HiOrg
     System zur Planung von Wachdiensten
+
+Wachbuch der Wasserwacht Bayern
+    Digitales Wachbuch der Bayern, welches die offiziellen Statistiken erfasst.
