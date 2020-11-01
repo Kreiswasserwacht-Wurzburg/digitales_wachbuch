@@ -1,16 +1,48 @@
 @startuml
 
-package Base
+package Core
 {
     class Organisation
-    class Person
+    {
+        + name : String
+        + number : ushort
+    }
 
-    class TechnicalLead
+    enum Gender
+    {
+        male
+        female
+        other
+    }
+
+    class Person
+    {
+        + firstName : String
+        + midName : String
+        + lastName : String
+        + gender : Gender
+    }
 
     class Station
+    {
+        + name : String
+        + street : String
+        + zipCode : String
+        + city : String
+        + phoneNumber : String
+    }
 
     class LogBook
+    {
+        + year : int
+    }
+
     interface ILogBookEntry
+    {
+        + timestamp : DateTime
+        + subject : String
+        + message : String
+    }
 }
 
 package Identity
@@ -19,25 +51,65 @@ package Identity
     class Group
 }
 
-package Core
+package Base
 {
+    enum LifeGuardCapabilities
+    {
+        None = 0
+        Bronze = 1
+        Silver = 2
+        Gold = 4
+        Wrd = 8
+        Wasserretter = 16
+    }
+
+    enum LeadingCapabilties
+    {
+        None = 0
+        Fie1 = 1
+        Fie2 = 2
+        Fie3 = 4
+        Fie4 = 8
+        Fie5 = 16
+    }
+
     class Guard
+    {
+        + lifeGuardCapabilities : LifeGuardCapabilities 
+        + leadingCapabilties : LeadingCapabilties
+    }
+
     class GuardSentryService
+    {
+        + start : DateTime
+        + end : DateTime
+    }
+
     class Sentry
+    {
+        + date : Date
+        + start : Time
+        + end : Time
+        + registration : Time
+    }
+
     class SentryLogBookEntry
+    {
+        
+    }
 }
 
 Person "1" -- "0..1" User
-Person ^-- TechnicalLead
 Person ^-- Guard
+Person ..> Gender : use
 
 Organisation "0..1" -- "1..*" Group
 Organisation "1" o-- "*" Organisation : has
-Organisation "*" -- "1..*" TechnicalLead : leads
+Organisation "*" -- "1..*" Person : TechnicalLead
 Organisation "1..*" o-- "*" Person : member of
 Organisation "1" -- "0..1" Station : responsible
 
-Station "1" -- "1" LogBook
+Station "1" -- "1..*" LogBook
 
 LogBook "1" o-- "1..*" ILogBookEntry
 
@@ -50,6 +122,11 @@ Sentry "*" -- "1" Station
 Sentry "1" -- "1..*" GuardSentryService
 Sentry "1" -- "1..*" SentryLogBookEntry
 
+Guard ..> LeadingCapabilties : use
+Guard ..> LifeGuardCapabilities : use
+
 GuardSentryService "*" -- "1" Guard
+
+User "*" -- "1..*" Group
 
 @enduml

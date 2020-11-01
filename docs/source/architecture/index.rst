@@ -6,5 +6,6 @@ Architektur
 .. toctree::
     :maxdepth: 2
 
+    classes
     datenbank
     plugin_manager
