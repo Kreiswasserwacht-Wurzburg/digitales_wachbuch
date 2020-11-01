@@ -1,4 +1,7 @@
 Klassen
--------
+=======
 
-.. uml:: ../plantuml/arch_class.puml
+Datenbanksicht
+--------------
+
+.. uml:: ../plantuml/arch_database_classes.puml

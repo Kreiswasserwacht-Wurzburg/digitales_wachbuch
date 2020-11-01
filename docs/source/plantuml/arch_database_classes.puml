@@ -1,6 +1,6 @@
 @startuml
 
-package Core
+package Common
 {
     class Organisation
     {
