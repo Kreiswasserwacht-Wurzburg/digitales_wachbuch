@@ -1,5 +1,6 @@
 Digitales Wachbuch
 =================
+[![Build Status](https://travis-ci.com/Kreiswasserwacht-Wurzburg/digitales_wachbuch.svg?branch=master)](https://travis-ci.com/Kreiswasserwacht-Wurzburg/digitales_wachbuch)
 
 Überblick
 ---------
