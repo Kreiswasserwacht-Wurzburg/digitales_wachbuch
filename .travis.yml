@@ -1,0 +1,20 @@
+language: csharp
+os:
+    - linux
+arch:
+    - amd64
+    - arm64
+solution: blazor-test.sln
+mono: none
+dotnet: 3.1.108
+script:
+    - dotnet restore
+    - dotnet build
+deploy:
+    provider: azure_web_apps
+    edge: true
+    skip_cleanup: true
+    on:
+        branch: main
+notifications:
+    webhooks: https://outlook.office.com/webhook/ff84b1b4-21af-4458-bc3e-185992f9a0e3@994fcc5a-cc28-470b-a851-adfe83371018/TravisCI/a89dd093c38e424ba78ced322f77a040/b00317a1-295b-4c16-8df7-b7cc68680faa
