@@ -80,7 +80,7 @@ Anlegen eines Wachtags
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-#. Als Wachleiter ist es möglich einen neune Wachtag anzulegen.
+#. Als Wachleiter ist es möglich einen neuen Wachtag anzulegen.
 #. Beim Anlegen eines neuen Wachtags werden folgende Daten erfasst
     * Datum des Wachtages
     * Beginn des Wachdienstes 
@@ -106,7 +106,10 @@ Hinzufügen eines Wachgängers
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter soll möglichst schnell und einfach ein Wachgänger hinzugefügt werden können.
+#. Folgende Felder sollen wie folgt vorbelegt werden
+    * Beginn des Wachdienstes
+        aktuelle Uhrzeit (durch Wachleiter überschreibbar)
 
 -------------------------------------------------------------------------------
 
@@ -118,7 +121,8 @@ Entfernen eines Wachgängers
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter soll ein Funktion geben, welche den Eintrag Wachgänger widerruft, sofern eine falsche Person ausgewählt wurde.
+#. In der Liste Wachgänger sollte die Person anschließend nicht mehr angezeigt werden.
 
 -------------------------------------------------------------------------------
 
@@ -130,7 +134,11 @@ Dienstende eines Wachgängers eintragen
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter soll möglichst schnell und einfach das Dienstende eines Wachgänger dokumentiert werden können.
+#. Folgende Felder sollen wie folgt vorbelegt werden
+    * Ende des Wachdienstes
+        aktuelle Uhrzeit (durch Wachleiter überschreibbar)
+
 
 -------------------------------------------------------------------------------
 
