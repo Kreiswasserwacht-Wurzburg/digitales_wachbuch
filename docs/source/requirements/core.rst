@@ -170,6 +170,30 @@ Akzeptanzkriterien
 
 -------------------------------------------------------------------------------
 
+Wachgänger beenden
+---------------------
+
+    Als Wachleiter möchte ich einen bereits angelegten Wachgänger beenden können, sofern dieser als Mitglied ausgeschieden ist oder aus anderen Gründen keine Wachdienste mehr übernimmt.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+*tbd*
+
+-------------------------------------------------------------------------------
+
+Ortsgruppe beenden
+---------------------
+
+    Als technischer Leiter möchte ich eine Ortsgruppe beenden können, sofern diese aufgelöst wurde oder aus anderen Gründen keine Wachdienste mehr übernimmt.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+*tbd*
+
+-------------------------------------------------------------------------------
+
 Duplikate von Wachgängern zusammenfassen
 ----------------------------------------
 
