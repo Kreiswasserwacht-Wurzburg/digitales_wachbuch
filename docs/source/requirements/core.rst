@@ -7,7 +7,7 @@ Basisfunktionalität
 :Authors:
     Philipp Jeske
 :QA:
-    * Markus Wosowicki
+    * Markus Wosowiecki
     * Björn Rausch
     * Lars Irimie
 
@@ -107,6 +107,8 @@ Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
 #. Als Wachleiter soll möglichst schnell und einfach ein Wachgänger hinzugefügt werden können.
+#. Bei der Eingabe wird geprüft, ob alle Felder eingegeben wurden.
+#. Ein Speichern mit einem fehlenden Feld ist nicht möglich.
 #. Folgende Felder sollen wie folgt vorbelegt werden
     * Beginn des Wachdienstes
         aktuelle Uhrzeit (durch Wachleiter überschreibbar)
@@ -122,6 +124,9 @@ Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
 #. Als Wachleiter soll ein Funktion geben, welche den Eintrag Wachgänger widerruft, sofern eine falsche Person ausgewählt wurde.
+#. Der Widerruf ist zu begründen.
+#. Bei der Eingabe wird geprüft, ob alle Felder eingegeben wurden.
+#. Ein Speichern mit einem fehlenden Feld ist nicht möglich.
 #. In der Liste Wachgänger sollte die Person anschließend nicht mehr angezeigt werden.
 
 -------------------------------------------------------------------------------
