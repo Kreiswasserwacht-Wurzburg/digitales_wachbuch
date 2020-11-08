@@ -170,6 +170,30 @@ Akzeptanzkriterien
 
 -------------------------------------------------------------------------------
 
+Wachgänger deaktivieren
+-----------------------
+
+    Als Wachleiter möchte ich einen bereits angelegten Wachgänger deaktivieren können, sofern dieser als Mitglied ausgeschieden ist oder aus anderen Gründen keine Wachdienste mehr übernimmt.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+*tbd*
+
+-------------------------------------------------------------------------------
+
+Ortsgruppe deaktivieren
+-----------------------
+
+    Als technischer Leiter möchte ich eine Ortsgruppe deaktivieren können, sofern diese aufgelöst wurde oder aus anderen Gründen keine Wachdienste mehr übernimmt.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+*tbd*
+
+-------------------------------------------------------------------------------
+
 Duplikate von Wachgängern zusammenfassen
 ----------------------------------------
 
