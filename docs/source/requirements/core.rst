@@ -155,7 +155,10 @@ Dienstende erfassen
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Folgende Felder sollen wie folgt vorbelegt werden
+    * Ende des Wachdienstes
+        aktuelle Uhrzeit (durch Wachleiter überschreibbar)
+#. Bei allen noch aktiven Wachgängern soll als Dienstende das Ende des Wachdienstes hinterlegt werden.
 
 -------------------------------------------------------------------------------
 
