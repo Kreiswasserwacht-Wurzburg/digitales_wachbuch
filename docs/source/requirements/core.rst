@@ -182,7 +182,13 @@ Ortsgruppe bearbeiten
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als technischer Leiter ist es möglich die Daten einer vorhandener Ortsgruppe zu bearbeiten.
+#. Als Wachleiter ist es nicht möglich eine vorhandene Ortsgruppe zu bearbeiten.
+#. Beim bearbeiten einer Ortsgruppe können folgende Daten geändert werden:
+    * Name
+    * Ortsgruppennummer
+#. Bei der Eingabe wird geprüft, ob alle Felder eingegeben wurden.
+#. Ein Speichern mit einem fehlenden Feld ist nicht möglich.
 
 -------------------------------------------------------------------------------
 
@@ -213,7 +219,7 @@ Akzeptanzkriterien
 Duplikate von Wachgängern zusammenfassen
 ----------------------------------------
 
-    Als technischer Leiter möchte ich einen bereits angelegten Wachgänger mit einem anderen zusammenfassen können, um Duplikate zu entferen.
+    Als technischer Leiter möchte ich einen bereits angelegten Wachgänger mit einem anderen zusammenfassen können, um Duplikate zu entfernen.
 
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
