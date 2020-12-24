@@ -1,9 +1,18 @@
 language: csharp
 dist: focal
+os:
+    - linux
+arch:
+    - amd64
+solution: src/Wachbuch-Interface.csproj
 mono: none
 dotnet: 3.1.108
 script :
-    - dotnet restore
-branches:
+    - dotnet restore src
+    - dotnet build src
+deploy:
+    provider: azure_web_apps
+    edge: true
+    skip_cleanup: true
   only:
-  - none
+    - master
