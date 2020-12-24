@@ -1,5 +1,5 @@
 language: csharp
-dist: focal
+# dist: focal
 os:
     - linux
 arch:
