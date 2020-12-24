@@ -15,4 +15,4 @@ deploy:
     edge: true
     skip_cleanup: true
     on:
-      branch: master
+      branch: issue/5
