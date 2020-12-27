@@ -15,6 +15,6 @@ deploy:
     provider: azure_web_apps
     edge: true
     skip_cleanup: true
-    verbose: false
+    verbose: true
     on:
       branch: master
