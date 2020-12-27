@@ -5,9 +5,10 @@ Basisfunktionalität
 :Status:
     Draft
 :Authors:
-    Philipp Jeske
+    * Philipp Jeske
+    * Thomas Scheuermann
 :QA:
-    * Markus Wosowicki
+    * Markus Wosowiecki
     * Björn Rausch
     * Lars Irimie
 
@@ -80,7 +81,7 @@ Anlegen eines Wachtags
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-#. Als Wachleiter ist es möglich einen neune Wachtag anzulegen.
+#. Als Wachleiter ist es möglich einen neuen Wachtag anzulegen.
 #. Beim Anlegen eines neuen Wachtags werden folgende Daten erfasst
     * Datum des Wachtages
     * Beginn des Wachdienstes 
@@ -106,7 +107,12 @@ Hinzufügen eines Wachgängers
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter soll möglichst schnell und einfach ein Wachgänger hinzugefügt werden können.
+#. Bei der Eingabe wird geprüft, ob alle Felder eingegeben wurden.
+#. Ein Speichern mit einem fehlenden Feld ist nicht möglich.
+#. Folgende Felder sollen wie folgt vorbelegt werden
+    * Beginn des Wachdienstes
+        aktuelle Uhrzeit (durch Wachleiter überschreibbar)
 
 -------------------------------------------------------------------------------
 
@@ -118,7 +124,11 @@ Entfernen eines Wachgängers
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter soll ein Funktion geben, welche den Eintrag Wachgänger widerruft, sofern eine falsche Person ausgewählt wurde.
+#. Der Widerruf ist zu begründen.
+#. Bei der Eingabe wird geprüft, ob alle Felder eingegeben wurden.
+#. Ein Speichern mit einem fehlenden Feld ist nicht möglich.
+#. In der Liste Wachgänger sollte die Person anschließend nicht mehr angezeigt werden.
 
 -------------------------------------------------------------------------------
 
@@ -130,7 +140,11 @@ Dienstende eines Wachgängers eintragen
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter soll möglichst schnell und einfach das Dienstende eines Wachgänger dokumentiert werden können.
+#. Folgende Felder sollen wie folgt vorbelegt werden
+    * Ende des Wachdienstes
+        aktuelle Uhrzeit (durch Wachleiter überschreibbar)
+
 
 -------------------------------------------------------------------------------
 
@@ -142,7 +156,10 @@ Dienstende erfassen
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Folgende Felder sollen wie folgt vorbelegt werden
+    * Ende des Wachdienstes
+        aktuelle Uhrzeit (durch Wachleiter überschreibbar)
+#. Bei allen noch aktiven Wachgängern soll als Dienstende das Ende des Wachdienstes hinterlegt werden.
 
 -------------------------------------------------------------------------------
 
@@ -154,7 +171,23 @@ Wachgänger bearbeiten
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter ist es möglich einen vorhandenen Wachgänger zu bearbeiten. 
+#. Als technischer Leiter ist es möglich einen vorhandenen Wachgänger zu bearbeiten.
+#. Beim bearbeiten des Wachgängers können folgende Daten geändert werden:
+    * Vorname
+    * Nachname
+    * Ortsgruppe
+    * Qualifikation Rettungsschwimmen
+        * Keine
+        * Rettungsschwimmer bronze/silber/gold
+        * RS im WRD
+        * Wasserretter
+    * Führungsqualifikation (keine, FIE 1 - 5)
+#. Beim Speichern wird geprüft, dass folgenden Pflichtfelder eingegeben wurden
+    * Vorname
+    * Nachname
+    * Ortsgruppe
+#. Ein Speichern mit einem fehlenden Pflichtfeld ist nicht möglich.
 
 -------------------------------------------------------------------------------
 
@@ -166,19 +199,102 @@ Ortsgruppe bearbeiten
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als technischer Leiter ist es möglich die Daten einer vorhandener Ortsgruppe zu bearbeiten.
+#. Als Wachleiter ist es nicht möglich eine vorhandene Ortsgruppe zu bearbeiten.
+#. Beim bearbeiten einer Ortsgruppe können folgende Daten geändert werden:
+    * Name
+    * Ortsgruppennummer
+#. Bei der Eingabe wird geprüft, ob alle Felder eingegeben wurden.
+#. Ein Speichern mit einem fehlenden Feld ist nicht möglich.
+
+-------------------------------------------------------------------------------
+
+Wachgänger deaktivieren
+-----------------------
+
+    Als Wachleiter möchte ich einen bereits angelegten Wachgänger deaktivieren können, sofern dieser als Mitglied ausgeschieden ist oder aus anderen Gründen keine Wachdienste mehr übernimmt.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+#. Als Wachleiter ist es möglich einen vorhandenen Wachgänger, welcher keine Dienste mehr übernimmt, zu deaktivieren. 
+#. Als technischer Leiter ist es möglich einen vorhandenen Wachgänger, welcher keine Dienste mehr übernimmt, zu deaktivieren. 
+#. Der Datensatz wird auf inaktiv gesetzt und nicht mehr in der Personalliste für Wachdienste angezeigt. 
+#. Die Daten sind weiterhin vorhanden und werden erst nach einem Fristablauf gelöscht.
+
+-------------------------------------------------------------------------------
+
+Inaktiven Wachgänger reaktivieren
+---------------------------------
+
+    Als Wachleiter möchte ich einen bereits angelegten, inaktiven Wachgänger reaktivieren können, sofern dieser wieder Wachdienste übernimmt. Hierdurch wird die Anlage von doppelten Datensätzen vermieden.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+#. Als Wachleiter ist es möglich einen vorhandenen, inaktiven Wachgänger, welcher wieder Dienste übernimmt, zu reaktivieren. 
+#. Als technischer Leiter ist es möglich einen vorhandenen, inaktiven Wachgänger, welcher wieder Dienste übernimmt, zu reaktivieren. 
+#. Der Datensatz wird auf aktiv gesetzt und wieder in der Personalliste für Wachdienste angezeigt. 
+
+-------------------------------------------------------------------------------
+
+Ortsgruppe deaktivieren
+-----------------------
+
+    Als technischer Leiter möchte ich eine Ortsgruppe deaktivieren können, sofern diese aufgelöst wurde oder aus anderen Gründen keine Wachdienste mehr übernimmt.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+#. Als Wachleiter ist es mir nicht möglich eine vorhandene Ortsgruppe zu deaktivieren. 
+#. Als technischer Leiter ist es möglich eine vorhandene Ortgruppe, welcher keine Dienste mehr übernimmt, zu deaktivieren. 
+#. Der Datensatz wird auf inaktiv gesetzt und nicht mehr in der Liste für Wachdienste angezeigt.
+#. Es soll eine Abfrage erscheinen, ob die Wachgänger der Ortsgruppe auch auf den Status inaktiv gesetzt werden sollen oder weiterin als aktiv in der Liste der Wachgänger verbleiben.
+#. Die Daten sind weiterhin vorhanden und werden erst nach einem Fristablauf gelöscht.
+
+-------------------------------------------------------------------------------
+
+Inaktive Ortsgruppe reaktivieren
+--------------------------------
+
+    Als technischer Leiter möchte ich eine bereits angelegte, inaktive Ortsgruppe reaktivieren können, sofern diese wieder Wachdienste übernimmt. Hierdurch wird die Anlage von doppelten Datensätzen vermieden.
+
+Akzeptanzkriterien
+~~~~~~~~~~~~~~~~~~
+
+#. Als Wachleiter ist es mir nicht möglich eine vorhandene, inaktive Ortsgruppe zu reaktivieren. 
+#. Als technischer Leiter ist es möglich eine vorhandene, inaktive Ortgruppe, welche wieder Dienste übernimmt, zu reaktivieren. 
+#. Der Datensatz wird auf aktiv gesetzt und wieder in der Liste für Wachdienste angezeigt. 
+#. Es soll eine Abfrage erscheinen, ob die Wachgänger der Ortsgruppe auch wieder auf den Status Aktiv gesetzt werden sollen oder weiterin als inktiv geführt werden.
 
 -------------------------------------------------------------------------------
 
 Duplikate von Wachgängern zusammenfassen
 ----------------------------------------
 
-    Als technischer Leiter möchte ich einen bereits angelegten Wachgänger mit einem anderen zusammenfassen können, um Duplikate zu entferen.
+    Als technischer Leiter möchte ich einen bereits angelegten Wachgänger mit einem anderen zusammenfassen können, um Duplikate zu entfernen.
 
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als technischer Leiter ist es möglich einen vorhandenen Wachgänger, welche doppelt angelegt wurde, zusammenzuführen.
+#. Beim zusammenführen des Wachgängers kann entschieden werden, welcher Datensatz in Zukunft erhalten bleibt. Aus diesem werden die folgende Daten übernommen:
+    * Vorname
+    * Nachname
+    * Ortsgruppe
+#. Beim zusammenführen des Wachgängers wird die höchste Qualifikation aus beiden Datensätzen in den verbleibenden aktiven übernommen.
+    * Qualifikation Rettungsschwimmen
+        * Keine
+        * Rettungsschwimmer bronze/silber/gold
+        * RS im WRD
+        * Wasserretter
+    * Führungsqualifikation (keine, FIE 1 - 5)
+#. Beim Speichern wird geprüft, dass folgenden Pflichtfelder eingegeben wurden
+    * Vorname
+    * Nachname
+    * Ortsgruppe
+#. Ein Speichern mit einem fehlenden Pflichtfeld ist nicht möglich.
+
 
 -------------------------------------------------------------------------------
 
@@ -190,6 +306,10 @@ Hinzufügen von Notizen
 Akzeptanzkriterien
 ~~~~~~~~~~~~~~~~~~
 
-*tbd*
+#. Als Wachleiter soll möglichst schnell und einfach eine Notiz erfasst werden können.
+#. Bei der Eingabe wird geprüft, ob alle Felder eingegeben wurden.
+#. Ein Speichern mit einem fehlenden Feld ist nicht möglich.
+#. Folgende Felder sollen wie folgt vorbelegt werden
+    * aktuelle Uhrzeit (durch Wachleiter überschreibbar)
 
 -------------------------------------------------------------------------------

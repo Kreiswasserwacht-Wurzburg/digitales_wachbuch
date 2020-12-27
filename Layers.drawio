@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" modified="2020-10-11T20:37:12.566Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36" etag="Zsk0-i04VUnAKqo8CazW" version="13.5.9" type="github">
+  <diagram id="vyr_rtWpH9crfcxWtXEX" name="Page-1">
+    <mxGraphModel dx="1422" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Mo_twAnaEzApN7gyf743-1" value="Wasserwacht.DigitalGuardBook.Common" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="159" y="680" width="511" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-2" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Dive.Data" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="290" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-3" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Dive.Logic" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="290" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-4" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Dive.Ui" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="290" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-5" value="Wasserwacht.DigitalGuardBook.Ui" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="159" y="370" width="511" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-6" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Boat.Data" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="420" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-7" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Boat.Logic" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="420" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-8" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Boat.Ui" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="420" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-9" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Base.Data" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="159" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-10" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Base.Logic" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="159" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-11" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Base.Ui" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="159" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-12" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Medical.Data" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="550" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-13" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Medical.Logic" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="550" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-14" value="Wasserwacht.&lt;br&gt;DigitalGuardBook.&lt;br&gt;Medical.Ui" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="550" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-16" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="600" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-18" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="525" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-19" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="450" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-20" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="370" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-21" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="680" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-23" value="Blazor-Applikation stellt den Rahmen für die Plugins" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="370" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-24" value="Die UI für die einzelnen Plugins, inkl. Submenu" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="450" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-25" value="Die Logik für das jeweilige Plugin" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="530" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-26" value="Datenschicht für das Plugin" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="600" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Mo_twAnaEzApN7gyf743-27" value="Geteilte Logik und Interfaces" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="680" width="110" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
