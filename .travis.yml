@@ -4,9 +4,9 @@ os:
     - linux
 arch:
     - amd64
-solution: src/Wachbuch-Interface.csproj
+solution: src/digitales-wachbuch.sln
 mono: none
-dotnet: 3.1.108
+dotnet: 5.0
 script :
     - dotnet restore src
     - dotnet build src
