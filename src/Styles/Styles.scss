@@ -1,0 +1,26 @@
+// Variablen Farben
+
+// Primärfarben
+$primary-blue:  #008ccd;
+$primary-red:   #e60005;
+$primary-white: #ffffff;
+$primary-blach: #000000;
+
+// Sekundärfarben
+$secondary-darkblue:    #002d55;
+$secondary-darkblue2:   #698caf;
+$secondary-darkblue3:   #b4c3d7;
+$secondary-beige:       #f5f0e6;
+$secondary-wwblue2:     #73afdc;
+$secondary-wwblue3:     #b4d7eb;
+
+// Statusfarben
+$status-red:    #e60005;
+$status-yellow: #ffff00;
+$status-green:  #008000;
+
+
+
+.title {
+    color: $primary-blue;
+}
