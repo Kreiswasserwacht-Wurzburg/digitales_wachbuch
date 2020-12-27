@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Base.Ui\Wasserwacht.DigitalGuardBook.Base.Ui.csproj" />
+    <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Common.Ui\Wasserwacht.DigitalGuardBook.Common.Ui.csproj" />
   </ItemGroup>
 
 </Project>
