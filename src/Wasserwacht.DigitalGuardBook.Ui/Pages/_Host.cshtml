@@ -12,7 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wasserwacht.DigitalGuardBook.Ui</title>
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+
+    <environment include="Staging,Production">
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    </environment>
+    <environment include="Development">
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.css" />
+    </environment>
+
     <link href="css/site.css" rel="stylesheet" />
     <link href="Wasserwacht.DigitalGuardBook.Ui.styles.css" rel="stylesheet" />
 </head>
@@ -29,6 +36,14 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+
+    <environment include="Staging,Production">
+        <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+    </environment>
+    <environment include="Development">
+        <script src="js/bootstrap/bootstrap.bundle.js"></script>
+    </environment>
 
     <script src="_framework/blazor.server.js"></script>
 </body>
