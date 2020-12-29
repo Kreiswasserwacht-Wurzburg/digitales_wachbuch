@@ -37,12 +37,18 @@ namespace Wasserwacht.DigitalGuardBook.Common.Data
                 .WithMany(x => x.Organisations);
         }
     }
-
+        
+    /// <summary>
+    /// Diese Klasse ist notwendig, um zur Designzeit die Migrationen erzeugen zu können.
+    /// </summary>
     public class CommonDataFactory : IDesignTimeDbContextFactory<CommonDataContext>
     {
         public CommonDataContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<CommonDataContext>();
+
+            // Hier sagen wir, dass es ein MS SQL-Server sein soll, ohne ConnectionString.
+            // Dies funktioniert, da die Migration auf einem lokalen Snapshot basiert.
             optionsBuilder.UseSqlServer();
 
             return new CommonDataContext(optionsBuilder.Options);
