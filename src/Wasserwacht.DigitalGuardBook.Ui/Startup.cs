@@ -26,7 +26,7 @@ namespace Wasserwacht.DigitalGuardBook.Ui
             services.AddDbContext<Common.Data.CommonDataContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<Common.Data.Person>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
             })
