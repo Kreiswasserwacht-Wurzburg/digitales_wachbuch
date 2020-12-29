@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Common.Logic\Wasserwacht.DigitalGuardBook.Common.Logic.csproj" />
-    <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Common\Wasserwacht.DigitalGuardBook.Common.Data.csproj" />
+    <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Common.Data\Wasserwacht.DigitalGuardBook.Common.Data.csproj" />
   </ItemGroup>
 
 </Project>
