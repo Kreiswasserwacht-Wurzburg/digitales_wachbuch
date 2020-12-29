@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wasserwacht.DigitalGuardBook.Common.Data;
 
 namespace Wasserwacht.DigitalGuardBook.Common.Data.Migrations
 {
     [DbContext(typeof(CommonDataContext))]
-    partial class CommonDataContextModelSnapshot : ModelSnapshot
+    [Migration("20201229193441_CreateInitialDataStructure")]
+    partial class CreateInitialDataStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

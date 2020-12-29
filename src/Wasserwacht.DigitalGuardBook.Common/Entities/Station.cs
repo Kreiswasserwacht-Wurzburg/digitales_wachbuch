@@ -20,5 +20,9 @@ namespace Wasserwacht.DigitalGuardBook.Common.Data
 
         [Phone]
         public string PhoneNumber { get; set; }
+
+        public Organisation Organisation { get; set; }
+
+        public virtual ICollection<LogBook> LogBooks { get; set; }
     }
 }

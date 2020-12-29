@@ -15,5 +15,8 @@ namespace Wasserwacht.DigitalGuardBook.Common.Data
         [PersonalData]
         public Gender Gender { get; set; }
 
+        public virtual ICollection<Organisation> MangedOrganisations { get; set; }
+
+        public virtual ICollection<Organisation> Organisations { get; set; }
     }
 }
