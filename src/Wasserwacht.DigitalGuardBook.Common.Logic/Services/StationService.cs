@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Wasserwacht.DigitalGuardBook.Common.Logic.Repositories
+namespace Wasserwacht.DigitalGuardBook.Common.Logic.Services
 {
-    public class StationRepository
+    public class StationService
     {
         public async Task<Data.Station> GetStationAsync()
         {
