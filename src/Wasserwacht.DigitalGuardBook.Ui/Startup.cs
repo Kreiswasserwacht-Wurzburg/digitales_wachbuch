@@ -35,7 +35,7 @@ namespace Wasserwacht.DigitalGuardBook.Ui
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddSingleton<Common.Logic.Services.StationService>();
+            services.AddScoped<Common.Logic.Services.StationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +67,15 @@ namespace Wasserwacht.DigitalGuardBook.Ui
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+            UpdateDatabase(app);
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = serviceScope.ServiceProvider.GetService<Common.Data.CommonDataContext>();
+
+            context.Database.Migrate();
         }
     }
 }
