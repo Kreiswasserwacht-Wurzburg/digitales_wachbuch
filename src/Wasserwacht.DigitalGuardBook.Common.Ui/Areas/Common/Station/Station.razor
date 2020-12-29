@@ -1,0 +1,20 @@
+﻿@page "/Administration/Station"
+@using Wasserwacht.DigitalGuardBook.Common.Logic.Services
+@inject StationService StationService
+
+<NavMenu />
+
+<EditForm EditContext="editContext" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary Model="@station"/>
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">Name</label>
+        <div class="col-sm-10">
+            <InputText id="name" @bind-Value="station.Name" class="form-control" placeholder="Name" />
+        </div>
+        <ValidationMessage class="invalid-feedback" For="@(() => station.Name)" />
+    </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>

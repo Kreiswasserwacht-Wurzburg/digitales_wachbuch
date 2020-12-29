@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wasserwacht.DigitalGuardBoo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{14E86637-5E1B-4B36-B0FA-24D3E2756D10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wasserwacht.DigitalGuardBook.Common.Logic", "Wasserwacht.DigitalGuardBook.Common.Logic\Wasserwacht.DigitalGuardBook.Common.Logic.csproj", "{E7E73550-F0A2-4AC5-BDB2-44D017C1AA96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wasserwacht.DigitalGuardBook.Common.Logic", "Wasserwacht.DigitalGuardBook.Common.Logic\Wasserwacht.DigitalGuardBook.Common.Logic.csproj", "{E7E73550-F0A2-4AC5-BDB2-44D017C1AA96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wasserwacht.DigitalGuardBook.Common.Ui", "Wasserwacht.DigitalGuardBook.Common.Ui\Wasserwacht.DigitalGuardBook.Common.Ui.csproj", "{634A06BD-A034-4092-9AD7-27BD59295C3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wasserwacht.DigitalGuardBook.Common.Ui", "Wasserwacht.DigitalGuardBook.Common.Ui\Wasserwacht.DigitalGuardBook.Common.Ui.csproj", "{634A06BD-A034-4092-9AD7-27BD59295C3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wasserwacht.DigitalGuardBook.Common", "Wasserwacht.DigitalGuardBook.Common\Wasserwacht.DigitalGuardBook.Common.csproj", "{D3A148FF-99B8-4C26-A331-95C918C7FCC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,18 @@ Global
 		{634A06BD-A034-4092-9AD7-27BD59295C3B}.Release|x64.Build.0 = Release|Any CPU
 		{634A06BD-A034-4092-9AD7-27BD59295C3B}.Release|x86.ActiveCfg = Release|Any CPU
 		{634A06BD-A034-4092-9AD7-27BD59295C3B}.Release|x86.Build.0 = Release|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Debug|x64.Build.0 = Debug|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Debug|x86.Build.0 = Debug|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Release|x64.ActiveCfg = Release|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Release|x64.Build.0 = Release|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Release|x86.ActiveCfg = Release|Any CPU
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +140,7 @@ Global
 		{ABB2ACEC-A98A-4E5C-BA71-E6EE4804A935} = {2CD2E129-A462-4312-9460-1245DB387C5F}
 		{E7E73550-F0A2-4AC5-BDB2-44D017C1AA96} = {14E86637-5E1B-4B36-B0FA-24D3E2756D10}
 		{634A06BD-A034-4092-9AD7-27BD59295C3B} = {14E86637-5E1B-4B36-B0FA-24D3E2756D10}
+		{D3A148FF-99B8-4C26-A331-95C918C7FCC6} = {14E86637-5E1B-4B36-B0FA-24D3E2756D10}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76ED3D3E-9E6F-4895-A109-1C4AF246EF76}

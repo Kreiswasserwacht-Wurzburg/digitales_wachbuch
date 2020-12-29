@@ -15,13 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Common\Shared\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Common.Logic\Wasserwacht.DigitalGuardBook.Common.Logic.csproj" />
     <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Common.Data\Wasserwacht.DigitalGuardBook.Common.Data.csproj" />
+    <ProjectReference Include="..\Wasserwacht.DigitalGuardBook.Common\Wasserwacht.DigitalGuardBook.Common.csproj" />
   </ItemGroup>
 
 </Project>

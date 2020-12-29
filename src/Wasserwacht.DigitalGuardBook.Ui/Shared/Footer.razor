@@ -1,11 +1,17 @@
-﻿<div class="container-fluid">
+﻿<div class="container-fluid fixed-bottom">
     <div class="row my-3">
         <div class="col-md-3">
             OG Musterstadt
         </div>
         <div class="col-md-9">
-            <span>Datenschutz</span>
-            <span>Administration</span>
+            <ul class="nav justify-content-end">
+                <NavLink class="nav-link" href="/Administration" Match="NavLinkMatch.Prefix">
+                    Administration
+                </NavLink>
+                <li class="nav-item disabled">
+                    Datenschutz
+                </li>
+            </ul>
         </div>
     </div>
 </div>
