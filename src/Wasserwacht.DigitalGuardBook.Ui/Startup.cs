@@ -23,9 +23,17 @@ namespace Wasserwacht.DigitalGuardBook.Ui
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+#if DEBUG
+            services.AddDbContext<Common.Data.CommonDataContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"))
+                .EnableSensitiveDataLogging(), ServiceLifetime.Transient);
+#else
             services.AddDbContext<Common.Data.CommonDataContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+#endif
+
             services.AddDefaultIdentity<Common.Data.Person>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -35,7 +43,7 @@ namespace Wasserwacht.DigitalGuardBook.Ui
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddScoped<Common.Logic.Services.StationService>();
+            services.AddTransient<Common.Logic.Services.StationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +53,7 @@ namespace Wasserwacht.DigitalGuardBook.Ui
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseBrowserLink();
             }
             else
             {
