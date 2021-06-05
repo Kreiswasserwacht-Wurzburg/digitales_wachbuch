@@ -14,10 +14,12 @@
             <NavMenu />
         </div>
         <div class="navbar-text">
-            <span class="fw-bold">@DateTime.Now.ToString("T")</span>
+            <span class="fw-bold" id="clock">@DateTime.Now.ToString("T")</span>
         </div>
     </div>
 </nav>
+
+
 
 @code {
     private Common.Data.Station station;

@@ -10,7 +10,7 @@ namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Station
 {
     public class StationModel
     {
-        [Required]
+        //[Required]
         [MaxLength(250)]
         public string Name { get; set; }
 
@@ -31,6 +31,10 @@ namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Station
     {
         private DigitalGuardBook.Common.Data.Station station = new DigitalGuardBook.Common.Data.Station();
         private EditContext editContext;
+        protected override void OnInitialized()
+        {
+            editContext = new(station);
+        }
 
         private async Task HandleValidSubmit(EditContext editContext)
         {
