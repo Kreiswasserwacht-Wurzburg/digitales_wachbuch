@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wasserwacht.DigitalGuardBoo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wasserwacht.DigitalGuardBook.Common.Ui", "Wasserwacht.DigitalGuardBook.Common.Ui\Wasserwacht.DigitalGuardBook.Common.Ui.csproj", "{634A06BD-A034-4092-9AD7-27BD59295C3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wasserwacht.DigitalGuardBook.Common", "Wasserwacht.DigitalGuardBook.Common\Wasserwacht.DigitalGuardBook.Common.csproj", "{D3A148FF-99B8-4C26-A331-95C918C7FCC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wasserwacht.DigitalGuardBook.Common", "Wasserwacht.DigitalGuardBook.Common\Wasserwacht.DigitalGuardBook.Common.csproj", "{D3A148FF-99B8-4C26-A331-95C918C7FCC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
