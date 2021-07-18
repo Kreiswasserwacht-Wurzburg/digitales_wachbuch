@@ -1,7 +1,4 @@
-﻿@using Wasserwacht.DigitalGuardBook.Common.Logic.Services
-@inject StationService StationService
-
-<nav class="navbar navbar-expand-md sticky-top navbar-light bg-light">
+﻿<nav class="navbar navbar-expand-md sticky-top navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="https://www.wawawue.de/wp-content/uploads/logo/wasserwacht-logo.svg" alt="Logo Wasserwacht Bayern" class="d-inline-block align-top">
@@ -18,14 +15,3 @@
         </div>
     </div>
 </nav>
-
-
-
-@code {
-    private Common.Data.Station station;
-
-    protected override async Task OnInitializedAsync()
-    {
-        station = await StationService.GetStationAsync();
-    }
-}

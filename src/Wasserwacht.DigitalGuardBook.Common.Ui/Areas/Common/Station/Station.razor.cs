@@ -1,52 +1,58 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Wasserwacht.DigitalGuardBook.Common.Logic.Models;
+using Wasserwacht.DigitalGuardBook.Common.Logic.Services;
 
 namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Station
 {
-    public class StationModel
-    {
-        //[Required]
-        [MaxLength(250)]
-        public string Name { get; set; }
-
-        [MaxLength(500)]
-        public string Street { get; set; }
-
-        [MaxLength(20)]
-        public string ZipCode { get; set; }
-
-        [MaxLength(100)]
-        public string City { get; set; }
-
-        [Phone]
-        public string PhoneNumber { get; set; }
-    }
-
     public partial class Station
     {
-        private DigitalGuardBook.Common.Data.Station station = new DigitalGuardBook.Common.Data.Station();
-        private EditContext editContext;
-        protected override void OnInitialized()
+
+        protected EditContext editContext { get; set; }
+
+        [Inject]
+        protected StationService StationService { get; set; }
+
+        private StationModel station = new StationModel();
+
+        protected override async Task OnInitializedAsync()
         {
-            editContext = new(station);
+            await base.OnInitializedAsync();
+
+            editContext = new EditContext(this.station);
+            editContext.SetFieldCssClassProvider(new BootstrapClassProvider());
+
+            await LoadDataAsync();
+        }
+
+        private async Task LoadDataAsync()
+        {
+            var dbStation = await this.StationService.GetStationAsync();
+
+            SetValues(dbStation);
+
+            editContext.Validate();
+        }
+
+        private void SetValues(StationModel model)
+        {
+            station.Id = model.Id;
+            station.City = model.City;
+            station.Name = model.Name;
+            station.PhoneNumber = model.PhoneNumber;
+            station.Street = model.Street;
+            station.ZipCode = model.ZipCode;
         }
 
         private async Task HandleValidSubmit(EditContext editContext)
         {
-            editContext.NotifyValidationStateChanged();
-        }
+            var dbStation = await StationService.UpdateStation(station);
 
-        protected async override Task OnInitializedAsync()
-        {
-            editContext = new EditContext(station);
-            editContext.SetFieldCssClassProvider(new BootstrapClassProvider());
+            SetValues(dbStation);
 
-            station = await StationService.GetStationAsync();
+            editContext.Validate();
         }
     }
 }

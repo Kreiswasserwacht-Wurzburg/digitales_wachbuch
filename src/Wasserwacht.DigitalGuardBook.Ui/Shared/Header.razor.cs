@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Wasserwacht.DigitalGuardBook.Common.Logic.Models;
 using Wasserwacht.DigitalGuardBook.Common.Logic.Services;
 
-namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Station
+namespace Wasserwacht.DigitalGuardBook.Ui.Shared
 {
-    public partial class StationInfo
+    public partial class Header
     {
         [Inject]
         protected StationService StationService { get; set; }
