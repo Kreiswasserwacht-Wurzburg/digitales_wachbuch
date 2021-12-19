@@ -18,42 +18,23 @@ namespace Wasserwacht.DigitalGuardBook.Common.Logic.Services
         {
             return await _commonDataContext.Organisations
                 .OrderBy(x => x.Name)
-                .Select(x => new Models.OrganisationModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Number = x.Number
-                }).ToListAsync();
+                .Select(x => new Models.OrganisationModel(x)).ToListAsync();
         }
 
 
         public async Task<Models.OrganisationModel> GetOrganisationAsync(Guid id)
         {
-            Data.Organisation dbOrganisation;
+            Data.Organisation dbOrganisation = await _commonDataContext.Organisations.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (!await _commonDataContext.Organisations.AnyAsync(x => x.Id == id))
-            {
-                dbOrganisation = null;
-            }
-            else
-            {
-                dbOrganisation = await _commonDataContext.Organisations.FirstOrDefaultAsync(x => x.Id == id);
-            }
-
-            return new Models.OrganisationModel
-            {
-                Id = dbOrganisation?.Id ?? Guid.NewGuid(),
-                Name = dbOrganisation?.Name,
-                Number = dbOrganisation?.Number,
-            };
+            return new Models.OrganisationModel(dbOrganisation);
         }
 
         public async Task<Models.OrganisationModel> UpdaterOrInsertAsync(Models.OrganisationModel model)
         {
             Data.Organisation dbOrganisation = await _commonDataContext.Organisations.FirstOrDefaultAsync(x => x.Id == model.Id);
-            
+
             bool isNew = false;
-            
+
             if (dbOrganisation == null)
             {
                 isNew = true;

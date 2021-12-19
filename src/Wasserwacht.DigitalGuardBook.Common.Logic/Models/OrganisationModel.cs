@@ -18,5 +18,15 @@ namespace Wasserwacht.DigitalGuardBook.Common.Logic.Models
         [Required]
         [Range(1, ushort.MaxValue)]
         public int? Number { get; set; }
+
+        public OrganisationModel()
+        { }
+
+        public OrganisationModel(Data.Organisation dbOrganisation)
+        {
+            Id = dbOrganisation?.Id ?? Guid.NewGuid();
+            Name = dbOrganisation?.Name;
+            Number = dbOrganisation?.Number;
+        }
     }
 }
