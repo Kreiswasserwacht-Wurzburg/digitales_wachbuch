@@ -2,33 +2,26 @@
 
 <NavMenu />
 
-<table>
+<table class="table table-hoverable table-striped">
     <thead>
         <tr>
-            <th>Nummer</th>
-            <th>Name</th>
+            <th scope="col">Nummer</th>
+            <th scope="col">Name</th>
+            <th scope="col">
+                <button class="btn btn-primary" @onclick="OnAddClicked">Add</button>
+            </th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1236</td>
-            <td>OG Aub</td>
-        </tr>
-        <tr>
-            <td>1236</td>
-            <td>OG Rimpar</td>
-        </tr>
-        <tr>
-            <td>1235</td>
-            <td>OG Rottendorf</td>
-        </tr>
-        <tr>
-            <td>1236</td>
-            <td>OG Thüngersheim</td>
-        </tr>
-        <tr>
-            <td>1234</td>
-            <td>OG Würzburg</td>
-        </tr>
+        @foreach (var orga in organisations)
+        {
+            <tr>
+                <td>@orga.Number</td>
+                <td>@orga.Name</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="@(e => OnEditClicked(orga.Id))">Edit</button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

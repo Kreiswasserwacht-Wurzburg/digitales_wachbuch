@@ -1,0 +1,28 @@
+﻿@page "/Administration/Organisation/{Id:guid}"
+
+<NavMenu />
+
+
+<EditForm EditContext="editContext" OnValidSubmit="HandleValidSubmit">
+    <input type="hidden" @bind-value="organisation.Id" id="Id" />
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">Name</label>
+        <div class="col-sm-10">
+            <InputText id="name" @bind-Value="organisation.Name" class="form-control" placeholder="Name" />
+        </div>
+        <ValidationMessage For="@(() => organisation.Name)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">Nummer</label>
+        <div class="col-sm-10">
+            <InputNumber id="name" @bind-Value="organisation.Number" class="form-control" placeholder="Nummer" />
+        </div>
+        <ValidationMessage For="@(() => organisation.Number)" />
+    </div>
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>

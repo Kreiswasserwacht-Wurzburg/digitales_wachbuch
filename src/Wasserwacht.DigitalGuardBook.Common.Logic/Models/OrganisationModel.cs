@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace Wasserwacht.DigitalGuardBook.Common.Logic.Models
 {
-    class OrganistationModel
+    public class OrganisationModel
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(500)]
         public string Name { get; set; }
 
         [Required]
-        public ushort? Number { get; set; }
+        [Range(1, ushort.MaxValue)]
+        public int? Number { get; set; }
     }
 }

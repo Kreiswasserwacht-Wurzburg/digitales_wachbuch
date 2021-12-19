@@ -44,6 +44,7 @@ namespace Wasserwacht.DigitalGuardBook.Ui
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddTransient<Common.Logic.Services.StationService>();
+            services.AddTransient<Common.Logic.Services.OrganisationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
