@@ -20,6 +20,7 @@
                 <td>@orga.Name</td>
                 <td>
                     <button class="btn btn-primary" @onclick="@(e => OnEditClicked(orga.Id))">Edit</button>
+                    <button class="btn btn-secondary" @onclick="@(e => OnMembersClicked(orga.Id))">Members</button>
                 </td>
             </tr>
         }

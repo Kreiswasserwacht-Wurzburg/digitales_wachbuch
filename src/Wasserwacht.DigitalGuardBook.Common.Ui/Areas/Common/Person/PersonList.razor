@@ -1,0 +1,23 @@
+﻿<table class="table table-hoverable table-striped">
+    <thead>
+        <tr>
+            <th scope="col">LastName</th>
+            <th scope="col">FirstName</th>
+            <th scope="col">
+                <button class="btn btn-primary" @onclick="OnAddClicked">Add</button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Persons)
+        {
+            <tr>
+                <td>@person.LastName</td>
+                <td>@person.FirstName</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="@(e => OnEditClicked(person.Id))">Edit</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

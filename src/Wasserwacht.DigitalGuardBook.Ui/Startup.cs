@@ -45,6 +45,7 @@ namespace Wasserwacht.DigitalGuardBook.Ui
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddTransient<Common.Logic.Services.StationService>();
             services.AddTransient<Common.Logic.Services.OrganisationService>();
+            services.AddTransient<Common.Logic.Services.PersonService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

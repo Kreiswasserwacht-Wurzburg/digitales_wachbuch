@@ -1,0 +1,69 @@
+﻿@page "/Administration/Person/{Id:guid}"
+
+<NavMenu />
+
+<EditForm EditContext="editContext" OnValidSubmit="HandleValidSubmit">
+    <input type="hidden" @bind-value="person.Id" id="Id" />
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">FirstName</label>
+        <div class="col-sm-10">
+            <InputText id="firstName" @bind-Value="person.FirstName" class="form-control" placeholder="FirstName" />
+        </div>
+        <ValidationMessage For="@(() => person.FirstName)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">MidName</label>
+        <div class="col-sm-10">
+            <InputText id="midName" @bind-Value="person.MidName" class="form-control" placeholder="MidName" />
+        </div>
+        <ValidationMessage For="@(() => person.MidName)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">LastName</label>
+        <div class="col-sm-10">
+            <InputText id="lastName" @bind-Value="person.LastName" class="form-control" placeholder="LastName" />
+        </div>
+        <ValidationMessage For="@(() => person.LastName)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">Gender</label>
+        <div class="col-sm-10">
+            <InputSelect id="gender" @bind-Value="person.Gender" class="form-select" placeholder="Gender">
+                @foreach (var item in GetGenders())
+                {
+                    <option value="@item.Key">@item.Value</option>
+                }
+            </InputSelect>
+        </div>
+        <ValidationMessage For="@(() => person.Gender)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="name" class="form-label col-sm-2 ">Organisations</label>
+        <div class="col-sm-10">
+            <select multiple id="organisations" @onchange="SelectOrganisation" class="form-select" placeholder="Organisations">
+                <option hidden>Please select</option>
+                @foreach (var item in organisations)
+                {
+                    if (person.Organisations.Any(x => x.Id == item.Id))
+                    {
+                        <option value="@item.Id" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <ValidationMessage For="@(() => person.Organisations)" />
+    </div>
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>

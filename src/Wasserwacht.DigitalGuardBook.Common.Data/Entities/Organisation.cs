@@ -9,6 +9,8 @@ namespace Wasserwacht.DigitalGuardBook.Common.Data
         public Organisation()
         {
             TechnicalLead = new HashSet<Person>();
+            Stations = new HashSet<Station>();
+            Members = new HashSet<Person>();
         }
 
         [Required]

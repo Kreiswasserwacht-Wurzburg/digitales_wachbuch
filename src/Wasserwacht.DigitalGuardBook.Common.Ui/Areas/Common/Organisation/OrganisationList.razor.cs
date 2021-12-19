@@ -29,6 +29,11 @@ namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Organisation
             _NavigationManager.NavigateTo($"/Administration/Organisation/{id}");
         }
 
+        private void OnMembersClicked(Guid id)
+        {
+            _NavigationManager.NavigateTo($"/Administration/Organisation/{id}/Members");
+        }
+
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
