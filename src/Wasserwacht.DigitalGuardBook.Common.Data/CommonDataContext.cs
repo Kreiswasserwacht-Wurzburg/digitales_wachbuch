@@ -37,7 +37,7 @@ namespace Wasserwacht.DigitalGuardBook.Common.Data
                 .WithMany(x => x.Organisations);
         }
     }
-        
+
     /// <summary>
     /// Diese Klasse ist notwendig, um zur Designzeit die Migrationen erzeugen zu können.
     /// </summary>

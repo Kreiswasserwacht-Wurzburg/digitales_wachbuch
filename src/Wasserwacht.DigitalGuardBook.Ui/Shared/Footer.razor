@@ -5,9 +5,11 @@
         </div>
         <div class="col-md-9">
             <ul class="nav justify-content-end">
-                <NavLink class="nav-link" href="/Administration" Match="NavLinkMatch.Prefix">
-                    Administration
-                </NavLink>
+                <AuthorizeView Policy="Admin">
+                    <NavLink class="nav-link" href="/Administration" Match="NavLinkMatch.Prefix">
+                        Administration
+                    </NavLink>
+                </AuthorizeView>
                 <li class="nav-item disabled">
                     Datenschutz
                 </li>

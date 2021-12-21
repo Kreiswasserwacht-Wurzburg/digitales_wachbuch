@@ -12,9 +12,9 @@ namespace Wasserwacht.DigitalGuardBook.Ui.Shared
 
         private StationModel station;
 
-        protected override async Task OnInitializedAsync()
-        {
-            station = await StationService.GetStationAsync();
-        }
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    station = await StationService.GetStationAsync();
+        //}
     }
 }
