@@ -25,7 +25,13 @@ namespace Wasserwacht.DigitalGuardBook.Common.Logic.Models
         public Data.Gender Gender { get; set; }
 
         [Required, MinLength(1)]
-        public List<OrganisationModel> Organisations { get; set; }
+        public ICollection<OrganisationModel> Organisations { get; set; }
+
+        public IEnumerable<Guid> OrganisationIds
+        {
+            get { return Organisations.Select(x => x.Id).ToList(); }
+            set { }
+        } 
 
         public PersonModel()
         {

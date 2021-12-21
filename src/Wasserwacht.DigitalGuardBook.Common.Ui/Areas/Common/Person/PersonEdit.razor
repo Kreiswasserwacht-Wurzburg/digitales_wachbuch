@@ -45,20 +45,15 @@
     <div class="row mb-3">
         <label for="name" class="form-label col-sm-2 ">Organisations</label>
         <div class="col-sm-10">
-            <select multiple id="organisations" @onchange="SelectOrganisation" class="form-select" placeholder="Organisations">
-                <option hidden>Please select</option>
-                @foreach (var item in organisations)
-                {
-                    if (person.Organisations.Any(x => x.Id == item.Id))
-                    {
-                        <option value="@item.Id" selected>@item.Name</option>
-                    }
-                    else
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                }
-            </select>
+            <RadzenCheckBoxList id="organisations" placeholder="Organisations" @bind-Value="person.OrganisationIds" Orientation="Orientation.Vertical" Data="organisations"
+                                TextProperty="Name" ValueProperty="Id" TValue="Guid" Change="@(args => OnChange(args))">
+                @*<Items>
+                        @foreach (var item in organisations)
+                        {
+                            <RadzenCheckBoxListItem Value="@item" Text="@item.Name" />
+                        }
+                    </Items>*@
+            </RadzenCheckBoxList>
         </div>
         <ValidationMessage For="@(() => person.Organisations)" />
     </div>

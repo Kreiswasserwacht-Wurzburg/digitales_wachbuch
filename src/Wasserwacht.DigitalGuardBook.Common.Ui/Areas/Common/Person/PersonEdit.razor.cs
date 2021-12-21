@@ -16,7 +16,6 @@ namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Person
         [Parameter]
         public Guid Id { get; set; }
 
-        private bool isAdd = false;
         protected EditContext editContext { get; set; }
 
         [Inject]
@@ -83,18 +82,11 @@ namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Person
             return res;
         }
 
-        private void SelectOrganisation(ChangeEventArgs e)
+        private void OnChange(IEnumerable<Guid> value)
         {
-            var id = Guid.Parse((string)e.Value);
+            person.Organisations = organisations.Where(x => value.Contains(x.Id)).ToList();
 
-            if (person.Organisations.Any(x => x.Id == id))
-            {
-                person.Organisations.Remove(person.Organisations.First(x => x.Id == id));
-            }
-            else
-            {
-                person.Organisations.Add(organisations.First(x => x.Id == id));
-            }
+            editContext.Validate();
         }
     }
 }
