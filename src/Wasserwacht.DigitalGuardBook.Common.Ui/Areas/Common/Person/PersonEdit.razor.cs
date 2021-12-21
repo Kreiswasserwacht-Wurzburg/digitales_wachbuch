@@ -10,7 +10,6 @@ using Wasserwacht.DigitalGuardBook.Common.Logic.Services;
 
 namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Person
 {
-
     public partial class PersonEdit
     {
         [Parameter]

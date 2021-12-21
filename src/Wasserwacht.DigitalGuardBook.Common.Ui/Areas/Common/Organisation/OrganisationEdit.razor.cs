@@ -16,8 +16,6 @@ namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Organisation
         [Parameter]
         public Guid Id { get; set; }
 
-        private bool isAdd = false;
-
         protected EditContext editContext { get; set; }
 
         [Inject]
