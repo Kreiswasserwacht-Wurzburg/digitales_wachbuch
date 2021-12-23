@@ -6,7 +6,7 @@
     <input type="hidden" @bind-value="person.Id" id="Id" />
 
     <div class="row mb-3">
-        <label for="name" class="form-label col-sm-2 ">FirstName</label>
+        <label for="firstName" class="form-label col-sm-2 ">FirstName</label>
         <div class="col-sm-10">
             <InputText id="firstName" @bind-Value="person.FirstName" class="form-control" placeholder="FirstName" />
         </div>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="row mb-3">
-        <label for="name" class="form-label col-sm-2 ">MidName</label>
+        <label for="midName" class="form-label col-sm-2 ">MidName</label>
         <div class="col-sm-10">
             <InputText id="midName" @bind-Value="person.MidName" class="form-control" placeholder="MidName" />
         </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="row mb-3">
-        <label for="name" class="form-label col-sm-2 ">LastName</label>
+        <label for="lastName" class="form-label col-sm-2 ">LastName</label>
         <div class="col-sm-10">
             <InputText id="lastName" @bind-Value="person.LastName" class="form-control" placeholder="LastName" />
         </div>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="row mb-3">
-        <label for="name" class="form-label col-sm-2 ">Gender</label>
+        <label for="gender" class="form-label col-sm-2 ">Gender</label>
         <div class="col-sm-10">
             <InputSelect id="gender" @bind-Value="person.Gender" class="form-select" placeholder="Gender">
                 @foreach (var item in GetGenders())
@@ -43,7 +43,7 @@
     </div>
 
     <div class="row mb-3">
-        <label for="name" class="form-label col-sm-2 ">Organisations</label>
+        <label for="organisations" class="form-label col-sm-2 ">Organisations</label>
         <div class="col-sm-10">
             <RadzenCheckBoxList id="organisations" placeholder="Organisations" @bind-Value="person.OrganisationIds" Orientation="Orientation.Vertical" Data="organisations"
                                 TextProperty="Name" ValueProperty="Id" TValue="Guid" Change="@(args => OnChange(args))">
