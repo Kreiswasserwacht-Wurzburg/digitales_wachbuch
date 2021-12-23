@@ -6,9 +6,11 @@
         <div class="col-md-9">
             <ul class="nav justify-content-end">
                 <AuthorizeView Policy="Admin">
-                    <NavLink class="nav-link" href="/Administration" Match="NavLinkMatch.Prefix">
-                        Administration
-                    </NavLink>
+                    <Authorized>
+                        <NavLink class="nav-link" href="/Administration" Match="NavLinkMatch.Prefix">
+                            Administration
+                        </NavLink>
+                    </Authorized>
                 </AuthorizeView>
                 <li class="nav-item disabled">
                     Datenschutz

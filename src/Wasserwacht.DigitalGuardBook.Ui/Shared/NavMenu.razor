@@ -1,13 +1,17 @@
 ﻿<ul class="navbar-nav">
-    <li class="navbar-item">
-        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-            Dashboard
-        </NavLink>
-    </li>
-    <li class="nav-item disabled">
-        <a class="nav-link" href="#">Personal</a>
-    </li>
-    <li class="nav-item disabled">
-        <a class="nav-link" href="#">Einsatz</a>
-    </li>
+    <AuthorizeView>
+        <Authorized>
+            <li class="navbar-item">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    Dashboard
+                </NavLink>
+            </li>
+            <li class="nav-item disabled">
+                <a class="nav-link" href="#">Personal</a>
+            </li>
+            <li class="nav-item disabled">
+                <a class="nav-link" href="#">Einsatz</a>
+            </li>
+        </Authorized>
+    </AuthorizeView>
 </ul>
