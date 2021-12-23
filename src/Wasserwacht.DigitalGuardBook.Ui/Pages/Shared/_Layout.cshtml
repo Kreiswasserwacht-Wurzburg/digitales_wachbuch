@@ -8,18 +8,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Wasserwacht.DigitalGuardBook.Ui</title>
+    <base href="~/" />
+
     <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Identity/css/site.css" />
+
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="Wasserwacht.DigitalGuardBook.Ui.styles.css" rel="stylesheet" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" href="~/">Wasserwacht.DigitalGuardBook.Ui</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-md sticky-top navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://www.wawawue.de/wp-content/uploads/logo/wasserwacht-logo.svg" alt="Logo Wasserwacht Bayern" class="d-inline-block align-top">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     @{
                         var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
@@ -34,24 +42,37 @@
                             "usually located at '/Pages/_LoginPartial' or at '/Views/Shared/_LoginPartial' to work. Based on your configuration " +
                             $"we have looked at it in the following locations: {System.Environment.NewLine}{string.Join(System.Environment.NewLine, result.SearchedLocations)}.");
                     }
+                    <span class="fw-bold" id="clock">@DateTime.Now.ToString("T")</span>
                 </div>
             </div>
         </nav>
     </header>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="content px-4">
             @RenderBody()
         </main>
     </div>
     <footer class="footer border-top text-muted">
-        <div class="container">
-            &copy; 2021 - Wasserwacht.DigitalGuardBook.Ui - <a asp-area="" asp-page="Privacy">Privacy</a>
+        <div class="container-fluid fixed-bottom">
+            <div class="row my-3">
+                <div class="col-md-3">
+                    OG Musterstadt
+                </div>
+                <div class="col-md-9">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item disabled">
+                            Datenschutz
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/Identity/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Identity/js/site.js" asp-append-version="true"></script>
+    <script src="js/clock.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
