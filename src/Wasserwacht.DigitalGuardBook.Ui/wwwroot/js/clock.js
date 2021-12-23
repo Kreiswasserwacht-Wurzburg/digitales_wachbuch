@@ -10,13 +10,13 @@
 
 function formatDate(dateObject) //pass date object
 {
-    return (dateObject.getHours() + ":" + dateObject.getMinutes() + ":" + dateObject.getSeconds());
+    return dateObject.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
 }
 
 docReady(function () {
     // DOM is loaded and ready for manipulation here
     setInterval(function () {
         var clockEle = document.getElementById("clock");
-        clockEle.textContent = formatDate(new Date());
+        clockEle.innerHTML = formatDate(new Date()).replace(',', '<br />').replace(',', '<br />').replace("<br />", ',');
     }, 1000);
 });

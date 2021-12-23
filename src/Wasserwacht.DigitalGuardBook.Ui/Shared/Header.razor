@@ -10,9 +10,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <NavMenu />
         </div>
-        <div class="navbar-text">
-            <LoginDisplay></LoginDisplay>
-            <span class="fw-bold" id="clock">@DateTime.Now.ToString("T")</span>
+        <div class="navbar-text px-2 mx-2" style="border-right: 1px solid #000;">
+            <span class="fw-bold" id="clock">@DateTime.Now.ToString("dddd, dd.MMM.yyyy<br />T")</span>
         </div>
+        <LoginDisplay></LoginDisplay>
     </div>
 </nav>
