@@ -16,6 +16,7 @@
                 <td>@person.FirstName</td>
                 <td>
                     <button class="btn btn-primary" @onclick="@(e => OnEditClicked(person.Id))">Edit</button>
+                    <button class="btn btn-secondary" @onclick="@(e => OnLoginClicked(person.Id))">Login</button>
                 </td>
             </tr>
         }

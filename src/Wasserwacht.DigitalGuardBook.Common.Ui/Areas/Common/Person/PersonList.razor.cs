@@ -26,5 +26,10 @@ namespace Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Person
         {
             _NavigationManager.NavigateTo($"/Administration/Person/{id}");
         }
+
+        private void OnLoginClicked(Guid id)
+        {
+            _NavigationManager.NavigateTo($"/Administration/Person/{id}/Login");
+        }
     }
 }

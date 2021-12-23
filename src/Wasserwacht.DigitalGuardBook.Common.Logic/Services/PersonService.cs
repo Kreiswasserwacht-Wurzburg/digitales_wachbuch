@@ -25,6 +25,13 @@ namespace Wasserwacht.DigitalGuardBook.Common.Logic.Services
             return new Models.PersonModel(dbPerson);
         }
 
+        public async Task<Models.PersonLoginModel> GetLoginForIdAsync(Guid id)
+        {
+            Data.Person dbPerson = await _commonDataContext.Persons.FirstOrDefaultAsync(x => x.Id == id);
+
+            return new Models.PersonLoginModel(dbPerson);
+        }
+
         public async Task<List<Models.PersonModel>> GetPersonsByOrganisationAsync(Guid organisationId)
         {
             return await _commonDataContext.Persons
@@ -52,6 +59,7 @@ namespace Wasserwacht.DigitalGuardBook.Common.Logic.Services
             dbPerson.MidName = string.IsNullOrEmpty(model.MidName?.Trim()) ? null : model.MidName?.Trim();
             dbPerson.LastName = model.LastName.Trim();
             dbPerson.UserName = $"{model.FirstName.Trim()}.{model.LastName}".ToLower();
+            dbPerson.LockoutEnd = DateTimeOffset.MaxValue;
 
             if (isNew)
             {
@@ -77,6 +85,38 @@ namespace Wasserwacht.DigitalGuardBook.Common.Logic.Services
             }
 
             await _commonDataContext.SaveChangesAsync();
+
+            return model;
+        }
+
+        public async Task<Models.PersonLoginModel> UpdateLoginForPerson(Models.PersonLoginModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id.ToString());
+
+            if (user == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            if (user.Email != model.Email)
+            {
+                var token = await _userManager.GenerateChangeEmailTokenAsync(user, model.Email.Trim());
+                var res = await _userManager.ChangeEmailAsync(user, model.Email.Trim(), token);
+            }
+
+            if (!model.HasAccount)
+            {
+                var res = await _userManager.AddPasswordAsync(user, model.Password.Trim());
+                if (res.Succeeded)
+                {
+                    model.HasAccount = true;
+
+                    var dbUser = await _commonDataContext.Users.FirstAsync(x => x.Id == user.Id);
+                    dbUser.UserName = dbUser.Email;
+                    dbUser.NormalizedUserName = dbUser.NormalizedEmail;
+                    await _commonDataContext.SaveChangesAsync();
+                }
+            }
 
             return model;
         }

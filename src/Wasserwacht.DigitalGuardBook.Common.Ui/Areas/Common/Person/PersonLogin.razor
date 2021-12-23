@@ -1,0 +1,59 @@
+﻿@page "/Administration/Person/{Id:guid}/Login"
+@attribute [Authorize(Policy = "Admin")]
+
+<NavMenu />
+
+<EditForm EditContext="editContext" OnValidSubmit="HandleValidSubmit">
+    <input type="hidden" @bind-value="login.Id" id="Id" />
+
+    <div class="row mb-3">
+        <label for="firstName" class="form-label col-sm-2 ">FirstName</label>
+        <div class="col-sm-10">
+            <InputText id="firstName" @bind-Value="login.FirstName" class="form-control-plaintext" placeholder="FirstName" disabled />
+        </div>
+        <ValidationMessage For="@(() => login.FirstName)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="midName" class="form-label col-sm-2 ">MidName</label>
+        <div class="col-sm-10">
+            <InputText id="midName" @bind-Value="login.MidName" class="form-control-plaintext" placeholder="MidName" disabled />
+        </div>
+        <ValidationMessage For="@(() => login.MidName)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="lastName" class="form-label col-sm-2 ">LastName</label>
+        <div class="col-sm-10">
+            <InputText id="lastName" @bind-Value="login.LastName" class="form-control-plaintext" placeholder="LastName" disabled />
+        </div>
+        <ValidationMessage For="@(() => login.LastName)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="email" class="form-label col-sm-2 ">Email</label>
+        <div class="col-sm-10">
+            <InputText id="email" @bind-Value="login.Email" class="form-control" placeholder="Email" />
+        </div>
+        <ValidationMessage For="@(() => login.LastName)" />
+    </div>
+
+    <div class="row mb-3">
+        <label for="password" class="form-label col-sm-2 ">Password</label>
+        <div class="col-sm-10">
+            @if (login.HasAccount)
+            {
+                <input id="password" Value="Password" class="form-control" placeholder="Password" type="password" disabled />
+            }
+            else
+            {
+                <InputText id="password" @bind-Value="login.Password" class="form-control" placeholder="Password" type="password" />
+            }
+        </div>
+        <ValidationMessage For="@(() => login.Password)" />
+    </div>
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
