@@ -1,4 +1,5 @@
 ﻿@page "/Administration/Person/{Id:guid}"
+@attribute [Authorize(Policy = "Admin")]
 
 <NavMenu />
 

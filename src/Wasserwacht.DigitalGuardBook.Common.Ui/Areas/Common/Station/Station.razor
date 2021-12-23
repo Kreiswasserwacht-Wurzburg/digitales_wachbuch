@@ -1,8 +1,9 @@
 ﻿@page "/Administration/Station"
+@attribute [Authorize(Policy = "Admin")]
 
 <NavMenu />
 
-<EditForm EditContext="editContext" OnValidSubmit="HandleValidSubmit"> 
+<EditForm EditContext="editContext" OnValidSubmit="HandleValidSubmit">
     <input type="hidden" @bind-value="station.Id" id="Id" />
 
     <div class="row mb-3">

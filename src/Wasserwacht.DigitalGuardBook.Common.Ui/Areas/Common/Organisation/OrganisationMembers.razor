@@ -1,4 +1,5 @@
 ﻿@page "/Administration/Organisation/{Id:guid}/Members"
+@attribute [Authorize(Policy = "Admin")]
 @using Wasserwacht.DigitalGuardBook.Common.Ui.Areas.Common.Person
 
 <NavMenu />
