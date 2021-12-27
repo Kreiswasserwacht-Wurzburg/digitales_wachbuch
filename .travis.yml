@@ -6,7 +6,7 @@ arch:
     - amd64
 solution: src/digitales-wachbuch.sln
 mono: none
-dotnet: 5.0
+dotnet: 6.0
 script :
     - dotnet restore src
     - dotnet build src
