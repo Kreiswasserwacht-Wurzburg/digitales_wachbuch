@@ -19,5 +19,8 @@ namespace DigitalGuardBook.Data.Entities
 
         [BsonRepresentation(BsonType.ObjectId)]
         public IList<string> SubOrganisationIds { get; set; } = new List<string>();
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        public IList<string> MemberIds {get;set;} = new List<string>();
     }
 }

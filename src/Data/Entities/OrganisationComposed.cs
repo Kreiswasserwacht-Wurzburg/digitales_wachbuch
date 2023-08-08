@@ -6,5 +6,7 @@ namespace DigitalGuardBook.Data.Entities
         public OrganisationComposed? ParentOrganisation { get; set; }
 
         public IList<Person> TechnicalLeads { get; set; } = new List<Person>();
+
+        public IList<Person> Members { get; set; } = new List<Person>();
     }
 }

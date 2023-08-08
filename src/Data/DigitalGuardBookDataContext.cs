@@ -47,7 +47,6 @@ namespace DigitalGuardBook.Data
             await Persons.InsertOneAsync(person1);
             await Persons.InsertOneAsync(person2);
 
-
             var organisation1 = new Organisation
             {
                 Name = "KWW Kleinstausbad",
@@ -67,9 +66,25 @@ namespace DigitalGuardBook.Data
             await Organisations.InsertOneAsync(organisation2);
 
             var updateOrganisations1 = Builders<Organisation>.Update
-                .Push(organisation => organisation.SubOrganisationIds,  organisation2.Id);
+                .Push(organisation => organisation.SubOrganisationIds, organisation2.Id);
 
             await Organisations.UpdateOneAsync(x => x.Id == organisation1.Id, updateOrganisations1);
+
+            var updatePerson1 = Builders<Person>.Update
+                .PushEach(person => person.OrganisationIds, new List<string> { organisation1.Id, organisation2.Id });
+            await Persons.UpdateOneAsync(x => x.Id == person1.Id, updatePerson1);
+
+            var updatePerson2 = Builders<Person>.Update
+                .Push(person => person.OrganisationIds, organisation2.Id);
+            await Persons.UpdateOneAsync(x => x.Id == person2.Id, updatePerson2);
+
+            var updateOrganisationMembers1 = Builders<Organisation>.Update
+                .Push(organisation => organisation.MemberIds, person1.Id);
+            await Organisations.UpdateOneAsync(x => x.Id == organisation1.Id, updateOrganisationMembers1);
+
+            var updateOrganisationMembers2 = Builders<Organisation>.Update
+                .PushEach(organisation => organisation.MemberIds, new List<string> { person1.Id, person2.Id });
+            await Organisations.UpdateOneAsync(x => x.Id == organisation2.Id, updateOrganisationMembers2);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace DigitalGuardBook.GraphQL.Types
             Field(person => person.FirstName);
             Field(person => person.LastName);
             Field(person => person.Gender);
+            Field<ListGraphType<OrganisationType>>("organisations").Resolve(context => context.Source.Organisations);
         }
     }
 }
