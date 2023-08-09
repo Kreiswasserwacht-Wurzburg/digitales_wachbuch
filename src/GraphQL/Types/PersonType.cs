@@ -10,7 +10,7 @@ namespace DigitalGuardBook.GraphQL.Types
             Field(person => person.Id);
             Field(person => person.FirstName);
             Field(person => person.LastName);
-            Field(person => person.Gender);
+            Field<GenderEnumType>("gender").Resolve(context => context.Source.Gender);
             Field<ListGraphType<OrganisationType>>("organisations").Resolve(context => context.Source.Organisations);
         }
     }

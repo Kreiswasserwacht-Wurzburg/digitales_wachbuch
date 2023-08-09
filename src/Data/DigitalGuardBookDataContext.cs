@@ -9,6 +9,8 @@ namespace DigitalGuardBook.Data
         public IMongoCollection<Person> Persons => _database.GetCollection<Person>("person");
         public IMongoCollection<Organisation> Organisations => _database.GetCollection<Organisation>("organisation");
 
+        public IMongoCollection<Station> Stations => _database.GetCollection<Station>("station");
+
         private readonly IMongoDatabase _database;
 
         public DigitalGuardBookDataContext()
@@ -49,7 +51,7 @@ namespace DigitalGuardBook.Data
 
             var organisation1 = new Organisation
             {
-                Name = "KWW Kleinstausbad",
+                Name = "KWW Siedensee",
                 Number = 1,
                 TechnicalLeadIds = new List<string> { person1.Id }
             };
@@ -57,13 +59,40 @@ namespace DigitalGuardBook.Data
 
             var organisation2 = new Organisation
             {
-                Name = "OG Kleinstausbad",
+                Name = "OG Winderhude",
                 Number = 2,
                 TechnicalLeadIds = new List<string> { person2.Id },
                 ParentOrganisationId = organisation1.Id
             };
 
             await Organisations.InsertOneAsync(organisation2);
+
+            var station1 = new Station
+            {
+                Name = "WRST Winderhude",
+                Address = new Address
+                {
+                    City = "Winderhude",
+                    ZipCode = "12345",
+                    Street = "Sidenseer Straße 1"
+                },
+                OrganisationId = organisation2.Id
+            };
+
+            var station2 = new Station
+            {
+                Name = "WRST Sidensee",
+                Address = new Address
+                {
+                    City = "Schrucksburg",
+                    ZipCode = "12355",
+                    Street = "Am Sidensee 1"
+                },
+                OrganisationId = organisation1.Id
+            };
+
+            await Stations.InsertOneAsync(station1);
+            await Stations.InsertOneAsync(station2);
 
             var updateOrganisations1 = Builders<Organisation>.Update
                 .Push(organisation => organisation.SubOrganisationIds, organisation2.Id);
@@ -85,6 +114,7 @@ namespace DigitalGuardBook.Data
             var updateOrganisationMembers2 = Builders<Organisation>.Update
                 .PushEach(organisation => organisation.MemberIds, new List<string> { person1.Id, person2.Id });
             await Organisations.UpdateOneAsync(x => x.Id == organisation2.Id, updateOrganisationMembers2);
+
         }
     }
 }

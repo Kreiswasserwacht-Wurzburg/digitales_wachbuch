@@ -16,6 +16,7 @@ public class Program
         builder.Services.AddSingleton<DigitalGuardBookDataContext>();
         builder.Services.AddSingleton<PersonRepository>();
         builder.Services.AddSingleton<OrganisationRepository>();
+        builder.Services.AddSingleton<StationRepository>();
 
 
         // Add GraphQL
