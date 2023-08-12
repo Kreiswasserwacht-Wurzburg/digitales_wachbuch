@@ -1,36 +1,34 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
-import WeatherApiService from './weather.api.ts';
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import type { Ref } from 'vue'
+import WeatherApiService from './weather.api';
+import type WeatherInfo from './weatherInfo';
+import { DateTime } from 'luxon';
+
+const props = defineProps({
+  stationId: {
+    type: Number,
+    required: true
+  }
+})
 
 const weatherApiService = new WeatherApiService
 
-export default defineComponent({
-  props: {
-    stationId: {
-      type: Number,
-      required: true
-    }
-  },
-  data() {
-    return {
-      weatherInfo: null
-    }
-  },
-  created() {
-    this.fetchData();
-  },
-  methods: {
-    async fetchData() {
-      const [error, weather] = await weatherApiService.getWeatherInfo(this.stationId);
+const weatherInfo: Ref<WeatherInfo | null> = ref(null);
 
-      if (error) {
-        console.error(error);
-      }
-      else {
-        this.weatherInfo = weather;
-      }
-    }
+async function fetchData() {
+  const [error, weather] = await weatherApiService.getWeatherInfo(props.stationId);
+
+  if (error) {
+    console.error(error);
   }
+  else {
+    weatherInfo.value = weather;
+  }
+}
+
+onMounted(() => {
+  fetchData();
 })
 </script>
 
@@ -40,21 +38,28 @@ export default defineComponent({
       Wetter
       <div v-if="weatherInfo">
         <div>
-          <h2>{{ this.weatherInfo.temperature.from }} °C | {{ this.weatherInfo.temperature.to }} °C </h2>
+          <h2>{{ weatherInfo.temperature.from }} °C | {{ weatherInfo.temperature.to }} °C </h2>
         </div>
         <div>
-          <p>{{ this.weatherInfo.rainfall }} mm Niederschlag<br /> {{ this.weatherInfo.wind.speed }} km/h Wind | {{
-            this.weatherInfo.wind.gust }} km/h Böen</p>
+          <p>{{ weatherInfo.rainfall }} mm Niederschlag<br /> {{ weatherInfo.wind.speed }} km/h Wind | {{
+            weatherInfo.wind.gust }} km/h Böen</p>
         </div>
         <p>
-          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill"
+            fill="{{weatherInfo.warnings.length > 0 ? 'red' : 'green' }}" xmlns="http://www.w3.org/2000/svg">
             <circle cx="8" cy="8" r="8" />
           </svg>
-        <div v-if="this.weatherInfo.warnings.length">
-          Warnungen!!!
+        <div v-if="weatherInfo.warnings.length">
+          <ul>
+            <li v-for="warning in weatherInfo.warnings">
+              <b>{{ warning.headline }}</b> <br />
+              Von {{ DateTime.fromMillis(warning.start).toLocaleString(DateTime.DATETIME_SHORT) }} bis {{
+                DateTime.fromMillis(warning.end).toLocaleString(DateTime.DATETIME_SHORT) }} <br />
+              <small>{{ warning.description }}</small>
+            </li>
+          </ul>
         </div>
-        <div v-if="!this.weatherInfo.warnings.length">
+        <div v-if="!weatherInfo.warnings.length">
           keine Unwetterwarnungen
         </div>
         </p>

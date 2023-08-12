@@ -4,7 +4,6 @@ import WeatherCard from "@/components/weather/WeatherCard.vue"
 
 <template>
   <main>
-    <h2>Home</h2>
     <div class="container-fluid">
       <div class="row my-3">
         <div class="col-md-6">
@@ -32,7 +31,7 @@ import WeatherCard from "@/components/weather/WeatherCard.vue"
           </div>
         </div>
         <div class="col-md-3">
-          <WeatherCard station-id="10655" />
+          <WeatherCard :station-id=10655 />
           <div class="card">
             <div class="card-body">
               <h5>Zuständige Leitstelle</h5>
