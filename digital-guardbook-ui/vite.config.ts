@@ -13,6 +13,12 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/weather/, ""),
       },
+      "/api": {
+        target: "http://localhost:5282/graphql",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
     },
   },
   plugins: [

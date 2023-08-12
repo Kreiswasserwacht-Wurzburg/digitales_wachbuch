@@ -21,5 +21,11 @@ namespace DigitalGuardBook.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Station> GetStationAsync()
+        {
+            return await _dataContext.Stations
+                .AsQueryable()
+                .FirstOrDefaultAsync();
+        }
     }
 }

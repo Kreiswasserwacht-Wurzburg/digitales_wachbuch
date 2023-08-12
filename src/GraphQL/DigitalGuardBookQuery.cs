@@ -11,6 +11,7 @@ namespace DigitalGuardBook.GraphQL
             Field<ListGraphType<PersonType>>("persons").ResolveAsync(async context => await personRepository.AllPersonsAsync());
             Field<ListGraphType<OrganisationType>>("organisations").ResolveAsync(async context => await organisationRepository.AllOrganisationsAsync());
             Field<ListGraphType<StationType>>("stations").ResolveAsync(async context => await stationRepository.AllStationsAsync());
+            Field<StationType>("station").ResolveAsync(async context => await stationRepository.GetStationAsync());
         }
     }
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import WeatherCard from "@/components/weather/WeatherCard.vue"
+import StationCard from "@/components/station/StationCard.vue"
 </script>
 
 <template>
@@ -45,6 +46,7 @@ import WeatherCard from "@/components/weather/WeatherCard.vue"
               <p>Funkname: ILS Musterstadt<br />Tel. 0931 / 1234567 <br>Funkgruppe: RD_XX 1234</p>
             </div>
           </div>
+          <StationCard />
         </div>
       </div>
     </div>
