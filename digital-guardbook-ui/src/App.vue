@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Clock from '@/components/date/Clock.vue'
 </script>
 
 <template>
@@ -26,6 +27,9 @@ import { RouterLink, RouterView } from 'vue-router'
               <router-link class="nav-link disabled" to="/mission">Einsatz</router-link>
             </li>
           </ul>
+        </div>
+        <div class="navbar-text px-2 mx-2" style="border-right: 1px solid #000;">
+            <Clock class="fw-bold" id="clock"></Clock>
         </div>
       </div>
     </nav>

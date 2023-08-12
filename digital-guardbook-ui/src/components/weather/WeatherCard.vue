@@ -1,8 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
 import WeatherApiService from './weather.api.ts';
-import type WeatherInfo from './weatherInfo.ts';
 
 const weatherApiService = new WeatherApiService
 
