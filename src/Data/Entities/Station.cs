@@ -12,6 +12,7 @@ namespace DigitalGuardBook.Data.Entities
 
     public class Station
     {
+        [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 

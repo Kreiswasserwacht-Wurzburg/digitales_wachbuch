@@ -5,6 +5,7 @@ namespace DigitalGuardBook.Data.Entities
 {
     public class Person
     {
+        [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 

@@ -17,6 +17,7 @@ public class Program
         builder.Services.AddSingleton<PersonRepository>();
         builder.Services.AddSingleton<OrganisationRepository>();
         builder.Services.AddSingleton<StationRepository>();
+        builder.Services.AddSingleton<SentryRepository>();
 
 
         // Add GraphQL

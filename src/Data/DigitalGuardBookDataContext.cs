@@ -11,6 +11,8 @@ namespace DigitalGuardBook.Data
 
         public IMongoCollection<Station> Stations => _database.GetCollection<Station>("station");
 
+        public IMongoCollection<Sentry> Sentries => _database.GetCollection<Sentry>("sentries");
+
         private readonly IMongoDatabase _database;
 
         public DigitalGuardBookDataContext()
