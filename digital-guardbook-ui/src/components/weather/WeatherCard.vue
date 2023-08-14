@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import WeatherApiService from './weather.api';
 import type WeatherInfo from './weatherInfo';
 import { DateTime } from 'luxon';
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTemperatureHigh, faTemperatureLow, faWind, faUmbrella } from '@fortawesome/free-solid-svg-icons'
+
+import WeatherIcon from './WeatherIcon.vue';
+
+const refreshDelayMinutes = ref(15);
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+library.add(faTemperatureHigh, faTemperatureLow, faWind, faUmbrella)
 
 const props = defineProps({
   stationId: {
@@ -25,6 +36,9 @@ async function fetchData() {
   else {
     weatherInfo.value = weather;
   }
+
+  await delay(refreshDelayMinutes.value * 60 * 1000)
+  fetchData()
 }
 
 onMounted(() => {
@@ -38,11 +52,19 @@ onMounted(() => {
       Wetter
       <div v-if="weatherInfo">
         <div>
-          <h2>{{ weatherInfo.temperature.from }} °C | {{ weatherInfo.temperature.to }} °C </h2>
+          <h2>
+            <WeatherIcon :iconNumber="weatherInfo.icon" :isDay="weatherInfo.isDay" /> {{ weatherInfo.temperature.current
+            }} °C
+          </h2>
+          <font-awesome-icon :icon="['fas', 'temperature-low']" /> {{ weatherInfo.temperature.from }} °C |
+          <font-awesome-icon :icon="['fas', 'temperature-high']" /> {{ weatherInfo.temperature.to }} °C
         </div>
         <div>
-          <p>{{ weatherInfo.rainfall }} mm Niederschlag<br /> {{ weatherInfo.wind.speed }} km/h Wind | {{
-            weatherInfo.wind.gust }} km/h Böen</p>
+          <p>
+            <font-awesome-icon :icon="['fas', 'umbrella']" /> {{ weatherInfo.rainfall }} mm<br /> <font-awesome-icon
+              :icon="['fas', 'wind']" />{{ weatherInfo.wind.speed }} km/h | {{
+                weatherInfo.wind.gust }} km/h Böen
+          </p>
         </div>
         <p>
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill"
@@ -65,5 +87,4 @@ onMounted(() => {
         </p>
       </div>
     </div>
-  </div>
-</template>
+</div></template>

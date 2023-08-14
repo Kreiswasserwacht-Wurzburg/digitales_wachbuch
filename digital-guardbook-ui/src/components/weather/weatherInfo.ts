@@ -1,5 +1,6 @@
 export default interface WeatherInfo {
     temperature: {
+        current: number,
         from: number,
         to: number
     },
@@ -7,6 +8,8 @@ export default interface WeatherInfo {
     wind: {
         speed: number,
         gust: number
-    }
+    },
+    icon: number,
+    isDay: boolean,
     warnings: []
 }

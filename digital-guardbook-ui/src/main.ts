@@ -4,6 +4,10 @@ import { createApp} from 'vue'
 
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import App from './App.vue'
 import router from './router'
 
@@ -26,7 +30,7 @@ const app = createApp(App)
 
 app.provide(DefaultApolloClient, apolloClient)
 
-
+app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router)
 
 app.mount('#app')
