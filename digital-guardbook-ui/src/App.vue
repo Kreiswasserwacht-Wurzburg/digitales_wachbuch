@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Clock from '@/components/date/Clock.vue'
+import StationLogo from '@/components/station/StationLogo.vue'
 </script>
 
 <template>
@@ -8,9 +9,8 @@ import Clock from '@/components/date/Clock.vue'
     <nav class="navbar navbar-expand-md bg-body-tertiary">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
-          <img src="https://www.wawawue.de/wp-content/uploads/logo/wasserwacht-logo.svg" alt="Logo Wasserwacht Bayern"
-            class="d-inline-block align-top" />
-          WRST Ortsname</router-link>
+          <StationLogo />
+          </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
