@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import WeatherCard from "@/components/weather/WeatherCard.vue"
 import StationCard from "@/components/station/StationCard.vue"
+import SentryCard from "@/components/sentry/SentryCard.vue"
 </script>
 
 <template>
@@ -8,7 +9,7 @@ import StationCard from "@/components/station/StationCard.vue"
     <div class="container-fluid">
       <div class="row my-3">
         <div class="col-md-6">
-          <p>Wachdienst</p>
+          <SentryCard />
         </div>
         <div class="col-md-3">
           <div class="card">
