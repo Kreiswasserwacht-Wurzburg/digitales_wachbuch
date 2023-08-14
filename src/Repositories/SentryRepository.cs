@@ -20,5 +20,11 @@ namespace DigitalGuardBook.Repositories
             .AsQueryable()
             .FirstOrDefaultAsync(x => !x.End.HasValue);
         }
+
+        public async Task<Sentry> StartSentryAsync(Sentry sentry)
+        {
+            await _dataContext.Sentries.InsertOneAsync(sentry);
+            return sentry;
+        }
     }
 }

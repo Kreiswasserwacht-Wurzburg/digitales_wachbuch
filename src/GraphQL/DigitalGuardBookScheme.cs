@@ -7,6 +7,7 @@ namespace DigitalGuardBook.GraphQL
         public DigitalGuardBookScheme(IServiceProvider provider) : base(provider)
         {
             Query = provider.GetRequiredService<DigitalGuardBookQuery>();
+            Mutation = provider.GetRequiredService<DigitalGuardBookMutation>();
         }
     }
 }
