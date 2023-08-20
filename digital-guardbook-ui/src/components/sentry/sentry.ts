@@ -19,3 +19,18 @@ export default interface SentryStart {
     supervisor?: Person,
     organisation?: Organisation
 }
+
+export interface GuardService {
+    start: DateTime,
+    end: DateTime,
+    guard: Person
+}
+
+export interface Sentry {
+    start: DateTime,
+    registration?: DateTime,
+    end?: DateTime,
+    supervisors: GuardService[],
+    organisation: Organisation,
+    guards: GuardService[]
+}
