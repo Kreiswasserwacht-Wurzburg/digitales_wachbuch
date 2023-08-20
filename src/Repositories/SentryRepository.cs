@@ -23,7 +23,14 @@ namespace DigitalGuardBook.Repositories
 
         public async Task<Sentry> StartSentryAsync(Sentry sentry)
         {
-            await _dataContext.Sentries.InsertOneAsync(sentry);
+            try
+            {
+                await _dataContext.Sentries.InsertOneAsync((Sentry)sentry);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+            }
             return sentry;
         }
     }

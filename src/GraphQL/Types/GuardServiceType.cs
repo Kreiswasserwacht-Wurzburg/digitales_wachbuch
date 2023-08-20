@@ -10,7 +10,7 @@ namespace DigitalGuardBook.GraphQL.Types
         {
             Field(x => x.Start);
             Field(x => x.End, nullable: true);
-            Field<PersonType>("guard").ResolveAsync(async context => await personRepository.PersonsAsync(new List<string> { context.Source.PersonId }));
+            Field<PersonType>("guard").ResolveAsync(async context => (await personRepository.PersonsAsync(new List<string> { context.Source.PersonId })).First());
         }
     }
 }
