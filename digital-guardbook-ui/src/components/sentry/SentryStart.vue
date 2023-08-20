@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery, useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { Ref, ref } from 'vue';
 import type SentryStart from './sentry';
@@ -15,6 +15,22 @@ const { result, loading } = useQuery(gql`
                 id
                 firstName
                 lastName
+            }
+        }
+    }
+`)
+
+const {mutate: startSentry} = useMutation(gql`
+    mutation ($sentry: SentryStartType!) {
+        startSentry(sentry: $sentry) {
+            start
+            organisation {
+                id
+            }
+            supervisors {
+                guard {
+                    id
+                }
             }
         }
     }
