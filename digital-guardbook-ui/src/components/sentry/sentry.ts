@@ -9,12 +9,13 @@ export interface Person {
 export interface Organisation {
     id: string,
     name: string,
-    number: number
+    number: number,
+    members: Person[]
 }
 
 export default interface SentryStart {
     start: DateTime,
     registration?: DateTime,
-    supervisor: Person,
-    organisation: Organisation
+    supervisor?: Person,
+    organisation?: Organisation
 }

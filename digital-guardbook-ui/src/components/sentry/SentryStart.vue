@@ -6,7 +6,7 @@ import type SentryStart from './sentry';
 import { DateTime } from 'luxon';
 
 
-const { orgQuery } = useQuery(gql`
+const { result, loading } = useQuery(gql`
     query {
         organisations {
             id
@@ -22,6 +22,8 @@ const { orgQuery } = useQuery(gql`
 
 const sentry: Ref<SentryStart> = ref({
     start: DateTime.now(),
+    organisation: null,
+    supervisor: null,
 } as SentryStart)
 </script>
 
@@ -30,9 +32,9 @@ const sentry: Ref<SentryStart> = ref({
         <div class="row mb-3">
             <label for="name" class="form-label col-sm-2 ">Ortsgruppe</label>
             <div class="col-sm-10">
-                <select v-model="sentry.organisation" class="form-select" required>
+                <select v-model="sentry.organisation" class="form-select" required v-if="!loading">
                     <option disabled :value="null">Please select one</option>
-                    <option v-for="organisation in orgQuery?.organisations" :value="organisation" :key="organisation.name"></option>
+                    <option v-for="organisation in result?.organisations" :value="organisation" :key="organisation.id">{{ organisation.name }}</option>
                 </select>
             </div>
         </div>
@@ -40,8 +42,9 @@ const sentry: Ref<SentryStart> = ref({
         <div class="row mb-3">
             <label for="name" class="form-label col-sm-2 ">Wachleiter</label>
             <div class="col-sm-10">
-                <select v-model="sentry.supervisor" class="form-select" required>
+                <select v-model="sentry.supervisor" class="form-select" required v-if="sentry.organisation?.members">
                     <option disabled :value="null">Please select one</option>
+                    <option v-for="member in sentry.organisation?.members" :value="member" :key="member.id">{{ member.firstName }} {{ member.lastName }}</option>
                 </select>
             </div>
         </div>
