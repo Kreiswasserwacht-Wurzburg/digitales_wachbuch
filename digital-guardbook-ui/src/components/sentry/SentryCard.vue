@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
-import { ref, type Ref } from 'vue';
+import { ref, watch, type Ref } from 'vue';
 import SentryDisplay from './SentryDisplay.vue';
 import SentryStart from './SentryStart.vue';
 import type { Sentry } from './sentry';
@@ -9,9 +9,10 @@ import type { Sentry } from './sentry';
 // const sentry: Ref<Sentry | null> = ref(null)
 
 
-const { result: sentry, loading } = useQuery(gql`
+const { result: query, loading } = useQuery(gql`
     query{
         activeSentry {
+            id,
             start,
             end,
             registration,
@@ -37,6 +38,13 @@ const { result: sentry, loading } = useQuery(gql`
         }
     }
 `)
+
+const sentry = ref<Sentry>();
+
+watch(query, async (newValue) => {
+    sentry.value = newValue.activeSentry
+})
+
 </script>
 
 <template>
@@ -45,7 +53,7 @@ const { result: sentry, loading } = useQuery(gql`
             <div class="card-body">
                 <div class="card-body">
                     <template v-if="!loading">
-                        <SentryDisplay :sentry="sentry.activeSentry" v-if="sentry.activeSentry" />
+                        <SentryDisplay v-model:sentry="sentry" v-if="sentry" />
                         <SentryStart v-else @created="sentry = $event" />
                     </template>
                 </div>

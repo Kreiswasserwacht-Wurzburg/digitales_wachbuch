@@ -27,6 +27,7 @@ export interface GuardService {
 }
 
 export interface Sentry {
+    id: string,
     start: DateTime,
     registration?: DateTime,
     end?: DateTime,

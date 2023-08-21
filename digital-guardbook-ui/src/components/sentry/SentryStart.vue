@@ -27,13 +27,27 @@ const { result, loading } = useQuery(gql`
 const { mutate: startSentry } = useMutation(gql`
     mutation ($sentry: SentryStartType!) {
         startSentry(sentry: $sentry) {
-            start
+            id,
+            start,
+            end,
+            registration,
             organisation {
-                id
-            }
+                name
+            },
             supervisors {
+                start,
+                end,
                 guard {
-                    id
+                    firstName
+                    lastName
+                }
+            },
+            guards {
+                start,
+                end,
+                guard {
+                    firstName,
+                    lastName
                 }
             }
         }
@@ -50,9 +64,9 @@ function allDataFilled(): boolean {
     return sentry.value.start != null && sentry.value.organisation != null && sentry.value.supervisor != null;
 }
 
-function submitForm(): void {
+async function submitForm(): Promise<void> {
     if (allDataFilled()) {
-        var res = startSentry({
+        var res = await startSentry({
             "sentry": {
                 "start": sentry.value.start.toString(),
                 "organisation": {
@@ -67,11 +81,8 @@ function submitForm(): void {
             }
         });
 
-
-        res.then((x) => { 
-            console.log(x?.data.startSentry);
-            emit('created', x?.data.startSentry);
-         });
+        console.log(res?.data.startSentry);
+        emit('created', res?.data.startSentry);
     }
 }
 </script>
