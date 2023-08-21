@@ -1,4 +1,3 @@
-using DigitalGuardBook.Data.Entities;
 using GraphQL.Types;
 
 namespace DigitalGuardBook.GraphQL.Types

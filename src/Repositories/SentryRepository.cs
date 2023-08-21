@@ -33,5 +33,22 @@ namespace DigitalGuardBook.Repositories
             }
             return sentry;
         }
+
+        public async Task FinishSentry(string id, DateTimeOffset dateTime)
+        {
+            try
+            {
+                var fb = Builders<Sentry>.Filter;
+                var filter = fb.And(fb.Eq(x => x.Id, id), fb.ElemMatch(x=> x.SupervisorServices, x => !x.End.HasValue));
+                UpdateDefinition<Sentry> update = Builders<Sentry>.Update
+                    .Set(x => x.End, dateTime)
+                    .Set("SupervisorServices.$.End", dateTime);
+                var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+            }
+        }
     }
 }
