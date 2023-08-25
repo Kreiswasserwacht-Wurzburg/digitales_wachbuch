@@ -1,0 +1,18 @@
+services:
+  fronted:
+    build: ./digital-guardbook-ui
+    container_name: Wachbuch-Fronted
+    networks:
+      - wachbuch
+
+  backend:
+    build: src
+    container_name: Wachbuch-Backend
+      - wachbuch
+
+  mongo:
+    image: mongo
+      - wachbuch
+
+networks:
+  wachbuch:
