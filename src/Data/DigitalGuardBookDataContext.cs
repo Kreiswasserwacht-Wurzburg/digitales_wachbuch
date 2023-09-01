@@ -15,9 +15,9 @@ namespace DigitalGuardBook.Data
 
         private readonly IMongoDatabase _database;
 
-        public DigitalGuardBookDataContext()
+        public DigitalGuardBookDataContext(string connectionString)
         {
-            var settings = MongoClientSettings.FromConnectionString("mongodb://localhost:27017");
+            var settings = MongoClientSettings.FromConnectionString(connectionString);
             settings.ClusterConfigurator = builder => builder.Subscribe<CommandStartedEvent>(started =>
             {
                 Console.WriteLine("MongoDB Command: " + started.Command);

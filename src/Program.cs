@@ -13,7 +13,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddSingleton<DigitalGuardBookDataContext>();
+        builder.Services.AddSingleton(x =>new DigitalGuardBookDataContext(builder.Configuration.GetConnectionString("MongoConnection")));
         builder.Services.AddSingleton<PersonRepository>();
         builder.Services.AddSingleton<OrganisationRepository>();
         builder.Services.AddSingleton<StationRepository>();
