@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useQuery, useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
-import { Ref, ref } from 'vue';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
 import type SentryStart from './sentry';
 import { DateTime } from 'luxon';
 import type { Sentry } from './sentry';
@@ -56,8 +57,6 @@ const { mutate: startSentry } = useMutation(gql`
 
 const sentry: Ref<SentryStart> = ref({
     start: DateTime.now(),
-    organisation: null,
-    supervisor: null,
 } as SentryStart)
 
 function allDataFilled(): boolean {
@@ -70,7 +69,7 @@ async function submitForm(): Promise<void> {
             "sentry": {
                 "start": sentry.value.start.toString(),
                 "organisation": {
-                    "id": sentry.value.organisation.id,
+                    "id": sentry.value.organisation?.id,
                 },
                 "supervisors": [{
                     "start": sentry.value.start.toString(),

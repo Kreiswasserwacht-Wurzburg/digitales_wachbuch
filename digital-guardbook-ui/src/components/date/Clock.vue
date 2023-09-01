@@ -2,7 +2,7 @@
 import { computed, defineComponent, getCurrentInstance } from 'vue'
 import { DateTime } from 'luxon'
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export default defineComponent({
     data() {
@@ -25,5 +25,5 @@ export default defineComponent({
 </script>
 
 <template>
-    <span>{{ this.dateTimeStr }}</span>
+    <span>{{ dateTimeStr }}</span>
 </template>

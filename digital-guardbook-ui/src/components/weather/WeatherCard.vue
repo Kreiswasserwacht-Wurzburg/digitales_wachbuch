@@ -12,7 +12,7 @@ import WeatherIcon from './WeatherIcon.vue';
 
 const refreshDelayMinutes = ref(15);
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 library.add(faTemperatureHigh, faTemperatureLow, faWind, faUmbrella)
 
@@ -75,8 +75,8 @@ onMounted(() => {
           <ul>
             <li v-for="warning in weatherInfo.warnings">
               <b>{{ warning.headline }}</b> <br />
-              Von {{ DateTime.fromMillis(warning.start).toLocaleString(DateTime.DATETIME_SHORT) }} bis {{
-                DateTime.fromMillis(warning.end).toLocaleString(DateTime.DATETIME_SHORT) }} <br />
+              Von {{ warning.start.toLocaleString(DateTime.DATETIME_SHORT) }} bis {{
+                warning.end.toLocaleString(DateTime.DATETIME_SHORT) }} <br />
               <small>{{ warning.description }}</small>
             </li>
           </ul>
@@ -87,4 +87,5 @@ onMounted(() => {
         </p>
       </div>
     </div>
-</div></template>
+  </div>
+</template>
