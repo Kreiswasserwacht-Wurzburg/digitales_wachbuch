@@ -1,18 +1,36 @@
+version: '3.8'
+
 services:
   fronted:
     build: ./digital-guardbook-ui
     container_name: Wachbuch-Fronted
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - backend
     networks:
       - wachbuch
 
   backend:
     build: src
-    container_name: Wachbuch-Backend
+    depends_on:
+      - mongo
+    container_name: backend
+    ports:
+      - 8080:80
+    networks:
       - wachbuch
 
   mongo:
-    image: mongo
-      - wachbuch
+    image: docker.io/mongo:6-jammy
+    container_name: mongo
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      wachbuch:
+        aliases:
+          - mongo
 
 networks:
   wachbuch:
