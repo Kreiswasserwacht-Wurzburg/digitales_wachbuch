@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQuery, useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import type { Ref } from 'vue';
 import type SentryStart from './sentry';
 import { DateTime } from 'luxon';
@@ -10,6 +10,9 @@ import type { Sentry } from './sentry';
 const emit = defineEmits<{
     created: [value: Sentry]
 }>()
+
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 const { result, loading } = useQuery(gql`
     query {
@@ -59,20 +62,30 @@ const sentry: Ref<SentryStart> = ref({
     start: DateTime.now(),
 } as SentryStart)
 
+const start = computed(() => {return sentry.value.start.toFormat("yyyy-MM-dd'T'T")})
+
 function allDataFilled(): boolean {
     return sentry.value.start != null && sentry.value.organisation != null && sentry.value.supervisor != null;
 }
 
+async function setTime() {
+    await delay(500);
+    sentry.value.start = DateTime.now();
+    setTime();
+}
+
 async function submitForm(): Promise<void> {
     if (allDataFilled()) {
+        var formattedStart = DateTime.fromISO(start?.value);
+
         var res = await startSentry({
             "sentry": {
-                "start": sentry.value.start.toString(),
+                "start": formattedStart,
                 "organisation": {
                     "id": sentry.value.organisation?.id,
                 },
                 "supervisors": [{
-                    "start": sentry.value.start.toString(),
+                    "start": formattedStart,
                     "guard": {
                         "id": sentry.value.supervisor?.id
                     }
@@ -84,6 +97,8 @@ async function submitForm(): Promise<void> {
         emit('created', res?.data.startSentry);
     }
 }
+
+onMounted(() => { setTime() })
 </script>
 
 <template>
@@ -114,7 +129,7 @@ async function submitForm(): Promise<void> {
         <div class="row mb-3">
             <label for="name" class="form-label col-sm-2 ">Datum</label>
             <div class="col-sm-10">
-                <input type="datetime-local" class="form-control" required v-model="sentry.start" />
+                <input type="datetime-local" class="form-control" required v-model="start" />
             </div>
         </div>
         <button type="submit" class="btn btn-primary" @click.prevent="submitForm()"
