@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { ref, watch } from 'vue';
 import SentryDisplay from './SentryDisplay.vue';
 import SentryStart from './SentryStart.vue';
+import GuardsList from './GuardsList.vue';
 import type { Sentry } from './sentry';
 
 // const sentry: Ref<Sentry | null> = ref(null)
@@ -48,7 +49,7 @@ watch(query, async (newValue) => {
 </script>
 
 <template>
-    <div class="col-md-6">
+    <div :class="{'col-md-6': sentry, 'col-md-9': !sentry}">
         <div class="card">
             <div class="card-body">
                 <div class="card-body">
@@ -62,7 +63,7 @@ watch(query, async (newValue) => {
         </div>
 
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3" v-if="sentry">
         <div class="card">
             <div class="card-body">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="currentColor"
@@ -71,14 +72,7 @@ watch(query, async (newValue) => {
                 </svg>
                 Aktive Wachmannschaft
 
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Max Muster</h5>
-                        <p class="btn btn-danger">FiE II</p>
-                        <p class="btn btn-primary">WR</p>
-                        <p class="btn btn-light">San</p>
-                    </div>
-                </div>
+                <GuardsList v-model:guards="sentry.guards"/>
 
             </div>
         </div>

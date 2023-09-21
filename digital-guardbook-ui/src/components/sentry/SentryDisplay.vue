@@ -4,6 +4,7 @@ import { useMutation } from '@vue/apollo-composable';
 import type { Sentry } from './sentry';
 import gql from 'graphql-tag'
 import { DateTime } from 'luxon'
+import { computed } from 'vue';
 
 const props = defineProps<{
     sentry: Sentry
@@ -19,6 +20,10 @@ const { mutate: finishSentry } = useMutation(gql`
     }
 `)
 
+const supervisor = computed(() => {
+    let activeSupervisor = props.sentry.supervisors.find(x => x.end == undefined)?.guard;
+    return `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}`
+})
 
 async function submit(): Promise<void> {
     var res = await finishSentry({
@@ -36,16 +41,14 @@ async function submit(): Promise<void> {
 
 <template>
     <dl>
-        <dt>Id</dt>
-        <dd>{{ sentry.id }}</dd>
         <dt>Start</dt>
         <dd>{{ sentry.start.toLocaleString(DateTime.DATETIME_SHORT) }}</dd>
         <dt>Registration</dt>
         <dd>{{ sentry.registration?.toLocaleString(DateTime.DATETIME_SHORT) }}</dd>
-        <dt>End</dt>
-        <dd>{{ sentry.end?.toLocaleString(DateTime.DATETIME_SHORT) }}</dd>
         <dt>Organisation</dt>
         <dd>{{ sentry.organisation?.name }}</dd>
+        <dt>Wachleiter</dt>
+        <dd>{{ supervisor }}</dd>
     </dl>
 
 
