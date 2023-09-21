@@ -74,6 +74,8 @@ const iconClass = computed(() => {
         case 30:
             return 'cloud-bolt'
     }
+
+    return ''
 });
 
 </script>

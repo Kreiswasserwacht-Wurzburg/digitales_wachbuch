@@ -27,9 +27,9 @@ export default class WeatherApiService {
             method: 'get',
             url: `/stationOverviewExtended?stationIds=${station}`,
             transformResponse: [(dataStr) => {
-                let data = JSON.parse(dataStr);
+                const data = JSON.parse(dataStr);
 
-                var weatherInfo: WeatherInfo = {
+                const weatherInfo: WeatherInfo = {
                     rainfall: data[`${station}`]["days"][0]["precipitation"] / 10,
                     temperature: {
                         current: data[`${station}`]["forecast1"]["temperature"][DateTime.now().hour] / 10,

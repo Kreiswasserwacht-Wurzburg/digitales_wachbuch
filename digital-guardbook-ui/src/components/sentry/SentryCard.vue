@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
-import { ref, watch, type Ref } from 'vue';
+import { ref, watch } from 'vue';
 import SentryDisplay from './SentryDisplay.vue';
 import SentryStart from './SentryStart.vue';
 import type { Sentry } from './sentry';

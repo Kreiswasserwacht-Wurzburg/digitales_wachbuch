@@ -4,7 +4,6 @@ import { useMutation } from '@vue/apollo-composable';
 import type { Sentry } from './sentry';
 import gql from 'graphql-tag'
 import { DateTime } from 'luxon'
-import SentryCard from './SentryCard.vue';
 
 const props = defineProps<{
     sentry: Sentry

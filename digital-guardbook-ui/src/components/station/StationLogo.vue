@@ -13,7 +13,7 @@ const { result } = useQuery(gql`
 
 const url = ref('')
 
-watch(result, value => {
+watch(result, () => {
     url.value = `https://meine.wasserwacht.bayern/logogenerator/H.php?kv=${result?.value?.station?.name}&ov=`
 })
 </script>

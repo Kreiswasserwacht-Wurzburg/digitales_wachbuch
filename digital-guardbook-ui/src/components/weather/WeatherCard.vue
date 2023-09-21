@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import type { Ref } from 'vue'
 import WeatherApiService from './weather.api';
 import type WeatherInfo from './weatherInfo';

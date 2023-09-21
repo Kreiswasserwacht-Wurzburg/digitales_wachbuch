@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
-import { onMounted, ref } from 'vue'
 
 const { result } = useQuery(gql`
     query {
@@ -16,9 +15,6 @@ const { result } = useQuery(gql`
     }
 `)
 
-const station = ref({
-    name: "Lorem"
-})
 </script>
 
 <template>

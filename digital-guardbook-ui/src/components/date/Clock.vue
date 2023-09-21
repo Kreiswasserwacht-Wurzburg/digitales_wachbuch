@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance } from 'vue'
+import { defineComponent } from 'vue'
 import { DateTime } from 'luxon'
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
