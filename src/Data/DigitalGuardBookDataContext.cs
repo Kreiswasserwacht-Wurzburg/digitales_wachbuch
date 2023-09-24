@@ -13,6 +13,8 @@ namespace DigitalGuardBook.Data
 
         public IMongoCollection<Sentry> Sentries => _database.GetCollection<Sentry>("sentries");
 
+        public IMongoCollection<LogBook> LogBooks => _database.GetCollection<LogBook>("log_books");
+
         private readonly IMongoDatabase _database;
 
         public DigitalGuardBookDataContext(string connectionString)
