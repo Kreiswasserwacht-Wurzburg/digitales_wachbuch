@@ -5,6 +5,7 @@ import { ref, watch } from 'vue';
 import SentryDisplay from './SentryDisplay.vue';
 import SentryStart from './SentryStart.vue';
 import GuardsList from './GuardsList.vue';
+import LogBookEntryList from '@/components/logBook/LogBookEntryList.vue';
 import type { Sentry } from './sentry';
 
 // const sentry: Ref<Sentry | null> = ref(null)
@@ -49,19 +50,20 @@ watch(query, async (newValue) => {
 </script>
 
 <template>
-    <div :class="{'col-md-6': sentry, 'col-md-9': !sentry}">
-        <div class="card">
-            <div class="card-body">
+    <div :class="{ 'col-md-6': sentry, 'col-md-9': !sentry }">
+        <template v-if="!loading">
+            <div class="card">
                 <div class="card-body">
-                    <template v-if="!loading">
-                        <SentryDisplay v-model:sentry="sentry" v-if="sentry" />
-                        <SentryStart v-else @created="sentry = $event" />
-                    </template>
+                    <SentryDisplay v-model:sentry="sentry" v-if="sentry" />
+                    <SentryStart v-else @created="sentry = $event" />
                 </div>
             </div>
-
-        </div>
-
+            <div class="card" v-if="sentry">
+                <div class="card-body">
+                    <LogBookEntryList v-model:from="sentry.start"/>
+                </div>
+            </div>
+        </template>
     </div>
     <div class="col-md-3" v-if="sentry">
         <div class="card">
@@ -72,7 +74,7 @@ watch(query, async (newValue) => {
                 </svg>
                 Aktive Wachmannschaft
 
-                <GuardsList v-model:guards="sentry.guards"/>
+                <GuardsList v-model:guards="sentry.guards" />
 
             </div>
         </div>

@@ -37,14 +37,27 @@ async function submit(): Promise<void> {
         emit("update:sentry", undefined);
     }
 }
+
+
+function convertDateTimeToString(dt: DateTime | string | undefined): string {
+    if (dt == undefined) {
+        return "";
+    }
+    else if (typeof (dt) == typeof (DateTime)) {
+        return dt.toLocaleString(DateTime.DATETIME_SHORT);
+    }
+    else {
+        return DateTime.fromISO(dt as string).toLocaleString(DateTime.DATETIME_SHORT)
+    }
+}
 </script>
 
 <template>
     <dl>
         <dt>Start</dt>
-        <dd>{{ sentry.start.toLocaleString(DateTime.DATETIME_SHORT) }}</dd>
+        <dd>{{ convertDateTimeToString(sentry.start) }}</dd>
         <dt>Registration</dt>
-        <dd>{{ sentry.registration?.toLocaleString(DateTime.DATETIME_SHORT) }}</dd>
+        <dd>{{ convertDateTimeToString(sentry.registration) }}</dd>
         <dt>Organisation</dt>
         <dd>{{ sentry.organisation?.name }}</dd>
         <dt>Wachleiter</dt>

@@ -28,9 +28,9 @@ export interface GuardService {
 
 export interface Sentry {
     id: string,
-    start: DateTime,
-    registration?: DateTime,
-    end?: DateTime,
+    start: DateTime | string,
+    registration?: DateTime | string,
+    end?: DateTime | string,
     supervisors: GuardService[],
     organisation: Organisation,
     guards: GuardService[]
