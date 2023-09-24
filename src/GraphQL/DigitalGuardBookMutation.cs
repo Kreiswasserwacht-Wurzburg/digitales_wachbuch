@@ -16,7 +16,7 @@ namespace DigitalGuardBook.GraphQL
             {
                 var sentry = context.GetArgument<SentryComposed>("sentry");
                 sentry.OrganisationId = sentry.Organisation.Id;
-                sentry.GuardServices = sentry.Guards.Select(x => new GuardService
+                var guardServices = sentry.Guards.Select(x => new GuardService
                 {
                     Start = x.Start,
                     End = x.End,
@@ -29,6 +29,17 @@ namespace DigitalGuardBook.GraphQL
                     End = x.End,
                     PersonId = x.Guard.Id
                 }).ToList();
+
+
+                guardServices.AddRange(sentry.Supervisors.Select(x => new GuardService
+                {
+                    Start = x.Start,
+                    End = x.End,
+                    PersonId = x.Guard.Id
+                }));
+
+                sentry.GuardServices = guardServices;
+
                 return await sentryRepository.StartSentryAsync(sentry);
             });
 

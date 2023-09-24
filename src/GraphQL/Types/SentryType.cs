@@ -15,7 +15,7 @@ namespace DigitalGuardBook.GraphQL.Types
             Field<OrganisationType>("organisation")
             .ResolveAsync(async context => await organisationRepository.OrganisationAsync(context.Source.OrganisationId));
             Field<ListGraphType<GuardServiceType>>("supervisors").Resolve(context => context.Source.SupervisorServices);
-            Field<ListGraphType<GuardServiceType>>("guards").Resolve(context => context.Source.SupervisorServices);
+            Field<ListGraphType<GuardServiceType>>("guards").Resolve(context => context.Source.GuardServices);
         }
     }
 }
