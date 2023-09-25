@@ -53,17 +53,24 @@ function convertDateTimeToString(dt: DateTime | string | undefined): string {
 </script>
 
 <template>
-    <dl>
-        <dt>Start</dt>
-        <dd>{{ convertDateTimeToString(sentry.start) }}</dd>
-        <dt>Registration</dt>
-        <dd>{{ convertDateTimeToString(sentry.registration) }}</dd>
-        <dt>Organisation</dt>
-        <dd>{{ sentry.organisation?.name }}</dd>
-        <dt>Wachleiter</dt>
-        <dd>{{ supervisor }}</dd>
-    </dl>
-
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>Start</th>
+                <th>Registration</th>
+                <th>Organisation</th>
+                <th>Wachleiter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ convertDateTimeToString(sentry.start) }}</td>
+                <td>{{ convertDateTimeToString(sentry.registration) }}</td>
+                <td>{{ sentry.organisation?.name }}</td>
+                <td>{{ supervisor }}</td>
+            </tr>
+        </tbody>
+    </table>
 
     <button type="submit" class="btn btn-primary" @click.prevent="submit()">Wachdienst beenden</button>
 </template>

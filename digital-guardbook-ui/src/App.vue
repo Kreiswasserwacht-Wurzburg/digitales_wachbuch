@@ -5,8 +5,8 @@ import StationLogo from '@/components/station/StationLogo.vue'
 </script>
 
 <template>
-  <header>
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
+  <header class="p-0 m-0">
+    <nav class="navbar navbar-expand-md bg-body-tertiary p-0 m-0">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
           <StationLogo />

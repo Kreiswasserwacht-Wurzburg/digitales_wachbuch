@@ -50,7 +50,7 @@ watch(query, async (newValue) => {
 </script>
 
 <template>
-    <div :class="{ 'col-md-6': sentry, 'col-md-9': !sentry }">
+    <div :class="{ 'col-md-6': sentry, 'col-md-9': !sentry }" class="d-flex flex-column">
         <template v-if="!loading">
             <div class="card">
                 <div class="card-body">
@@ -58,15 +58,15 @@ watch(query, async (newValue) => {
                     <SentryStart v-else @created="sentry = $event" />
                 </div>
             </div>
-            <div class="card" v-if="sentry">
+            <div class="card flex-grow-1" v-if="sentry">
                 <div class="card-body">
                     <LogBookEntryList v-model:from="sentry.start"/>
                 </div>
             </div>
         </template>
     </div>
-    <div class="col-md-3" v-if="sentry">
-        <div class="card">
+    <div class="col-md-3 d-flex flex-column" v-if="sentry">
+        <div class="card flex-fill">
             <div class="card-body">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
