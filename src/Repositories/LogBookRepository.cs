@@ -37,7 +37,7 @@ namespace DigitalGuardBook.Repositories
             return logBook;
         }
 
-        private async Task<string> GetLogBookId(int? year)
+        private async Task<string> GetLogBookIdByYearAsync(int? year)
         {
             var stationId = (await _stationRepository.GetStationAsync()).Id;
             var id = await _dataContext.LogBooks
@@ -65,7 +65,7 @@ namespace DigitalGuardBook.Repositories
 
         public async Task<List<LogBookEntry>> GetEntriesForLogBookAsync(DateTimeOffset? from, DateTimeOffset? to)
         {
-            var logBookId = await GetLogBookId(from?.Year ?? to?.Year ?? DateTimeOffset.Now.Year);
+            var logBookId = await GetLogBookIdByYearAsync(from?.Year ?? to?.Year ?? DateTimeOffset.Now.Year);
             var query = _dataContext.LogBooks.AsQueryable().Where(x => x.Id == logBookId)
             .SelectMany(x => x.Entries);
 
@@ -81,8 +81,9 @@ namespace DigitalGuardBook.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task InsertLogBookEntryAsync(string logBookId, string message, DateTimeOffset? time)
+        public async Task InsertLogBookEntryAsync(string message, DateTimeOffset? time)
         {
+            var logBookId = await GetLogBookIdByYearAsync(time?.Year ?? DateTimeOffset.Now.Year);
             var logBook = await _dataContext.LogBooks.AsQueryable().FirstOrDefaultAsync(x => x.Id == logBookId);
 
             var entry = new LogBookEntry

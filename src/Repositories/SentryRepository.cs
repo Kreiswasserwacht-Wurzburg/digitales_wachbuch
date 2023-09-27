@@ -10,11 +10,13 @@ namespace DigitalGuardBook.Repositories
     {
         private readonly DigitalGuardBookDataContext _dataContext;
         private readonly LogBookRepository _logBookRepository;
+        private readonly PersonRepository _personRepository;
 
-        public SentryRepository(DigitalGuardBookDataContext dataContext, LogBookRepository logBookRepository)
+        public SentryRepository(DigitalGuardBookDataContext dataContext, LogBookRepository logBookRepository, PersonRepository personRepository)
         {
             _dataContext = dataContext;
             _logBookRepository = logBookRepository;
+            _personRepository = personRepository;
         }
 
         public async Task<Sentry> GetActiveSentry()
@@ -28,11 +30,30 @@ namespace DigitalGuardBook.Repositories
         {
             try
             {
-                var stationTask = _dataContext.Stations.AsQueryable().FirstAsync();
                 await _dataContext.Sentries.InsertOneAsync((Sentry)sentry);
-                var stationId = (await stationTask).Id;
-                var logBook = await _logBookRepository.GetLogBookAsync(stationId, sentry.Start.Year);
-                await _logBookRepository.InsertLogBookEntryAsync(logBook.Id, "Sentry started", sentry.Start);
+                await _logBookRepository.InsertLogBookEntryAsync("Sentry started", sentry.Start);
+
+                var personList = await _personRepository.AllPersonsAsync();
+
+                foreach (var service in sentry.GuardServices)
+                {
+                    var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
+
+                    if (person != null)
+                    {
+                        await _logBookRepository.InsertLogBookEntryAsync($"Guard {person.FirstName} {person.LastName} has started its service.", sentry.Start);
+                    }
+                }
+
+                foreach (var service in sentry.SupervisorServices)
+                {
+                    var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
+
+                    if (person != null)
+                    {
+                        await _logBookRepository.InsertLogBookEntryAsync($"Supervisor {person.FirstName} {person.LastName} has started its service.", sentry.Start);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -41,21 +62,54 @@ namespace DigitalGuardBook.Repositories
             return sentry;
         }
 
+        private async Task<Sentry> GetSentryAsync(string id)
+        {
+
+            return await _dataContext.Sentries
+            .AsQueryable()
+            .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task FinishSentry(string id, DateTimeOffset dateTime)
         {
             try
             {
-                var stationTask = _dataContext.Stations.AsQueryable().FirstAsync();
+                var sentry = await GetSentryAsync(id);
+                var personList = await _personRepository.AllPersonsAsync();
+
+                foreach (var service in sentry.GuardServices.Where(x => !x.End.HasValue))
+                {
+                    var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
+
+                    if (person != null)
+                    {
+                        await _logBookRepository.InsertLogBookEntryAsync($"Guard {person.FirstName} {person.LastName} has finished its service.", dateTime);
+                    }
+                }
+
+                foreach (var service in sentry.SupervisorServices.Where(x => !x.End.HasValue))
+                {
+                    var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
+
+                    if (person != null)
+                    {
+                        await _logBookRepository.InsertLogBookEntryAsync($"Supervisor {person.FirstName} {person.LastName} has finished its service.", dateTime);
+                    }
+                }
+
                 var fb = Builders<Sentry>.Filter;
-                var filter = fb.And(fb.Eq(x => x.Id, id), fb.ElemMatch(x => x.SupervisorServices, x => !x.End.HasValue));
+                var filter = fb.And(
+                    fb.Eq(x => x.Id, id), 
+                    fb.ElemMatch(x => x.SupervisorServices, x => !x.End.HasValue), 
+                    fb.ElemMatch(x => x.GuardServices, x => !x.End.HasValue)
+                );
                 UpdateDefinition<Sentry> update = Builders<Sentry>.Update
                     .Set(x => x.End, dateTime)
-                    .Set("SupervisorServices.$.End", dateTime);
+                    .Set("SupervisorServices.$.End", dateTime)
+                    .Set("GuardServices.$.End", dateTime);
                 var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
 
-                var stationId = (await stationTask).Id;
-                var logBook = await _logBookRepository.GetLogBookAsync(stationId, dateTime.Year);
-                await _logBookRepository.InsertLogBookEntryAsync(logBook.Id, "Sentry finished", dateTime);
+                await _logBookRepository.InsertLogBookEntryAsync("Sentry finished", dateTime);
             }
             catch (Exception ex)
             {
