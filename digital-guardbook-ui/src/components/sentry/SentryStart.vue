@@ -62,7 +62,9 @@ const sentry: Ref<SentryStart> = ref({
     start: DateTime.now(),
 } as SentryStart)
 
-const start = computed(() => {return sentry.value.start.toFormat("yyyy-MM-dd'T'T")})
+const start = computed(() => { return sentry.value.start.toFormat("yyyy-MM-dd'T'T") })
+
+let manualEdit: Boolean = false;
 
 function allDataFilled(): boolean {
     return sentry.value.start != null && sentry.value.organisation != null && sentry.value.supervisor != null;
@@ -70,8 +72,10 @@ function allDataFilled(): boolean {
 
 async function setTime() {
     await delay(500);
-    sentry.value.start = DateTime.now();
-    setTime();
+    if (!manualEdit) {
+        sentry.value.start = DateTime.now();
+        setTime();
+    }
 }
 
 async function submitForm(): Promise<void> {
@@ -96,6 +100,10 @@ async function submitForm(): Promise<void> {
         console.log(res?.data.startSentry);
         emit('created', res?.data.startSentry);
     }
+}
+
+function onTimeFocus() {
+    manualEdit = true;
 }
 
 onMounted(() => { setTime() })
@@ -129,7 +137,7 @@ onMounted(() => { setTime() })
         <div class="row mb-3">
             <label for="name" class="form-label col-sm-2 ">Datum</label>
             <div class="col-sm-10">
-                <input type="datetime-local" class="form-control" required v-model="start" />
+                <input type="datetime-local" class="form-control" required v-model="start" @focus="onTimeFocus" />
             </div>
         </div>
         <button type="submit" class="btn btn-primary" @click.prevent="submitForm()"
