@@ -5,13 +5,13 @@ import SentryCard from "@/components/sentry/SentryCard.vue"
 </script>
 
 <template>
-  <main class="flex-fill d-flex">
-    <div class="container-fluid flex-fill d-flex">
-      <div class="row my-3 flex-fill">
+  <main>
+    <div class="container-fluid">
+      <div class="row my-3">
 
         <SentryCard />
         
-        <div class="col-md-3 d-flex flex-column justify-content-around">
+        <div class="col-md-3 justify-content-around">
           <WeatherCard :station-id=10655 />
           <div class="card">
             <div class="card-body">
