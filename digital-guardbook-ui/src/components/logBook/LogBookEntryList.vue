@@ -6,10 +6,7 @@ import type { LogBookEntry } from './logBookEntry'
 
 const props = defineProps<{
     from: DateTime | string,
-    to: {
-        type: DateTime | string,
-        required: false
-    }
+    to?: DateTime | string
 }>();
 
 const { result, loading } = useQuery(gql`
@@ -23,7 +20,7 @@ const { result, loading } = useQuery(gql`
     from: props.from.toString()
 })
 
-function convertDateTimeToString(dt: String)
+function convertDateTimeToString(dt: string)
 {
     return DateTime.fromISO(dt).toLocaleString(DateTime.DATETIME_SHORT)
 }
