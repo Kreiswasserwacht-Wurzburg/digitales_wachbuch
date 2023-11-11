@@ -22,13 +22,13 @@ Wesentliche Features
 - Auswertungen der geleisteten Dienste
 - Erweiterbar um neue Exporte und Module
 
-Voraussetzungen
----------------
+Voraussetzungen für die Entwicklung
+-----------------------------------
 
 - Laufende MongoDB-Instanz
 
-Start des Wachbuches
---------------------
+### Start des Wachbuches
+
 
 - Starten des Backends mittels
 ```bash
@@ -39,7 +39,12 @@ Start des Wachbuches
     digital-guardbook-ui$ npm run dev
 ```
 
-Ausblick
---------
+Ausführen des Wachbuches
+------------------------
 
-Das Wachbuch soll mittels docker-compose gestartet werden können, das alle notwendingen Instanzen hochzieht und nur das UI exposed.
+Das Starten des Wachbuchs ist mittels docker-compose möglich.
+
+```bash
+    $ docker-compose up
+```
+
