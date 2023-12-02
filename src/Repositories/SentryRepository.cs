@@ -116,5 +116,30 @@ namespace DigitalGuardBook.Repositories
                 Console.Error.WriteLine(ex.ToString());
             }
         }
+
+        public async Task RegisterSentry(string id, DateTimeOffset dateTime)
+        {
+            try
+            {
+                var sentry = await GetSentryAsync(id);
+
+                var fb = Builders<Sentry>.Filter;
+                var filter = fb.And(
+                    fb.Eq(x => x.Id, id), 
+                    fb.ElemMatch(x => x.SupervisorServices, x => !x.End.HasValue), 
+                    fb.ElemMatch(x => x.GuardServices, x => !x.End.HasValue)
+                );
+                UpdateDefinition<Sentry> update = Builders<Sentry>.Update
+                    .Set(x => x.Registration, dateTime);
+                var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
+
+                await _logBookRepository.InsertLogBookEntryAsync($"Registered at ILS!", dateTime);
+
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+            }
+        }
     }
 }

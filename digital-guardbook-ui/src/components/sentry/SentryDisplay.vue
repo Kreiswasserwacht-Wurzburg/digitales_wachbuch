@@ -24,6 +24,12 @@ const { mutate: finishSentry } = useMutation(gql`
     }
 `)
 
+const { mutate: registerSentry } = useMutation(gql`
+    mutation ($sentry: SentryRegisterType!) {
+        registerSentry(sentry: $sentry)
+    }
+`)
+
 const supervisor = computed(() => {
     let activeSupervisor = props.sentry.supervisors.find(x => x.end == undefined)?.guard;
     return `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}`
@@ -53,6 +59,25 @@ function convertDateTimeToString(dt: DateTime | string | undefined): string {
         return DateTime.fromISO(dt as string).toLocaleString(DateTime.DATETIME_SHORT)
     }
 }
+
+async function saveRegistration(): Promise<void> {
+
+    var res = await registerSentry({
+        "sentry": {
+            "id": props.sentry.id,
+            "registration": DateTime.fromISO(props.sentry.registration).toISO()
+        }
+    })
+
+    if (res?.errors == undefined) {
+
+        emit("update:sentry", props.sentry);
+    }
+
+    window.location.reload()
+    
+}
+
 </script>
 
 <template>
@@ -95,7 +120,7 @@ function convertDateTimeToString(dt: DateTime | string | undefined): string {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" @click="saveRegistration" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>

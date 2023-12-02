@@ -53,6 +53,17 @@ namespace DigitalGuardBook.GraphQL
 
                 return sentry.Id;
             });
+
+            Field<StringGraphType>("registerSentry")
+            .Argument<NonNullGraphType<SentryRegisterType>>("sentry")
+            .ResolveAsync(async context =>
+            {
+                var sentry = context.GetArgument<Sentry>("sentry");
+
+                await sentryRepository.RegisterSentry(sentry.Id, sentry.Registration.GetValueOrDefault());
+
+                return sentry.Id;
+            });
         }
     }
 }
