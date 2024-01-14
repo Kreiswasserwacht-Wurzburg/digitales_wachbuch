@@ -35,7 +35,7 @@ namespace DigitalGuardBook.Repositories
             try
             {
                 await _dataContext.Sentries.InsertOneAsync((Sentry)sentry);
-                await _logBookRepository.InsertLogBookEntryAsync("Sentry started", sentry.Start);
+                await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryStarted"], sentry.Start);
 
                 var personList = await _personRepository.AllPersonsAsync();
 
@@ -45,7 +45,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Guard {person.FirstName} {person.LastName} has started its service.", sentry.Start);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["GuardServiceStart"],person.FirstName, person.LastName), sentry.Start);
                     }
                 }
 
@@ -55,7 +55,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Supervisor {person.FirstName} {person.LastName} has started its service.", sentry.Start);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["SupervisorServiceStart"],person.FirstName, person.LastName), sentry.Start);
                     }
                 }
             }
@@ -87,7 +87,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Guard {person.FirstName} {person.LastName} has finished its service.", dateTime);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["GuardServiceFinish"],person.FirstName, person.LastName), dateTime);
                     }
                 }
 
@@ -97,7 +97,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Supervisor {person.FirstName} {person.LastName} has finished its service.", dateTime);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["SupervisorServiceFinish"],person.FirstName, person.LastName), dateTime);
                     }
                 }
 
@@ -113,7 +113,7 @@ namespace DigitalGuardBook.Repositories
                     .Set("GuardServices.$.End", dateTime);
                 var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
 
-                await _logBookRepository.InsertLogBookEntryAsync(_localizer["Sentry finished"], dateTime);
+                await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryFinished"], dateTime);
             }
             catch (Exception ex)
             {

@@ -118,27 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SentryFinished" xml:space="preserve">
-    <value>Wachdienst beendet</value>
+    <value>Sentry finished</value>
     <comment/>
   </data>
   <data name="SentryStarted" xml:space="preserve">
-    <value>Wachdienst gestartet</value>
+    <value>Sentry started</value>
     <comment/>
   </data>
   <data name="GuardServiceStart" xml:space="preserve">
-    <value>Wachgänger {0} {1} hat den Dienst aufgenommen.</value>
+    <value>Guard {0} {1} has started its service.</value>
     <comment/>
   </data>
   <data name="SupervisorServiceStart" xml:space="preserve">
-    <value>Wachleiter {0} {1} hat den Dienst aufgenommen.</value>
+    <value>Supervisor {0} {1} has started its service.</value>
     <comment/>
   </data>
   <data name="GuardServiceFinish" xml:space="preserve">
-    <value>Wachgänger {0} {1} hat den Dienst beendet.</value>
+    <value>Guard {0} {1} has finished its service.</value>
     <comment/>
   </data>
   <data name="SupervisorServiceFinish" xml:space="preserve">
-    <value>Wachleiter {0} {1} hat den Dienst beendet.</value>
+    <value>Supervisor {0} {1} has finished its service.</value>
     <comment/>
   </data>
 </root>
