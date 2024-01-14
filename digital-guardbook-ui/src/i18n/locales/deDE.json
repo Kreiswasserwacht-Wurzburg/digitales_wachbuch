@@ -1,0 +1,10 @@
+{
+    "nav": {
+        "dashboard": "Dashboard",
+        "staff": "Personal",
+        "operation": "Einsatz"
+    },
+    "dashboard": {
+        "weather": "Wetter"
+    }
+}

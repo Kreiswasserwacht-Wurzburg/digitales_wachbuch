@@ -49,7 +49,7 @@ onMounted(() => {
 <template>
   <div class="card">
     <div class="card-body">
-      Wetter
+      {{ $t("dashboard.weather") }}
       <div v-if="weatherInfo">
         <div>
           <h2>

@@ -1,0 +1,10 @@
+{
+    "nav": {
+        "dashboard": "Dashboard",
+        "staff": "Staff",
+        "operation": "Operation"
+    },
+    "dashboard": {
+        "weather": "Weather"
+    }
+}

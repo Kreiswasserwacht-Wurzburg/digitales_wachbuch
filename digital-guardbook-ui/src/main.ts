@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import App from './App.vue'
 import router from './router'
+import i18n from './i18n/index'
 
 const httpLink = createHttpLink({
   uri: '/api',
@@ -32,6 +33,7 @@ app.provide(DefaultApolloClient, apolloClient)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router)
+app.use(i18n)
 
 app.mount('#app')
 
