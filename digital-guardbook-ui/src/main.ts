@@ -14,8 +14,8 @@ import i18n from './i18n/index'
 
 const httpLink = createHttpLink({
   uri: '/api',
-  fetch: (uri: RequestInfo, options: RequestInit) => {
-    return fetch(uri, options)
+  fetch: (reqInfo: RequestInfo | URL, options: RequestInit | undefined) => {
+    return fetch(reqInfo, options)
   },
 })
 
