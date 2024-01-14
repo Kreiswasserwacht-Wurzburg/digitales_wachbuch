@@ -5,6 +5,28 @@
         "operation": "Einsatz"
     },
     "dashboard": {
-        "weather": "Wetter"
+        "weather": {
+          "title": "Wetter",
+          "gust": "Böen",
+          "noWarnings": "Keine Unwetterwarnungen",
+          "from": "Von",
+          "until": "bis"
+        },
+        "controlCentre": "Zuständige Leitstelle"
+    },
+    "logBook": {
+      "title": "Log-Buch",
+      "time": "Zeit",
+      "author": "Autor",
+      "message": "Text"
+    },
+    "sentry": {
+      "organisation": "Organisation",
+      "supervisor": "Wachleiter",
+      "startTime": "Beginn",
+      "startAction": "Wachdienst beginnen",
+      "stopAction": "Wachdienst beenden",
+      "registrationTime": "Anmeldung",
+      "activeGuards": "Aktive Wachmannschaft"
     }
 }

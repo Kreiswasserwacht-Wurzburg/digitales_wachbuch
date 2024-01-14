@@ -20,6 +20,16 @@ export default createI18n<false>({
                 second: "numeric",
                 timezone: "Europe/London",
                 timeZoneName: "short"
+            },
+            shortDateTime: {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                timeZoneName: 'short',
+                timezone: "Europe/London"
             }
         },
         "de-DE": {
@@ -29,6 +39,16 @@ export default createI18n<false>({
                 second: "numeric",
                 timezone: "Europe/Berlin",
                 timeZoneName: "short"
+            },
+            shortDateTime: {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                timeZoneName: 'short',
+                timezone: "Europe/Berlin"
             }
         }
     },

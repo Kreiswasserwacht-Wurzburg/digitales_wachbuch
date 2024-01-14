@@ -19,9 +19,31 @@ declare module 'vue-i18n' {
       dashboard: string,
       staff: string,
       operation: string
-    }
+    },
     dashboard: {
-      weather: string
+      weather: {
+        title: string,
+        gust: string,
+        noWarnings: string,
+        from: string
+        until: string
+      },
+      controlCentre: string
+    },
+    logBook: {
+      title: string,
+      time: string,
+      author: string,
+      message: string
+    },
+    sentry: {
+      organisation: string,
+      supervisor: string,
+      startTime: string,
+      startAction: string,
+      stopAction: string,
+      registrationTime: string,
+      activeGuards: string
     }
   }
 
@@ -50,6 +72,16 @@ declare module 'vue-i18n' {
       minute: 'numeric'
       second: 'numeric'
       timeZoneName: 'short'
+      timezone: string
+    },
+    shortDateTime: {
+      year:'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
       timezone: string
     }
   }

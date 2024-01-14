@@ -7,6 +7,12 @@ import type SentryStart from './sentry';
 import { DateTime } from 'luxon';
 import type { Sentry } from './sentry';
 
+import { useI18n } from 'vue-i18n'
+
+const {t} = useI18n({
+  useScope: 'global'
+})
+
 const emit = defineEmits<{
     created: [value: Sentry]
 }>()
@@ -112,7 +118,7 @@ onMounted(() => { setTime() })
 <template>
     <form>
         <div class="row mb-3">
-            <label for="name" class="form-label col-sm-2 ">Ortsgruppe</label>
+            <label for="name" class="form-label col-sm-2 ">{{t('sentry.organisation')}}</label>
             <div class="col-sm-10">
                 <select v-model="sentry.organisation" class="form-select" required v-if="!loading">
                     <option disabled :value="null">Please select one</option>
@@ -123,7 +129,7 @@ onMounted(() => { setTime() })
         </div>
 
         <div class="row mb-3">
-            <label for="name" class="form-label col-sm-2 ">Wachleiter</label>
+            <label for="name" class="form-label col-sm-2 ">{{t('sentry.supervisor')}}</label>
             <div class="col-sm-10">
                 <select v-model="sentry.supervisor" class="form-select" required
                     :class="{ disabled: sentry.organisation?.members }">
@@ -135,12 +141,12 @@ onMounted(() => { setTime() })
         </div>
 
         <div class="row mb-3">
-            <label for="name" class="form-label col-sm-2 ">Datum</label>
+            <label for="name" class="form-label col-sm-2 ">{{ t('sentry.startTime') }}</label>
             <div class="col-sm-10">
                 <input type="datetime-local" class="form-control" required v-model="start" @focus="onTimeFocus" />
             </div>
         </div>
         <button type="submit" class="btn btn-primary" @click.prevent="submitForm()"
-            :class="{ disabled: !allDataFilled() }">Start</button>
+            :class="{ disabled: !allDataFilled() }">{{t('sentry.startAction')}}</button>
     </form>
 </template>

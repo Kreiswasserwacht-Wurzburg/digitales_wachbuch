@@ -10,6 +10,12 @@ import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-i
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
+import { useI18n } from 'vue-i18n'
+
+const { t, n, d } = useI18n({
+    useScope: 'global'
+})
+
 const props = defineProps<{
     sentry: Sentry
 }>()
@@ -42,15 +48,12 @@ async function submit(): Promise<void> {
     }
 }
 
-function convertDateTimeToString(dt: DateTime | string | undefined): string {
-    if (dt == undefined) {
-        return "";
-    }
-    else if (typeof (dt) == typeof (DateTime)) {
-        return dt.toLocaleString(DateTime.DATETIME_SHORT);
+function getDateTime(dt: DateTime | string): Date {
+    if (typeof (dt) == typeof (DateTime)) {
+        return (dt as DateTime).toJSDate();
     }
     else {
-        return DateTime.fromISO(dt as string).toLocaleString(DateTime.DATETIME_SHORT)
+        return DateTime.fromISO(dt as string).toJSDate();
     }
 }
 </script>
@@ -59,17 +62,20 @@ function convertDateTimeToString(dt: DateTime | string | undefined): string {
     <table class="table table-borderless">
         <thead>
             <tr>
-                <th>Start</th>
-                <th>Registration</th>
-                <th>Organisation</th>
-                <th>Wachleiter</th>
+                <th>{{ t('sentry.startTime') }}</th>
+                <th>{{ t('sentry.registrationTime') }}</th>
+                <th>{{ t('sentry.organisation') }}</th>
+                <th>{{ t('sentry.supervisor') }}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{ convertDateTimeToString(sentry.start) }}</td>
-                <td>{{ convertDateTimeToString(sentry.registration) }} <a class="btn btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#registrationModal"><font-awesome-icon :icon="['fa', 'square-phone-flip']" /></a>
+                <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
+                <td><template v-if="sentry.registration">
+                    {{ d(getDateTime(sentry.registration), "shortDateTime") }} <a
+                            class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
+                                :icon="['fa', 'square-phone-flip']" /></a>
+                    </template>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
                 <td>{{ supervisor }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
@@ -79,7 +85,7 @@ function convertDateTimeToString(dt: DateTime | string | undefined): string {
         </tbody>
     </table>
 
-    <button type="submit" class="btn btn-primary" @click.prevent="submit()">Wachdienst beenden</button>
+    <button type="submit" class="btn btn-primary" @click.prevent="submit()">{{ t('sentry.stopAction') }}</button>
 
     <div class="modal" id="registrationModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
