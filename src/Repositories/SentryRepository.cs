@@ -3,20 +3,24 @@ using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
 using System.Transactions;
+using Microsoft.Extensions.Localization;
 
 namespace DigitalGuardBook.Repositories
 {
     public class SentryRepository
     {
+        private readonly IStringLocalizer<SentryRepository> _localizer;
+    
         private readonly DigitalGuardBookDataContext _dataContext;
         private readonly LogBookRepository _logBookRepository;
         private readonly PersonRepository _personRepository;
 
-        public SentryRepository(DigitalGuardBookDataContext dataContext, LogBookRepository logBookRepository, PersonRepository personRepository)
+        public SentryRepository(DigitalGuardBookDataContext dataContext, LogBookRepository logBookRepository, PersonRepository personRepository,IStringLocalizer<SentryRepository> localizer)
         {
             _dataContext = dataContext;
             _logBookRepository = logBookRepository;
             _personRepository = personRepository;
+            _localizer = localizer;
         }
 
         public async Task<Sentry> GetActiveSentry()
@@ -109,7 +113,7 @@ namespace DigitalGuardBook.Repositories
                     .Set("GuardServices.$.End", dateTime);
                 var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
 
-                await _logBookRepository.InsertLogBookEntryAsync("Sentry finished", dateTime);
+                await _logBookRepository.InsertLogBookEntryAsync(_localizer["Sentry finished"], dateTime);
             }
             catch (Exception ex)
             {
