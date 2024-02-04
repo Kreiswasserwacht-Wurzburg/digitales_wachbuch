@@ -129,9 +129,7 @@ namespace DigitalGuardBook.Repositories
 
                 var fb = Builders<Sentry>.Filter;
                 var filter = fb.And(
-                    fb.Eq(x => x.Id, id), 
-                    fb.ElemMatch(x => x.SupervisorServices, x => !x.End.HasValue), 
-                    fb.ElemMatch(x => x.GuardServices, x => !x.End.HasValue)
+                    fb.Eq(x => x.Id, id)
                 );
                 UpdateDefinition<Sentry> update = Builders<Sentry>.Update
                     .Set(x => x.Registration, dateTime);
