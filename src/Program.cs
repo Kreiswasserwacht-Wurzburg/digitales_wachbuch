@@ -4,13 +4,17 @@ using GraphQL.MicrosoftDI;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Repositories;
 using DigitalGuardBook.GraphQL;
+using System.Net.WebSockets;
+
 
 namespace DigitalGuardBook;
 
 public class Program
 {
+    private static List<WebSocket> wsClients = new List<WebSocket>();
     public static void Main(string[] args)
     {
+
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddSingleton(x =>new DigitalGuardBookDataContext(builder.Configuration.GetConnectionString("MongoConnection")));
@@ -33,7 +37,51 @@ public class Program
         app.UseWebSockets();
         app.UseGraphQL("/graphql");            // url to host GraphQL endpoint
         app.UseGraphQLGraphiQL("/");
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Path == "/ws")
+            {
+                if (context.WebSockets.IsWebSocketRequest)
+                {
+
+                WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                wsClients.Add(webSocket);
+                await WsKeepAlive(context, webSocket);
+                
+
+                }
+                else
+                {
+                    context.Response.StatusCode = 400;
+                }
+            }
+            else
+            {
+                await next();
+            }
+        });
 
         app.Run();
     }
+
+    private static async Task WsKeepAlive(HttpContext context, WebSocket webSocket)
+    {
+        var buffer = new byte[1024 * 4];
+        WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+        while (!result.CloseStatus.HasValue)
+        {
+            result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+        }
+        await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+    }
+
+    public static void Notify()
+    {
+
+        foreach (WebSocket client in wsClients)
+        {
+            client.SendAsync(new ArraySegment<byte>(new byte[1]),WebSocketMessageType.Binary,true,CancellationToken.None);
+        }
+    }
 }
+

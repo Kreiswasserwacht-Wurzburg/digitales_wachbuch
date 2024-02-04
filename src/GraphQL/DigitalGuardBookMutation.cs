@@ -4,12 +4,15 @@ using DigitalGuardBook.Repositories;
 using GraphQL;
 using GraphQL.Types;
 
+
 namespace DigitalGuardBook.GraphQL
 {
     public class DigitalGuardBookMutation : ObjectGraphType
     {
         public DigitalGuardBookMutation(SentryRepository sentryRepository)
         {
+            
+
             Field<SentryType>("startSentry")
             .Argument<NonNullGraphType<SentryStartType>>("sentry")
             .ResolveAsync(async context =>
@@ -61,6 +64,7 @@ namespace DigitalGuardBook.GraphQL
                 var sentry = context.GetArgument<Sentry>("sentry");
 
                 await sentryRepository.RegisterSentry(sentry.Id, sentry.Registration.GetValueOrDefault());
+                Program.Notify();
 
                 return sentry.Id;
             });

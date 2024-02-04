@@ -74,7 +74,7 @@ async function saveRegistration(): Promise<void> {
         emit("update:sentry", props.sentry);
     }
 
-    window.location.reload()
+    document.getElementById('registrationModal-close')?.click();
     
 }
 
@@ -94,7 +94,7 @@ async function saveRegistration(): Promise<void> {
             <tr>
                 <td>{{ convertDateTimeToString(sentry.start) }}</td>
                 <td>{{ convertDateTimeToString(sentry.registration) }} <a class="btn btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#registrationModal"><font-awesome-icon :icon="['fa', 'square-phone-flip']" /></a>
+                        data-bs-target="#registrationModal" ><font-awesome-icon :icon="['fa', 'square-phone-flip']" /></a>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
                 <td>{{ supervisor }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
@@ -111,7 +111,7 @@ async function saveRegistration(): Promise<void> {
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title">Anmeldung bei der ILS</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" id="registrationModal-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     ILS anrufen: <a href="tel:+499311234567">0931 / 1234567</a>

@@ -2,14 +2,19 @@
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { DateTime } from 'luxon';
-import type { LogBookEntry } from './logBookEntry'
+
+const socket = new WebSocket("ws://localhost:5282/ws");
+
+socket.onmessage = function(event){
+    refetch();
+}
 
 const props = defineProps<{
     from: DateTime | string,
     to?: DateTime | string
 }>();
 
-const { result, loading } = useQuery(gql`
+const { result, loading, refetch } = useQuery(gql`
     query ($from: String!, $to: String) {
         logBookEntries(from: $from, to: $to) {
             time
@@ -17,12 +22,13 @@ const { result, loading } = useQuery(gql`
             message
         }
     }`, {
-    from: props.from.toString()
-})
+        from: props.from.toString()
+    })
 
 function convertDateTimeToString(dt: string)
 {
     return DateTime.fromISO(dt).toLocaleString(DateTime.DATETIME_SHORT)
+    
 }
 </script>
 
