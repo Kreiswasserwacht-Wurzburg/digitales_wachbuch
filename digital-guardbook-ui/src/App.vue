@@ -18,13 +18,13 @@ import StationLogo from '@/components/station/StationLogo.vue'
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link class="nav-link active" to="/">Dashboard</router-link>
+              <router-link class="nav-link active" to="/">{{ $t("nav.dashboard") }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link disabled" to="/personal">Personal</router-link>
+              <router-link class="nav-link disabled" to="/personal">{{ $t("nav.staff") }}</router-link>
             </li>
             <li class="nav-item disabled">
-              <router-link class="nav-link disabled" to="/mission">Einsatz</router-link>
+              <router-link class="nav-link disabled" to="/mission">{{ $t("nav.operation") }}</router-link>
             </li>
           </ul>
         </div>

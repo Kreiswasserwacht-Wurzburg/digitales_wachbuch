@@ -1,0 +1,32 @@
+{
+    "nav": {
+        "dashboard": "Dashboard",
+        "staff": "Staff",
+        "operation": "Operation"
+    },
+    "dashboard": {
+        "weather": {
+            "title": "Weather",
+            "gust": "Gust",
+            "noWarnings": "No Severe Weather Warnings",
+            "from": "from",
+            "until": "until"
+          },
+        "controlCentre": "Responsible Control Centre"
+    },
+    "logBook": {
+      "title": "Log Book",
+      "time": "Time",
+      "author": "Author",
+      "message": "Message"
+    },
+    "sentry": {
+      "organisation": "Organisation",
+      "supervisor": "Supervisor",
+      "startTime": "Start Time",
+      "startAction": "Start Sentry",
+      "stopAction": "Finish Sentry",
+      "registrationTime": "Registration",
+      "activeGuards": "Active Guards"
+    }
+}

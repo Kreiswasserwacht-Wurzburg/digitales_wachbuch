@@ -10,6 +10,12 @@ import { faTemperatureHigh, faTemperatureLow, faWind, faUmbrella } from '@fortaw
 
 import WeatherIcon from './WeatherIcon.vue';
 
+import { useI18n } from 'vue-i18n'
+
+const {t} = useI18n({
+  useScope: 'global'
+})
+
 const refreshDelayMinutes = ref(15);
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
@@ -49,7 +55,7 @@ onMounted(() => {
 <template>
   <div class="card">
     <div class="card-body">
-      Wetter
+      {{ t("dashboard.weather.title") }}
       <div v-if="weatherInfo">
         <div>
           <h2>
@@ -63,7 +69,7 @@ onMounted(() => {
           <p>
             <font-awesome-icon :icon="['fas', 'umbrella']" /> {{ weatherInfo.rainfall }} mm<br /> <font-awesome-icon
               :icon="['fas', 'wind']" />{{ weatherInfo.wind.speed }} km/h | {{
-                weatherInfo.wind.gust }} km/h Böen
+                weatherInfo.wind.gust }} km/h {{ t("dashboard.weather.gust") }}
           </p>
         </div>
         <p>
@@ -75,14 +81,14 @@ onMounted(() => {
           <ul>
             <li v-for="warning in weatherInfo.warnings">
               <b>{{ warning.headline }}</b> <br />
-              Von {{ warning.start.toLocaleString(DateTime.DATETIME_SHORT) }} bis {{
+              {{ t("dashboard.weather.from") }} {{ warning.start.toLocaleString(DateTime.DATETIME_SHORT) }} {{ t("dashboard.weather.until") }} {{
                 warning.end.toLocaleString(DateTime.DATETIME_SHORT) }} <br />
               <small>{{ warning.description }}</small>
             </li>
           </ul>
         </div>
         <div v-if="!weatherInfo.warnings.length">
-          keine Unwetterwarnungen
+          {{ t("dashboard.weather.noWarnings") }}
         </div>
         </p>
       </div>

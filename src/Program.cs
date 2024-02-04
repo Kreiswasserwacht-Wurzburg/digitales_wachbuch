@@ -13,7 +13,16 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddSingleton(x =>new DigitalGuardBookDataContext(builder.Configuration.GetConnectionString("MongoConnection")));
+        builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+        builder.Services.AddRequestLocalization(options =>
+        {
+            var supportedCultures = new[] { "en", "de-DE" };
+            options.SetDefaultCulture(supportedCultures.First())
+            .AddSupportedCultures(supportedCultures)
+            .AddSupportedUICultures(supportedCultures);
+        });
+
+        builder.Services.AddSingleton(x => new DigitalGuardBookDataContext(builder.Configuration.GetConnectionString("MongoConnection")));
         builder.Services.AddSingleton<PersonRepository>();
         builder.Services.AddSingleton<OrganisationRepository>();
         builder.Services.AddSingleton<StationRepository>();
@@ -28,6 +37,11 @@ public class Program
             .AddSchema<DigitalGuardBookScheme>());
 
         var app = builder.Build();
+
+        app.UseRequestLocalization(new RequestLocalizationOptions
+        {
+            ApplyCurrentCultureToResponseHeaders = true
+        });
 
         app.UseDeveloperExceptionPage();
         app.UseWebSockets();

@@ -3,20 +3,24 @@ using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
 using System.Transactions;
+using Microsoft.Extensions.Localization;
 
 namespace DigitalGuardBook.Repositories
 {
     public class SentryRepository
     {
+        private readonly IStringLocalizer<SentryRepository> _localizer;
+    
         private readonly DigitalGuardBookDataContext _dataContext;
         private readonly LogBookRepository _logBookRepository;
         private readonly PersonRepository _personRepository;
 
-        public SentryRepository(DigitalGuardBookDataContext dataContext, LogBookRepository logBookRepository, PersonRepository personRepository)
+        public SentryRepository(DigitalGuardBookDataContext dataContext, LogBookRepository logBookRepository, PersonRepository personRepository,IStringLocalizer<SentryRepository> localizer)
         {
             _dataContext = dataContext;
             _logBookRepository = logBookRepository;
             _personRepository = personRepository;
+            _localizer = localizer;
         }
 
         public async Task<Sentry> GetActiveSentry()
@@ -31,7 +35,7 @@ namespace DigitalGuardBook.Repositories
             try
             {
                 await _dataContext.Sentries.InsertOneAsync((Sentry)sentry);
-                await _logBookRepository.InsertLogBookEntryAsync("Sentry started", sentry.Start);
+                await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryStarted"], sentry.Start);
 
                 var personList = await _personRepository.AllPersonsAsync();
 
@@ -41,7 +45,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Guard {person.FirstName} {person.LastName} has started its service.", sentry.Start);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["GuardServiceStart"],person.FirstName, person.LastName), sentry.Start);
                     }
                 }
 
@@ -51,7 +55,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Supervisor {person.FirstName} {person.LastName} has started its service.", sentry.Start);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["SupervisorServiceStart"],person.FirstName, person.LastName), sentry.Start);
                     }
                 }
             }
@@ -83,7 +87,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Guard {person.FirstName} {person.LastName} has finished its service.", dateTime);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["GuardServiceFinish"],person.FirstName, person.LastName), dateTime);
                     }
                 }
 
@@ -93,7 +97,7 @@ namespace DigitalGuardBook.Repositories
 
                     if (person != null)
                     {
-                        await _logBookRepository.InsertLogBookEntryAsync($"Supervisor {person.FirstName} {person.LastName} has finished its service.", dateTime);
+                        await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["SupervisorServiceFinish"],person.FirstName, person.LastName), dateTime);
                     }
                 }
 
@@ -109,7 +113,7 @@ namespace DigitalGuardBook.Repositories
                     .Set("GuardServices.$.End", dateTime);
                 var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
 
-                await _logBookRepository.InsertLogBookEntryAsync("Sentry finished", dateTime);
+                await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryFinished"], dateTime);
             }
             catch (Exception ex)
             {
