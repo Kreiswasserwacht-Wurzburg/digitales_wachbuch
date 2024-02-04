@@ -7,7 +7,7 @@ namespace DigitalGuardBook.GraphQL.Types
         public SentryRegisterType()
         {
             Field<NonNullGraphType<StringGraphType>>("id");
-            Field<DateTimeOffsetGraphType>("registration");
+            Field<NonNullGraphType<DateTimeOffsetGraphType>>("registration");
         }
     }
 }   
