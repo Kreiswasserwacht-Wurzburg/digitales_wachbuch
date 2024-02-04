@@ -107,7 +107,5 @@ namespace DigitalGuardBook.Repositories
 
         }
 
-        public IObservable<LogBookEntryType> SubscribeAll() => null;
-        public IObservable<LogBookEntryType> SubscribeFromDate(string date) => null;
     }
 }
