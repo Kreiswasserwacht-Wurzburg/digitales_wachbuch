@@ -8,6 +8,7 @@ namespace DigitalGuardBook.GraphQL
         {
             Query = provider.GetRequiredService<DigitalGuardBookQuery>();
             Mutation = provider.GetRequiredService<DigitalGuardBookMutation>();
+            //Subscription= provider.GetRequiredService<DigitalGuardBookSubscription>();
         }
     }
 }

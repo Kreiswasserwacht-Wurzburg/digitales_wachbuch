@@ -2,6 +2,9 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
+using DigitalGuardBook.GraphQL.Types;
+
+
 
 namespace DigitalGuardBook.Repositories
 {
@@ -100,6 +103,11 @@ namespace DigitalGuardBook.Repositories
             .AddToSet(x => x.Entries, entry);
 
             await _dataContext.LogBooks.UpdateOneAsync(filter, update);
+
+
         }
+
+        public IObservable<LogBookEntryType> SubscribeAll() => null;
+        public IObservable<LogBookEntryType> SubscribeFromDate(string date) => null;
     }
 }
