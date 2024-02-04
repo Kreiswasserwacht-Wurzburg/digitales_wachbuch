@@ -80,12 +80,10 @@ async function saveRegistration(): Promise<void> {
             <tr>
                 <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
                 <td><template v-if="sentry.registration">
-                        {{ d(getDateTime(sentry.registration), "shortDateTime") }}
+                    {{ d(getDateTime(sentry.registration), "shortDateTime") }} 
                     </template>
-                    <template v-else><a class="btn btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#registrationModal"><font-awesome-icon
+                    <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
                                 :icon="['fa', 'square-phone-flip']" /></a>
-                    </template>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
                 <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#"
