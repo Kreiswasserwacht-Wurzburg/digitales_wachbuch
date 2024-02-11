@@ -135,8 +135,7 @@ namespace DigitalGuardBook.Repositories
                     .Set(x => x.Registration, dateTime);
                 var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
 
-                await _logBookRepository.InsertLogBookEntryAsync($"Registered at ILS!", dateTime);
-
+                await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryRegistered"], dateTime);
             }
             catch (Exception ex)
             {
