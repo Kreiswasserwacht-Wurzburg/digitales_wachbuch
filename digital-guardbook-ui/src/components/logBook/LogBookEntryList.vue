@@ -33,7 +33,6 @@ onMounted(() => {
 function convertDateTimeToString(dt: string)
 {
     return DateTime.fromISO(dt).toLocaleString(DateTime.DATETIME_SHORT)
-    
 }
 </script>
 

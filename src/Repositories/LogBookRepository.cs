@@ -4,8 +4,6 @@ using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
 using DigitalGuardBook.GraphQL.Types;
 
-
-
 namespace DigitalGuardBook.Repositories
 {
     public class LogBookRepository
@@ -103,9 +101,6 @@ namespace DigitalGuardBook.Repositories
             .AddToSet(x => x.Entries, entry);
 
             await _dataContext.LogBooks.UpdateOneAsync(filter, update);
-
-
         }
-
     }
 }

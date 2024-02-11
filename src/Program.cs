@@ -6,7 +6,6 @@ using DigitalGuardBook.Repositories;
 using DigitalGuardBook.GraphQL;
 using System.Net.WebSockets;
 
-
 namespace DigitalGuardBook;
 
 public class Program
@@ -57,12 +56,9 @@ public class Program
             {
                 if (context.WebSockets.IsWebSocketRequest)
                 {
-
-                WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                wsClients.Add(webSocket);
-                await WsKeepAlive(context, webSocket);
-                
-
+                    WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                    wsClients.Add(webSocket);
+                    await WsKeepAlive(context, webSocket);
                 }
                 else
                 {

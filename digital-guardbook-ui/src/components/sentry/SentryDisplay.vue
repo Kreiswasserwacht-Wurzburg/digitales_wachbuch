@@ -59,9 +59,7 @@ async function saveRegistration(): Promise<void> {
 
         emit("update:sentry", props.sentry);
     }
-
     document.getElementById('registrationModal-close')?.click();
-    
 }
 
 </script>

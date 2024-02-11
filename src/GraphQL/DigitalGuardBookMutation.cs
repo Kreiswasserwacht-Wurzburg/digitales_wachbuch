@@ -11,8 +11,6 @@ namespace DigitalGuardBook.GraphQL
     {
         public DigitalGuardBookMutation(SentryRepository sentryRepository)
         {
-            
-
             Field<SentryType>("startSentry")
             .Argument<NonNullGraphType<SentryStartType>>("sentry")
             .ResolveAsync(async context =>
