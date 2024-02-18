@@ -1,29 +1,26 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
 import { DateTime } from 'luxon';
-import type { LogBookEntry } from './logBookEntry'
+import { useLogBookStore } from '@/store/logBook'
+import { storeToRefs } from 'pinia'
 
 import { useI18n } from 'vue-i18n'
+import { onMounted } from 'vue';
 
 const {t,n,d} = useI18n({
   useScope: 'global'
 })
+
+const store = useLogBookStore()
+
+const { logBookEntries, loading} = storeToRefs(store)
 
 const props = defineProps<{
     from: DateTime | string,
     to?: DateTime | string
 }>();
 
-const { result, loading } = useQuery(gql`
-    query ($from: String!, $to: String) {
-        logBookEntries(from: $from, to: $to) {
-            time
-            author
-            message
-        }
-    }`, {
-    from: props.from.toString()
+onMounted(() => {
+    store.fetchByTime(props.from, props.to)
 })
 
 function convertDateTimeToString(dt: string)
@@ -43,7 +40,7 @@ function convertDateTimeToString(dt: string)
             </tr>
         </thead>
         <tbody v-if="!loading"  class="table-group-divider">
-            <tr v-for="entry in result?.logBookEntries">
+            <tr v-for="entry in logBookEntries">
                 <th scope="row">{{ d(entry.time,'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>
                 <td>{{ entry.message }}</td>
