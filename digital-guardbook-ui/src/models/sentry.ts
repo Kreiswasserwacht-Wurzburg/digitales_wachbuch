@@ -1,17 +1,6 @@
 import { DateTime } from "luxon";
-
-export interface Person {
-    id: string,
-    firstName: string,
-    lastName: string
-}
-
-export interface Organisation {
-    id: string,
-    name: string,
-    number: number,
-    members: Person[]
-}
+import type { Person } from `./person`;
+import type { Organisation } from `./organisation`;
 
 export interface SentryStart {
     start: DateTime,

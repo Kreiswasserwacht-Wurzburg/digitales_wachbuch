@@ -9,7 +9,7 @@ export const useSentryStore = defineStore('sentry', () => {
     const loading = ref<Boolean>(false)
     const active = computed(() => sentry.value?.id != null)
 
-    async function startSentry(sentry: SentryStart) {
+    async function startSentry(_sentry: SentryStart) {
         const result = await apolloClient.mutate({
             mutation: gql`
                 mutation ($sentry: SentryStartType!) {
@@ -41,11 +41,11 @@ export const useSentryStore = defineStore('sentry', () => {
                 }
             `,
             variables: {
-                sentry
+                sentry: _sentry
             }
         })
 
-        console.log(result)
+        sentry.value = result.data.startSentry
     }
 
     async function getActiveSentry() {
