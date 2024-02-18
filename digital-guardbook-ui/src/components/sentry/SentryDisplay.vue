@@ -3,15 +3,16 @@
 import type { Sentry } from '@/models/sentry';
 import { useSentryStore } from '@/store/sentry'
 import { DateTime } from 'luxon'
-import { computed } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-icons'
+import { storeToRefs } from 'pinia'
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
 import { useI18n } from 'vue-i18n'
 
 const store = useSentryStore()
+const { activeSupervisor } = storeToRefs(store)
 
 const { t, n, d } = useI18n({
     useScope: 'global'
@@ -24,11 +25,6 @@ const props = defineProps<{
 const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
-
-const supervisor = computed(() => {
-    let activeSupervisor = props.sentry.supervisors.find(x => x.end == undefined)?.guard;
-    return `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}`
-})
 
 async function submit(): Promise<void> {
     var res = await store.finishSentry({
@@ -71,7 +67,7 @@ function getDateTime(dt: DateTime | string): Date {
                     </template>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ supervisor }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
                         data-bs-target="#changeSupervisorModal"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>

@@ -8,6 +8,7 @@ export const useSentryStore = defineStore('sentry', () => {
     const sentry = ref<Sentry | null>(null)
     const loading = ref<Boolean>(false)
     const active = computed(() => sentry.value?.id != null)
+    const activeSupervisor = computed(() => sentry.value?.supervisors.find(x => x.end == undefined)?.guard)
 
     async function startSentry(_sentry: SentryStart) {
         const result = await apolloClient.mutate({
@@ -80,12 +81,12 @@ export const useSentryStore = defineStore('sentry', () => {
             }`,
             fetchPolicy: 'no-cache'
         })
-    
+
         sentry.value = data.activeSentry
         loading.value = false
     }
 
-    async function finishSentry(_sentry:SentryFinish) {
+    async function finishSentry(_sentry: SentryFinish) {
         const result = apolloClient.mutate({
             mutation: gql`
                 mutation ($sentry: SentryFinishType!) {
@@ -98,5 +99,5 @@ export const useSentryStore = defineStore('sentry', () => {
         })
     }
 
-    return { active, loading, sentry, getActiveSentry, startSentry, finishSentry }
+    return { active, loading, sentry, getActiveSentry, startSentry, finishSentry, activeSupervisor }
 })
