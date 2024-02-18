@@ -102,17 +102,17 @@ async function cancelRegistration(): Promise<void> {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title">Anmeldung bei der ILS</h1>
+                    <h1 class="modal-title">{{ t('sentry.registerControlCentre') }}</h1>
                     <button type="button" id="registrationModal-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ILS anrufen: <a href="tel:+499311234567">0931 / 1234567</a>
+                    {{ t('sentry.callControlCentre') }}: <a href="tel:+499311234567">0931 / 1234567</a>
                     <hr />
                     <input type="datetime-local" class="form-control" v-model="sentry.registration"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" @click="cancelRegistration" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" @click="saveRegistration" class="btn btn-primary">Save changes</button>
+                    <button type="button" @click="cancelRegistration" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('button.close')}}</button>
+                    <button type="button" @click="saveRegistration" class="btn btn-primary">{{ t('button.save') }}</button>
                 </div>
             </div>
         </div>
@@ -122,28 +122,28 @@ async function cancelRegistration(): Promise<void> {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title">Wachleiter wechsel</h1>
+                    <h1 class="modal-title">{{ t('sentry.changeSupervisor') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <label for="newSupervisor" class="form-label col-sm-4">Wachleiter</label>
+                        <label for="newSupervisor" class="form-label col-sm-4">{{ t('sentry.supervisor') }}</label>
                         <div class="col-sm-8">
                             <select id="newSupervisor" class="form-select">
-                                <option disabled :value="null">Please select one</option>
+                                <option disabled :value="null">{{ t('general.select') }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="supervisorChangeTime" class="form-label col-sm-4">Ab</label>
+                        <label for="supervisorChangeTime" class="form-label col-sm-4">{{ t('general.from') }}</label>
                         <div class="col-sm-8">
                             <input id="supervisorChangeTime" type="datetime-local" class="form-control" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('button.close')}}</button>
+                    <button type="button" class="btn btn-primary">{{ t('button.save') }}</button>
                 </div>
             </div>
         </div>

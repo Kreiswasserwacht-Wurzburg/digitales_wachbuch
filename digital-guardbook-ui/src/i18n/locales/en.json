@@ -27,6 +27,17 @@
       "startAction": "Start Sentry",
       "stopAction": "Finish Sentry",
       "registrationTime": "Registration",
-      "activeGuards": "Active Guards"
+      "activeGuards": "Active Guards",
+      "changeSupervisor": "Switch Supervisor",
+      "registerControlCentre": "Register at Control Centre",
+      "callControlCentre": "Call Control Centre"
+    },
+    "button": {
+      "save": "Save changes",
+      "close": "Close"
+    },
+    "general":{
+      "select": "Please select",
+      "from": "From"
     }
 }
