@@ -48,24 +48,24 @@ function getDateTime(dt: DateTime | string): Date {
 
 async function saveRegistration(): Promise<void> {
 
-    console.log(regDate)
-
-    var res = await registerSentry({
-        "sentry": {
-            "id": props.sentry.id,
-            "registration": DateTime.fromISO(regDate.value).toISO()
-        }
+    var res = await store.registerSentry({
+        id: props.sentry.id,
+        registration: DateTime.fromISO(props.sentry.registration).toISO(),
     })
 
     if (res?.errors == undefined) {
 
-        emit("update:sentry", props.sentry);
+        emit("update:sentry", props.sentry); 
     }
 
     document.getElementById('registrationModal-close')?.click();
 }
-// using an existing datetime as `v-model` you must format its value to 'YYYY-MM-DDThh:mm'
 
+async function cancelRegistration(): Promise<void> {
+
+    props.sentry.registration = prevRegistration;
+
+}
 
 </script>
 
@@ -89,9 +89,8 @@ async function saveRegistration(): Promise<void> {
                                 :icon="['fa', 'square-phone-flip']" /></a>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#"
-                        data-bs-toggle="modal" data-bs-target="#changeSupervisorModal"><font-awesome-icon
-                            :icon="['fa', 'arrows-rotate']" /></a>
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
+                        data-bs-target="#changeSupervisorModal"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>
         </tbody>
@@ -109,11 +108,10 @@ async function saveRegistration(): Promise<void> {
                 <div class="modal-body">
                     ILS anrufen: <a href="tel:+499311234567">0931 / 1234567</a>
                     <hr />
-                    <a> {{ regDate }}</a>
-                    <input type="datetime-local" class="form-control" v-model="regDate" />
+                    <input type="datetime-local" class="form-control" v-model="sentry.registration"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" @click="cancelRegistration" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" @click="saveRegistration" class="btn btn-primary">Save changes</button>
                 </div>
             </div>

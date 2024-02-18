@@ -22,8 +22,10 @@ export const useLogBookStore = defineStore('logBook', () => {
             variables: {
                 from,
                 to
-            }
+            },
+            fetchPolicy: 'no-cache',
         })
+
         logBookEntries.value = data.logBookEntries
         loading.value = false
     }

@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { DateTime } from 'luxon';
-import type { LogBookEntry } from './logBookEntry'
 import { useLogBookStore } from '@/store/logBook'
 import { storeToRefs } from 'pinia'
 
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue';
-
-const {t,n,d} = useI18n({
-  useScope: 'global'
-})
+import { vModelCheckbox } from 'vue';
 
 const store = useLogBookStore()
 
@@ -17,23 +13,25 @@ const { logBookEntries, loading} = storeToRefs(store)
 
 const socket = new WebSocket("ws://localhost:5282/ws");
 
-socket.onmessage = function(event){
-    refetch();
-}
-
 const props = defineProps<{
     from: DateTime | string,
     to?: DateTime | string
 }>();
 
+
+socket.onmessage = function(event){
+    store.fetchByTime(props.from, props.to);
+}
+
+const {t,n,d} = useI18n({
+  useScope: 'global'
+})
+
+
 onMounted(() => {
     store.fetchByTime(props.from, props.to)
 })
 
-function convertDateTimeToString(dt: string)
-{
-    return DateTime.fromISO(dt).toLocaleString(DateTime.DATETIME_SHORT)
-}
 </script>
 
 <template>
@@ -47,6 +45,7 @@ function convertDateTimeToString(dt: string)
             </tr>
         </thead>
         <tbody v-if="!loading"  class="table-group-divider">
+            <tr v-for="entry in logBookEntries">
             <tr v-for="entry in logBookEntries">
                 <th scope="row">{{ d(entry.time,'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>

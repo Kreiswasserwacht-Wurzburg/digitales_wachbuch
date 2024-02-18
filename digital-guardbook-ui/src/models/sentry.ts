@@ -29,3 +29,8 @@ export interface SentryFinish {
     id: string,
     finish: DateTime
 }
+
+export interface SentryRegister {
+    id: string,
+    registration: DateTime
+}
