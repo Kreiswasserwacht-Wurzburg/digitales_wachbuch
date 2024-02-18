@@ -1,8 +1,7 @@
 <script setup lang="ts">
 
-import { useMutation } from '@vue/apollo-composable';
 import type { Sentry } from '@/models/sentry';
-import gql from 'graphql-tag'
+import { useSentryStore } from '@/store/sentry'
 import { DateTime } from 'luxon'
 import { computed } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -11,6 +10,8 @@ import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-i
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
 import { useI18n } from 'vue-i18n'
+
+const store = useSentryStore()
 
 const { t, n, d } = useI18n({
     useScope: 'global'
@@ -24,23 +25,15 @@ const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
 
-const { mutate: finishSentry } = useMutation(gql`
-    mutation ($sentry: SentryFinishType!) {
-        finishSentry(sentry: $sentry)
-    }
-`)
-
 const supervisor = computed(() => {
     let activeSupervisor = props.sentry.supervisors.find(x => x.end == undefined)?.guard;
     return `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}`
 })
 
 async function submit(): Promise<void> {
-    var res = await finishSentry({
-        "sentry": {
-            "id": props.sentry.id,
-            "finish": DateTime.now().toString()
-        }
+    var res = await store.finishSentry({
+        id: props.sentry.id,
+        finish: DateTime.now()
     })
 
     if (res?.errors == undefined) {

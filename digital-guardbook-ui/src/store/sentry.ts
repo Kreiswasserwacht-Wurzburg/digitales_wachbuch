@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type { Sentry, SentryStart } from '@/models/sentry'
+import type { Sentry, SentryStart, SentryFinish } from '@/models/sentry'
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 
@@ -85,5 +85,18 @@ export const useSentryStore = defineStore('sentry', () => {
         loading.value = false
     }
 
-    return { active, loading, sentry, getActiveSentry, startSentry }
+    async function finishSentry(_sentry:SentryFinish) {
+        const result = apolloClient.mutate({
+            mutation: gql`
+                mutation ($sentry: SentryFinishType!) {
+                    finishSentry(sentry: $sentry)
+                }
+            `,
+            variables: {
+                sentry: _sentry
+            }
+        })
+    }
+
+    return { active, loading, sentry, getActiveSentry, startSentry, finishSentry }
 })

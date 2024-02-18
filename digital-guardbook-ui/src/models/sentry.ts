@@ -24,3 +24,8 @@ export interface Sentry {
     organisation: Organisation,
     guards: GuardService[]
 }
+
+export interface SentryFinish {
+    id: string,
+    finish: DateTime
+}
