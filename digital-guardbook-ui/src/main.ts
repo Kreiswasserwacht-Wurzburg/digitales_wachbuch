@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.css"
 
-import { createApp} from 'vue'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
@@ -32,6 +33,7 @@ const app = createApp(App)
 app.provide(DefaultApolloClient, apolloClient)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.use(createPinia())
 app.use(router)
 app.use(i18n)
 
