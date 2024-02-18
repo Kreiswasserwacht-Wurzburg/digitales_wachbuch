@@ -3,9 +3,8 @@ import { useQuery, useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { ref, computed, onMounted } from 'vue';
 import type { Ref } from 'vue';
-import type SentryStart from './sentry';
 import { DateTime } from 'luxon';
-import type { Sentry } from './sentry';
+import type { Sentry, SentryStart } from '@/models/sentry';
 
 import { useI18n } from 'vue-i18n'
 

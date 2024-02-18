@@ -1,0 +1,27 @@
+query {
+    activeSentry {
+        id,
+        start,
+        end,
+        registration,
+        organisation {
+            name
+        },
+        supervisors {
+            start,
+            end,
+            guard {
+                firstName
+                lastName
+            }
+        },
+        guards {
+            start,
+            end,
+            guard {
+                firstName,
+                lastName
+            }
+        }
+    }
+}

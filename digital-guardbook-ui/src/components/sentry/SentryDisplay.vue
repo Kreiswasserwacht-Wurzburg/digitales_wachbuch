@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { useMutation } from '@vue/apollo-composable';
-import type { Sentry } from './sentry';
+import type { Sentry } from '@/models/sentry';
 import gql from 'graphql-tag'
 import { DateTime } from 'luxon'
 import { computed } from 'vue';

@@ -13,7 +13,7 @@ export interface Organisation {
     members: Person[]
 }
 
-export default interface SentryStart {
+export interface SentryStart {
     start: DateTime,
     registration?: DateTime,
     supervisor?: Person,

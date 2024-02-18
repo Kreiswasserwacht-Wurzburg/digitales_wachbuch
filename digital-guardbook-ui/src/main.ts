@@ -2,8 +2,7 @@ import "bootstrap/dist/css/bootstrap.css"
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import apolloClient from '@/plugins/apollo'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 
 /* import font awesome icon component */
@@ -12,21 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import App from './App.vue'
 import router from './router'
 import i18n from './i18n/index'
-
-const httpLink = createHttpLink({
-  uri: '/api',
-  fetch: (reqInfo: RequestInfo | URL, options: RequestInit | undefined) => {
-    return fetch(reqInfo, options)
-  },
-})
-
-const cache = new InMemoryCache()
-
-// Create the apollo client
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache
-})
 
 const app = createApp(App)
 
