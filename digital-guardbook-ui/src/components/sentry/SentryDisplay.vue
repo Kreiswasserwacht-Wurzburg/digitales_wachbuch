@@ -61,14 +61,17 @@ function getDateTime(dt: DateTime | string): Date {
             <tr>
                 <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
                 <td><template v-if="sentry.registration">
-                    {{ d(getDateTime(sentry.registration), "shortDateTime") }} <a
-                            class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
+                        {{ d(getDateTime(sentry.registration), "shortDateTime") }}
+                    </template>
+                    <template v-else><a class="btn btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#registrationModal"><font-awesome-icon
                                 :icon="['fa', 'square-phone-flip']" /></a>
                     </template>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
-                        data-bs-target="#changeSupervisorModal"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#"
+                        data-bs-toggle="modal" data-bs-target="#changeSupervisorModal"><font-awesome-icon
+                            :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>
         </tbody>
