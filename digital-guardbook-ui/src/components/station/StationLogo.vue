@@ -1,24 +1,19 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
-import { ref, watch } from 'vue'
 
-const { result } = useQuery(gql`
-    query {
-        station {
-            name
-        }
-    }
-`)
+import { useStationStore } from '@/store/station';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 
-const url = ref('')
+const store = useStationStore()
+const { logo, loading } = storeToRefs(store)
 
-watch(result, () => {
-    url.value = `https://meine.wasserwacht.bayern/logogenerator/H.php?kv=${result?.value?.station?.name}&ov=`
+onMounted(() => {
+    store.fetch()
 })
+
 </script>
 
 <template>
-    <img :src="url" alt="Logo Wasserwacht Bayern"
+    <img :src="logo" alt="Logo Wasserwacht Bayern"
         class="d-inline-block align-top" height="75" />
 </template>
