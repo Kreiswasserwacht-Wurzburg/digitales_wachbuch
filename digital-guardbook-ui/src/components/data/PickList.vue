@@ -9,8 +9,8 @@ const { t, n, d } = useI18n({
 export interface Props {
   data: any[],
   selection: any[],
-  dragDrop: boolean,
-  multiselect: boolean
+  dragDrop: {type: boolean, required: false},
+  multiselect:  {type: boolean, required: false}
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -50,7 +50,7 @@ function xor(lhs: boolean, rhs: boolean): boolean {
 }
 
 function addItemToSelection(item: any) {
-  if (!props.selection.find((x) => x.id == item.id)) {
+  if (!itemAlreadySelected(item)) {
     props.selection.push(item)
     emit("value:selection", props.selection)
   }
@@ -61,6 +61,10 @@ function removeItemFromSelection(item: any) {
   if (index > -1) {
     props.selection.splice(index, 1)
   }
+}
+
+function itemAlreadySelected(item: any): boolean {
+  return props.selection.find((x) => x.id == item.id)
 }
 </script>
 
@@ -74,16 +78,16 @@ function removeItemFromSelection(item: any) {
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <h2>
+        <div>
           <slot name="sourceTitle"></slot>
-        </h2>
+        </div>
         <div>
           <input type="text" class="form-control" :placeholder="t('common.search')" />
           <div class="dropzone h-100" :class="{ dragover: dragState.source.dragenter }"
             @dragenter="dragState.source.dragenter = true; $event.preventDefault()"
             @dragleave="dragState.source.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()">
             <ul class="list-group">
-              <li class="list-group-item" :class="{ 'active': item.selected }" v-for="item in data"
+              <li class="list-group-item" :class="{ 'active': item.selected, 'disabled': itemAlreadySelected(item) }" v-for="item in data"
                 @dblclick="addItemToSelection(item)">
                 <div :data-id="item.id" :draggable="dragDrop" @dragstart="startDrag($event, item)">
                   <slot name="item" v-bind="item"></slot>
@@ -94,9 +98,9 @@ function removeItemFromSelection(item: any) {
         </div>
       </div>
       <div class="col">
-        <h2>
+        <div>
           <slot name="targetTitle"></slot>
-        </h2>
+        </div>
         <div class="dropzone h-100" :class="{ dragover: dragState.target.dragenter }"
           @dragenter="dragState.target.dragenter = true; $event.preventDefault()"
           @dragleave="dragState.target.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()"
