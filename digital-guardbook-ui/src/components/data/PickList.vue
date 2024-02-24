@@ -9,8 +9,8 @@ const { t, n, d } = useI18n({
 export interface Props {
   data: any[],
   selection: any[],
-  dragDrop: {type: boolean, required: false},
-  multiselect:  {type: boolean, required: false}
+  dragDrop: boolean,
+  multiselect: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -34,13 +34,16 @@ const dragState = ref({
 })
 
 function startDrag(event: DragEvent, item: any) {
-  event.dataTransfer.setData("key", item.id)
+  event.dataTransfer?.setData("key", item.id)
 }
 
 function onDrop(event: DragEvent) {
-  const key = event.dataTransfer.getData("key");
+  const key = event.dataTransfer?.getData("key");
   const item = props.data.find((item) => item.id == key)
-  addItemToSelection(item)
+
+  if (item) {
+    addItemToSelection(item)
+  }
 
   dragState.value.target.dragenter = false
 }
@@ -87,8 +90,8 @@ function itemAlreadySelected(item: any): boolean {
             @dragenter="dragState.source.dragenter = true; $event.preventDefault()"
             @dragleave="dragState.source.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()">
             <ul class="list-group">
-              <li class="list-group-item" :class="{ 'active': item.selected, 'disabled': itemAlreadySelected(item) }" v-for="item in data"
-                @dblclick="addItemToSelection(item)">
+              <li class="list-group-item" :class="{ 'active': item.selected, 'disabled': itemAlreadySelected(item) }"
+                v-for="item in data" @dblclick="addItemToSelection(item)">
                 <div :data-id="item.id" :draggable="dragDrop" @dragstart="startDrag($event, item)">
                   <slot name="item" v-bind="item"></slot>
                 </div>
