@@ -48,10 +48,6 @@ function onDrop(event: DragEvent) {
   dragState.value.target.dragenter = false
 }
 
-function xor(lhs: boolean, rhs: boolean): boolean {
-  return !(lhs == rhs);
-}
-
 function addItemToSelection(item: any) {
   if (!itemAlreadySelected(item)) {
     props.selection.push(item)
