@@ -1,0 +1,98 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { ref } from 'vue';
+
+const { t, n, d } = useI18n({
+  useScope: 'global'
+})
+
+export interface Props {
+  data: any[],
+  selection: any[],
+  dragDrop: boolean
+}
+
+const props = withDefaults(defineProps<Props>(),{
+  data: Array<any>,
+  selection: Array<any>,
+  dragDrop: true
+})
+
+const dragState = ref({
+  source: {
+    dragenter: false
+  },
+  target: {
+    dragenter: false
+  }
+})
+
+function startDrag(event: DragEvent, item: any) {
+  event.dataTransfer.setData("key", item.id)
+}
+
+function onDrop(event: DragEvent) {
+  const key = event.dataTransfer.getData("key");
+  if (!props.selection.find((item) => item.id == key)) {
+    const item = props.data.find((item) => item.id == key)
+    props.selection.push(item)
+  }
+
+  dragState.value.target.dragenter = false
+}
+
+
+function xor(lhs: boolean, rhs: boolean): boolean
+{
+  return !(lhs == rhs);
+}
+</script>
+
+<style scoped>
+.dragover {
+  border: 1px dashed #ccc
+}
+</style>
+
+<template>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h2>
+          <slot name="sourceTitle"></slot>
+        </h2>
+        <div>
+          <input type="text" class="form-control" :placeholder="t('common.search')" />
+          <div class="dropzone h-100" :class="{ dragover: dragState.source.dragenter }"
+            @dragenter="dragState.source.dragenter = true; $event.preventDefault()"
+            @dragleave="dragState.source.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()">
+            <ul class="list-group">
+              <li class="list-group-item" :class="{'active': item.selected}" v-for="item in data">
+                <div :data-id="item.id" :draggable="dragDrop" @dragstart="startDrag($event, item)">
+                  <slot name="item" v-bind="item"></slot>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h2>
+          <slot name="targetTitle"></slot>
+        </h2>
+        <div class="dropzone h-100" :class="{ dragover: dragState.target.dragenter }"
+          @dragenter="dragState.target.dragenter = true; $event.preventDefault()"
+          @dragleave="dragState.target.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()"
+          @drop="onDrop($event)">
+          <ul class="list-group">
+            <li class="list-group-item" v-for="item in selection">
+              <div :data-id="item.id" :draggable="dragDrop">
+                <slot name="item" v-bind="item"></slot>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
