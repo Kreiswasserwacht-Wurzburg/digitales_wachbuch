@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { Station } from '@/models/station'
+import type { Station } from '@/models/station'
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 

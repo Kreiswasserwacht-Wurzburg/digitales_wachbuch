@@ -15,17 +15,17 @@ const store = useLogBookStore()
 const { logBookEntries, loading} = storeToRefs(store)
 
 const props = defineProps<{
-    from: DateTime | string,
-    to?: DateTime | string
+    from: DateTime,
+    to?: DateTime
 }>();
 
 onMounted(() => {
     store.fetchByTime(props.from, props.to)
 })
 
-function convertDateTimeToString(dt: string)
+function convertDateTimeToString(dt: string): Date
 {
-    return DateTime.fromISO(dt).toLocaleString(DateTime.DATETIME_SHORT)
+    return DateTime.fromISO(dt).toJSDate()
 }
 </script>
 
@@ -41,7 +41,7 @@ function convertDateTimeToString(dt: string)
         </thead>
         <tbody v-if="!loading"  class="table-group-divider">
             <tr v-for="entry in logBookEntries">
-                <th scope="row">{{ d(entry.time,'shortDateTime') }}</th>
+                <th scope="row">{{ d(convertDateTimeToString(entry.time),'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>
                 <td>{{ entry.message }}</td>
             </tr>

@@ -31,18 +31,18 @@ onMounted(() => {
         <template v-if="!loading">
             <div class="card">
                 <div class="card-body">
-                    <SentryDisplay v-model:sentry="sentry" v-if="active" />
+                    <SentryDisplay v-model:sentry="sentry" v-if="active && sentry" />
                     <SentryStart v-else @created="sentry = $event" />
                 </div>
             </div>
             <div class="card" v-if="active">
                 <div class="card-body">
-                    <LogBookEntryList v-model:from="sentry.start" />
+                    <LogBookEntryList v-model:from="sentry.start" v-if="sentry"/>
                 </div>
             </div>
         </template>
     </div>
-    <div class="col-md-3" v-if="active">
+    <div class="col-md-3" v-if="active && sentry">
         <div class="card">
             <div class="card-body">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="currentColor"

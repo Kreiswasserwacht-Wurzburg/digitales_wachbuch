@@ -4,10 +4,12 @@ import type { Ref } from 'vue';
 import { DateTime } from 'luxon';
 import { useSentryStore } from '@/store/sentry'
 import { useOrganisationStore } from '@/store/organisation'
-import type { Sentry, SentryStart } from '@/models/sentry';
+import type { Sentry } from '@/models/sentry';
+import type { Person } from '@/models/person';
 import { storeToRefs } from 'pinia'
 
 import { useI18n } from 'vue-i18n'
+
 
 const { t } = useI18n({
     useScope: 'global'
@@ -22,16 +24,18 @@ const emit = defineEmits<{
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-const sentry: Ref<SentryStart> = ref({
+const sentry: Ref<Sentry> = ref({
     start: DateTime.now(),
-} as SentryStart)
+} as Sentry)
+
+const supervisor = ref<Person>()
 
 const start = computed(() => { return sentry.value.start.toFormat("yyyy-MM-dd'T'T") })
 
 let manualEdit: Boolean = false;
 
 function allDataFilled(): boolean {
-    return sentry.value.start != null && sentry.value.organisation != null && sentry.value.supervisor != null;
+    return sentry.value.start != null && sentry.value.organisation != null && supervisor.value != null;
 }
 
 async function setTime() {
@@ -51,17 +55,17 @@ async function submitForm(): Promise<void> {
         var res = await store.startSentry({
             start: formattedStart,
             organisation: {
-                id: sentry.value.organisation?.id,
+                id: sentry.value.organisation?.id ?? "",
             },
             supervisors: [{
                 start: formattedStart,
                 guard: {
-                    id: sentry.value.supervisor?.id
+                    id: supervisor?.value?.id ?? ""
                 }
             }]
         });
 
-        emit('created', res?.data.startSentry);
+        emit('created', res);
     }
 }
 
@@ -91,7 +95,7 @@ onMounted(() => {
         <div class="row mb-3">
             <label for="name" class="form-label col-sm-2 ">{{ t('sentry.supervisor') }}</label>
             <div class="col-sm-10">
-                <select v-model="sentry.supervisor" class="form-select" required
+                <select v-model="supervisor" class="form-select" required
                     :class="{ disabled: sentry.organisation?.members }">
                     <option disabled :value="null">Please select one</option>
                     <option v-for="member in sentry.organisation?.members" :value="member" :key="member.id">{{
