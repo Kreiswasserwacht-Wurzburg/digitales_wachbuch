@@ -42,5 +42,5 @@ export const useLogBookStore = defineStore('logBook', () => {
         loading.value = false
     }
 
-    return { logBookEntries, loading, socket, fetchByTime }
+    return { logBookEntries, loading, fetchByTime }
 })
