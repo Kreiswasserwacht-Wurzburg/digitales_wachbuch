@@ -1,19 +1,8 @@
 import { DateTime } from "luxon";
+import type { Person } from `./person`;
+import type { Organisation } from `./organisation`;
 
-export interface Person {
-    id: string,
-    firstName: string,
-    lastName: string
-}
-
-export interface Organisation {
-    id: string,
-    name: string,
-    number: number,
-    members: Person[]
-}
-
-export default interface SentryStart {
+export interface SentryStart {
     start: DateTime,
     registration?: DateTime,
     supervisor?: Person,
@@ -34,4 +23,9 @@ export interface Sentry {
     supervisors: GuardService[],
     organisation: Organisation,
     guards: GuardService[]
+}
+
+export interface SentryFinish {
+    id: string,
+    finish: DateTime
 }

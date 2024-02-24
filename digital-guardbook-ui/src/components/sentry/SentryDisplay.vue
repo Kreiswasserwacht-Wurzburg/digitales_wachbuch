@@ -1,14 +1,22 @@
 <script setup lang="ts">
 
-import { useMutation } from '@vue/apollo-composable';
-import type { Sentry } from './sentry';
-import gql from 'graphql-tag'
+import type { Sentry } from '@/models/sentry';
+import { useSentryStore } from '@/store/sentry'
 import { DateTime } from 'luxon'
-import { computed } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-icons'
+import { storeToRefs } from 'pinia'
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
+
+import { useI18n } from 'vue-i18n'
+
+const store = useSentryStore()
+const { activeSupervisor } = storeToRefs(store)
+
+const { t, n, d } = useI18n({
+    useScope: 'global'
+})
 
 const props = defineProps<{
     sentry: Sentry
@@ -18,29 +26,10 @@ const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
 
-const { mutate: finishSentry } = useMutation(gql`
-    mutation ($sentry: SentryFinishType!) {
-        finishSentry(sentry: $sentry)
-    }
-`)
-
-const { mutate: registerSentry } = useMutation(gql`
-    mutation ($sentry: SentryRegisterType!) {
-        registerSentry(sentry: $sentry)
-    }
-`)
-
-const supervisor = computed(() => {
-    let activeSupervisor = props.sentry.supervisors.find(x => x.end == undefined)?.guard;
-    return `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}`
-})
-
 async function submit(): Promise<void> {
-    var res = await finishSentry({
-        "sentry": {
-            "id": props.sentry.id,
-            "finish": DateTime.now().toString()
-        }
+    var res = await store.finishSentry({
+        id: props.sentry.id,
+        finish: DateTime.now()
     })
 
     if (res?.errors == undefined) {
@@ -48,15 +37,12 @@ async function submit(): Promise<void> {
     }
 }
 
-function convertDateTimeToString(dt: DateTime | string | undefined): string {
-    if (dt == undefined) {
-        return "";
-    }
-    else if (typeof (dt) == typeof (DateTime)) {
-        return dt.toLocaleString(DateTime.DATETIME_SHORT);
+function getDateTime(dt: DateTime | string): Date {
+    if (typeof (dt) == typeof (DateTime)) {
+        return (dt as DateTime).toJSDate();
     }
     else {
-        return DateTime.fromISO(dt as string).toLocaleString(DateTime.DATETIME_SHORT)
+        return DateTime.fromISO(dt as string).toJSDate();
     }
 }
 
@@ -84,27 +70,33 @@ async function saveRegistration(): Promise<void> {
     <table class="table table-borderless">
         <thead>
             <tr>
-                <th>Start</th>
-                <th>Registration</th>
-                <th>Organisation</th>
-                <th>Wachleiter</th>
+                <th>{{ t('sentry.startTime') }}</th>
+                <th>{{ t('sentry.registrationTime') }}</th>
+                <th>{{ t('sentry.organisation') }}</th>
+                <th>{{ t('sentry.supervisor') }}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{ convertDateTimeToString(sentry.start) }}</td>
-                <td>{{ convertDateTimeToString(sentry.registration) }} <a class="btn btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#registrationModal" ><font-awesome-icon :icon="['fa', 'square-phone-flip']" /></a>
+                <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
+                <td><template v-if="sentry.registration">
+                        {{ d(getDateTime(sentry.registration), "shortDateTime") }}
+                    </template>
+                    <template v-else><a class="btn btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#registrationModal"><font-awesome-icon
+                                :icon="['fa', 'square-phone-flip']" /></a>
+                    </template>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ supervisor }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
-                        data-bs-target="#changeSupervisorModal"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#"
+                        data-bs-toggle="modal" data-bs-target="#changeSupervisorModal"><font-awesome-icon
+                            :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <button type="submit" class="btn btn-primary" @click.prevent="submit()">Wachdienst beenden</button>
+    <button type="submit" class="btn btn-primary" @click.prevent="submit()">{{ t('sentry.stopAction') }}</button>
 
     <div class="modal" id="registrationModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

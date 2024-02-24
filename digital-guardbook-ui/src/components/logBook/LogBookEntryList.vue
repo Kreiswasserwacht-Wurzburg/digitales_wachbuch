@@ -1,7 +1,19 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
 import { DateTime } from 'luxon';
+import type { LogBookEntry } from './logBookEntry'
+import { useLogBookStore } from '@/store/logBook'
+import { storeToRefs } from 'pinia'
+
+import { useI18n } from 'vue-i18n'
+import { onMounted } from 'vue';
+
+const {t,n,d} = useI18n({
+  useScope: 'global'
+})
+
+const store = useLogBookStore()
+
+const { logBookEntries, loading} = storeToRefs(store)
 
 const socket = new WebSocket("ws://localhost:5282/ws");
 
@@ -14,16 +26,9 @@ const props = defineProps<{
     to?: DateTime | string
 }>();
 
-const { result, loading, refetch } = useQuery(gql`
-    query ($from: String!, $to: String) {
-        logBookEntries(from: $from, to: $to) {
-            time
-            author
-            message
-        }
-    }`, {
-        from: props.from.toString()
-    })
+onMounted(() => {
+    store.fetchByTime(props.from, props.to)
+})
 
 function convertDateTimeToString(dt: string)
 {
@@ -33,18 +38,18 @@ function convertDateTimeToString(dt: string)
 </script>
 
 <template>
-    <h2>Log-Buch</h2>
+    <h2>{{t('logBook.title')}}</h2>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Zeit</th>
-                <th scope="col">Autor</th>
-                <th scope="col">Text</th>
+                <th scope="col">{{t('logBook.time')}}</th>
+                <th scope="col">{{t('logBook.author')}}</th>
+                <th scope="col">{{t('logBook.message')}}</th>
             </tr>
         </thead>
         <tbody v-if="!loading"  class="table-group-divider">
-            <tr v-for="entry in result?.logBookEntries">
-                <th scope="row">{{ convertDateTimeToString(entry.time) }}</th>
+            <tr v-for="entry in logBookEntries">
+                <th scope="row">{{ d(entry.time,'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>
                 <td>{{ entry.message }}</td>
             </tr>

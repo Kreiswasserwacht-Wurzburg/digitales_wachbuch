@@ -1,78 +1,55 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
-import { ref, watch } from 'vue';
+
 import SentryDisplay from './SentryDisplay.vue';
 import SentryStart from './SentryStart.vue';
 import GuardsList from './GuardsList.vue';
 import LogBookEntryList from '@/components/logBook/LogBookEntryList.vue';
-import type { Sentry } from './sentry';
+import { useSentryStore } from '@/store/sentry'
+import { storeToRefs } from 'pinia'
 
 // const sentry: Ref<Sentry | null> = ref(null)
 
+import { useI18n } from 'vue-i18n'
+import { onMounted } from 'vue';
 
-const { result: query, loading } = useQuery(gql`
-    query{
-        activeSentry {
-            id,
-            start,
-            end,
-            registration,
-            organisation {
-                name
-            },
-            supervisors {
-                start,
-                end,
-                guard {
-                    firstName
-                    lastName
-                }
-            },
-            guards {
-                start,
-                end,
-                guard {
-                    firstName,
-                    lastName
-                }
-            }
-        }
-    }
-`)
+const { t } = useI18n({
+    useScope: 'global'
+})
 
-const sentry = ref<Sentry>();
+const store = useSentryStore()
 
-watch(query, async (newValue) => {
-    sentry.value = newValue.activeSentry
+const { active, loading, sentry} = storeToRefs(store)
+
+onMounted(() => {
+    store.getActiveSentry()
 })
 
 </script>
 
 <template>
-    <div :class="{ 'col-md-6': sentry, 'col-md-9': !sentry }">
+    <div :class="{ 'col-md-6': active, 'col-md-9': !active }">
         <template v-if="!loading">
             <div class="card">
                 <div class="card-body">
-                    <SentryDisplay v-model:sentry="sentry" v-if="sentry" />
+                    <SentryDisplay v-model:sentry="sentry" v-if="active" />
                     <SentryStart v-else @created="sentry = $event" />
                 </div>
             </div>
-            <div class="card" v-if="sentry">
+            <div class="card" v-if="active">
                 <div class="card-body">
-                    <LogBookEntryList v-model:from="sentry.start"/>
+                    <LogBookEntryList v-model:from="sentry.start" />
                 </div>
             </div>
         </template>
     </div>
-    <div class="col-md-3" v-if="sentry">
+    <div class="col-md-3" v-if="active">
         <div class="card">
             <div class="card-body">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle-fill" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8" cy="8" r="8" />
                 </svg>
-                Aktive Wachmannschaft
+                {{ t('sentry.activeGuards') }}
 
                 <GuardsList v-model:guards="sentry.guards" />
 
