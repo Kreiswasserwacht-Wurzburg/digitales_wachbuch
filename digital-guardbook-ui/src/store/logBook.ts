@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
-import { LogBookEntry } from '@/models/logBook'
+import type { LogBookEntry } from '@/models/logBook'
 import { DateTime } from 'luxon'
 import { type } from 'os'
 import { RefSymbol } from '@vue/reactivity'
@@ -18,7 +18,7 @@ export const useLogBookStore = defineStore('logBook', () => {
         fetchByTime(dateFrom.value, dateTo.value);
     }
 
-    async function fetchByTime(from: DateTime, to: DateTime | null) {
+    async function fetchByTime(from: DateTime, to: DateTime | undefined) {
         loading.value = true
         dateFrom.value = from
         dateTo.value = to

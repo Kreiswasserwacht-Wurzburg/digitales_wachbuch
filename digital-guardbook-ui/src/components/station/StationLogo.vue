@@ -14,6 +14,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <img :src="logo" alt="Logo Wasserwacht Bayern"
+    <img :src="logo.toString()" alt="Logo Wasserwacht Bayern"
         class="d-inline-block align-top" height="75" />
 </template>

@@ -5,21 +5,28 @@ import { storeToRefs } from 'pinia'
 
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue';
-import { vModelCheckbox } from 'vue';
 
 const store = useLogBookStore()
 
 const { logBookEntries, loading, socket} = storeToRefs(store)
 
 const props = defineProps<{
-    from: DateTime | string,
-    to?: DateTime | string
+    from: DateTime,
+    to?: DateTime
 }>();
 
 const {t,n,d} = useI18n({
   useScope: 'global'
 })
 
+const store = useLogBookStore()
+
+const { logBookEntries, loading} = storeToRefs(store)
+
+const props = defineProps<{
+    from: DateTime,
+    to?: DateTime
+}>();
 
 onMounted(() => {
     store.fetchByTime(props.from, props.to)

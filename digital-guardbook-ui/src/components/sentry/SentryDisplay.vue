@@ -34,9 +34,7 @@ async function submit(): Promise<void> {
         finish: DateTime.now()
     })
 
-    if (res?.errors == undefined) {
-        emit("update:sentry", undefined);
-    }
+    emit("update:sentry", undefined);
 }
 
 function getDateTime(dt: DateTime | string): Date {
