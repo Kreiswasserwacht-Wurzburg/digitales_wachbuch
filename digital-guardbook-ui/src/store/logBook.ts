@@ -4,8 +4,6 @@ import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 import type { LogBookEntry } from '@/models/logBook'
 import { DateTime } from 'luxon'
-import { type } from 'os'
-import { RefSymbol } from '@vue/reactivity'
 
 export const useLogBookStore = defineStore('logBook', () => {
     const logBookEntries = ref<LogBookEntry[]>()

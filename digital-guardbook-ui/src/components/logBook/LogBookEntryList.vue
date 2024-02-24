@@ -8,7 +8,7 @@ import { onMounted } from 'vue';
 
 const store = useLogBookStore()
 
-const { logBookEntries, loading, socket} = storeToRefs(store)
+const { logBookEntries, loading} = storeToRefs(store)
 
 const props = defineProps<{
     from: DateTime,
@@ -18,15 +18,6 @@ const props = defineProps<{
 const {t,n,d} = useI18n({
   useScope: 'global'
 })
-
-const store = useLogBookStore()
-
-const { logBookEntries, loading} = storeToRefs(store)
-
-const props = defineProps<{
-    from: DateTime,
-    to?: DateTime
-}>();
 
 onMounted(() => {
     store.fetchByTime(props.from, props.to)

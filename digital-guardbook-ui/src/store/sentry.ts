@@ -117,6 +117,8 @@ export const useSentryStore = defineStore('sentry', () => {
                 sentry: _sentry,
             }
         })
+
+        return result
     }
 
     return { active, loading, sentry, getActiveSentry, startSentry, finishSentry, registerSentry, activeSupervisor }
