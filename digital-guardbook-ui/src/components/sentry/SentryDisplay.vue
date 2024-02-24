@@ -50,7 +50,7 @@ async function saveRegistration(): Promise<void> {
 
     var res = await store.registerSentry({
         id: props.sentry.id,
-        registration: DateTime.fromISO(props.sentry.registration).toISO(),
+        registration: <DateTime>props.sentry.registration,
     })
 
     if (res?.errors == undefined) {

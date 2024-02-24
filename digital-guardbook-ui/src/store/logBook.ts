@@ -10,13 +10,12 @@ export const useLogBookStore = defineStore('logBook', () => {
     const loading = ref<Boolean>(false)
     const socket = ref<WebSocket>(new WebSocket("ws://localhost:5282/ws"));
     const dateFrom = ref<DateTime>()
-    const dateTo = ref<DateTime>()
+    const dateTo = ref<DateTime | undefined>()
 
     socket.value.onmessage = function(event){
-        fetchByTime(dateFrom.value, dateTo.value);
+        fetchByTime(<DateTime>dateFrom.value, dateTo.value);
     }
 
-    async function fetchByTime(from: DateTime, to: DateTime | undefined) {
     async function fetchByTime(from: DateTime, to: DateTime | undefined) {
         loading.value = true
         dateFrom.value = from

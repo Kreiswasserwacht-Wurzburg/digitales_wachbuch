@@ -87,9 +87,10 @@ export const useSentryStore = defineStore('sentry', () => {
     
         sentry.value = data.activeSentry;
         // Date conversion for input fields if registration is set
-        if (sentry.value != null && sentry.value.registration != null) {
-            sentry.value.registration = DateTime.fromISO(sentry.value.registration).toISO().toString().slice(0,16)
-        }
+        //if (sentry.value != null && sentry.value.registration != null) {
+        //    sentry.value.registration = sentry.value.registration?
+            // sentry.value.registration = DateTime.fromISO(sentry.value.registration).toISO().toString().slice(0,16)
+        //}
         loading.value = false
     }
 

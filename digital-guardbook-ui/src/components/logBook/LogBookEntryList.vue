@@ -54,7 +54,7 @@ onMounted(() => {
         <tbody v-if="!loading" class="table-group-divider">
             <tr v-for="entry in logBookEntries">
                 <!-- <th scope="row">{{ formatDate(entry) }}</th> -->
-                <th scope="row">{{ d(entry.time,'shortDateTime') }}</th>
+                <th scope="row">{{ d(entry.time.toLocaleString(),'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>
                 <td>{{ entry.message }}</td>
             </tr>
