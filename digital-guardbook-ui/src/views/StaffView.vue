@@ -7,19 +7,19 @@ const { t } = useI18n({
 
 import { usePersonStore } from '@/store/person'
 import { storeToRefs } from 'pinia'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import PickList from '@/components/data/PickList.vue'
-import type { Person } from '@/models/person'
+import { useSentryStore } from '../store/sentry';
 
 
 const store = usePersonStore()
-
+const sentryStore = useSentryStore()
 const { loading, persons } = storeToRefs(store)
-
-const selection = ref<Person[]>([])
+const { guards } = storeToRefs(sentryStore)
 
 onMounted(() => {
     store.fetchAll()
+    sentryStore.getActiveSentry()
 })
 
 </script>
@@ -28,10 +28,10 @@ onMounted(() => {
     <main>
         <div class="container-fluid">
             <div class="row my-3">
-                <PickList v-model:data="persons" v-model:selection="selection" v-if="!loading && persons" class="vh-100">
+                <PickList v-model:data="persons" v-model:selection="guards" v-if="!loading && persons" class="vh-100">
                     <template #sourceTitle>Source</template>
                     <template #targetTitle>Target</template>
-                    <template #item="{firstName, lastName}">
+                    <template #item="{ firstName, lastName }">
                         {{ firstName }} {{ lastName }}
                     </template>
                 </PickList>
