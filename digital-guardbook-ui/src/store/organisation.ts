@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { Organisation } from '@/models/organisation'
+import type { Organisation } from '@/models/organisation'
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 

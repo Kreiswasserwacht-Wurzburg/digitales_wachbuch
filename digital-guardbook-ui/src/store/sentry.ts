@@ -47,6 +47,8 @@ export const useSentryStore = defineStore('sentry', () => {
         })
 
         sentry.value = result.data.startSentry
+
+        return result.data.startSentry
     }
 
     async function getActiveSentry() {
