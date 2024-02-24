@@ -9,9 +9,9 @@ import { vModelCheckbox } from 'vue';
 
 const store = useLogBookStore()
 
-const { logBookEntries, loading} = storeToRefs(store)
+const { logBookEntries, loading, socket} = storeToRefs(store)
 
-const socket = new WebSocket("ws://localhost:5282/ws");
+// const socket = new WebSocket("ws://localhost:5282/ws");
 
 const props = defineProps<{
     from: DateTime | string,
@@ -19,9 +19,10 @@ const props = defineProps<{
 }>();
 
 
-socket.onmessage = function(event){
-    store.fetchByTime(props.from, props.to);
-}
+// socket.onmessage = function(event){
+//     console.log("Web Socket Message!");
+//     store.fetchByTime(props.from, props.to);
+// }
 
 const {t,n,d} = useI18n({
   useScope: 'global'
