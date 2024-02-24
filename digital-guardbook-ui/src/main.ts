@@ -23,4 +23,6 @@ app.use(i18n)
 
 app.mount('#app')
 
+app.config.globalProperties.window = window
+
 import "bootstrap/dist/js/bootstrap.js"
