@@ -141,7 +141,7 @@
     <value>Wachleiter {0} {1} hat den Dienst beendet.</value>
     <comment/>
   </data>
-  <data name="RegisteredSentry" xml:space="preserve">
+  <data name="SentryRegistered" xml:space="preserve">
     <value>Bei ILS Angemeldet</value>
     <comment/>
   </data>

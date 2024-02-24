@@ -1,11 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-<<<<<<< HEAD
-import type { Sentry, SentryStart, SentryFinish } from '@/models/sentry'
-=======
 import { DateTime } from 'luxon'
 import type { Sentry, SentryStart, SentryFinish, SentryRegister } from '@/models/sentry'
->>>>>>> ba4e716 (Squashed commit of the following:)
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 
@@ -86,17 +82,12 @@ export const useSentryStore = defineStore('sentry', () => {
             }`,
             fetchPolicy: 'no-cache'
         })
-<<<<<<< HEAD
-
-        sentry.value = data.activeSentry
-=======
     
         sentry.value = data.activeSentry;
         // Date conversion for input fields if registration is set
-        if (sentry._value != null && sentry.value.registration != null) {
+        if (sentry.value != null && sentry.value.registration != null) {
             sentry.value.registration = DateTime.fromISO(sentry.value.registration).toISO().toString().slice(0,16)
         }
->>>>>>> ba4e716 (Squashed commit of the following:)
         loading.value = false
     }
 
@@ -113,9 +104,6 @@ export const useSentryStore = defineStore('sentry', () => {
         })
     }
 
-<<<<<<< HEAD
-    return { active, loading, sentry, getActiveSentry, startSentry, finishSentry, activeSupervisor }
-=======
     async function registerSentry(_sentry: SentryRegister) {
         const result = apolloClient.mutate({
             mutation: gql`
@@ -130,5 +118,4 @@ export const useSentryStore = defineStore('sentry', () => {
     }
 
     return { active, loading, sentry, getActiveSentry, startSentry, finishSentry, registerSentry, activeSupervisor }
->>>>>>> ba4e716 (Squashed commit of the following:)
 })

@@ -26,6 +26,8 @@ const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
 
+const prevRegistration = props.sentry.registration;
+
 async function submit(): Promise<void> {
     var res = await store.finishSentry({
         id: props.sentry.id,

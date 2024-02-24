@@ -11,18 +11,10 @@ const store = useLogBookStore()
 
 const { logBookEntries, loading, socket} = storeToRefs(store)
 
-// const socket = new WebSocket("ws://localhost:5282/ws");
-
 const props = defineProps<{
     from: DateTime | string,
     to?: DateTime | string
 }>();
-
-
-// socket.onmessage = function(event){
-//     console.log("Web Socket Message!");
-//     store.fetchByTime(props.from, props.to);
-// }
 
 const {t,n,d} = useI18n({
   useScope: 'global'
@@ -46,7 +38,6 @@ onMounted(() => {
             </tr>
         </thead>
         <tbody v-if="!loading"  class="table-group-divider">
-            <tr v-for="entry in logBookEntries">
             <tr v-for="entry in logBookEntries">
                 <th scope="row">{{ d(entry.time,'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>
