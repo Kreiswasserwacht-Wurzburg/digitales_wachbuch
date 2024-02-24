@@ -17,6 +17,7 @@ export const useLogBookStore = defineStore('logBook', () => {
     }
 
     async function fetchByTime(from: DateTime, to: DateTime | undefined) {
+    async function fetchByTime(from: DateTime, to: DateTime | undefined) {
         loading.value = true
         dateFrom.value = from
         dateTo.value = to
