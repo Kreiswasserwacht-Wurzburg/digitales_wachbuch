@@ -6,6 +6,7 @@ import { DateTime } from 'luxon'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-icons'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
@@ -26,7 +27,9 @@ const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
 
-const prevRegistration = props.sentry.registration;
+
+const formattedRegistration = ref<string>(<string>props.sentry.registration?.toLocaleString().slice(0,16))
+const prevRegistration = formattedRegistration.value
 
 async function submit(): Promise<void> {
     var res = await store.finishSentry({
@@ -50,7 +53,7 @@ async function saveRegistration(): Promise<void> {
 
     var res = await store.registerSentry({
         id: props.sentry.id,
-        registration: <DateTime>props.sentry.registration,
+        registration: <DateTime>DateTime.fromISO(formattedRegistration.value),
     })
 
     if (res?.errors == undefined) {
@@ -62,9 +65,7 @@ async function saveRegistration(): Promise<void> {
 }
 
 async function cancelRegistration(): Promise<void> {
-
-    props.sentry.registration = prevRegistration;
-
+    formattedRegistration.value = prevRegistration
 }
 
 </script>
@@ -81,9 +82,9 @@ async function cancelRegistration(): Promise<void> {
         </thead>
         <tbody>
             <tr>
-                <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
-                <td><template v-if="sentry.registration">
-                    {{ d(getDateTime(sentry.registration), "shortDateTime") }} 
+                <td>{{ d(sentry.start.toLocaleString(), "shortDateTime") }}</td>
+                <td><template v-if="formattedRegistration">
+                    {{ d(formattedRegistration.toLocaleString(), "shortDateTime") }} 
                     </template>
                     <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
                                 :icon="['fa', 'square-phone-flip']" /></a>
@@ -108,7 +109,7 @@ async function cancelRegistration(): Promise<void> {
                 <div class="modal-body">
                     {{ t('sentry.callControlCentre') }}: <a href="tel:+499311234567">0931 / 1234567</a>
                     <hr />
-                    <input type="datetime-local" class="form-control" v-model="sentry.registration"/>
+                    <input type="datetime-local" class="form-control" v-model="formattedRegistration"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" @click="cancelRegistration" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('button.close')}}</button>
