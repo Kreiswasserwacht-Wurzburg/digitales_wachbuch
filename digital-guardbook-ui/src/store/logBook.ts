@@ -4,22 +4,20 @@ import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 import type { LogBookEntry } from '@/models/logBook'
 import { DateTime } from 'luxon'
+import { curSentryStore } from './curSentry'
 
 export const useLogBookStore = defineStore('logBook', () => {
     const logBookEntries = ref<LogBookEntry[]>()
     const loading = ref<Boolean>(false)
     const socket = ref<WebSocket>(new WebSocket("ws://localhost:5282/ws"));
-    const dateFrom = ref<DateTime>()
-    const dateTo = ref<DateTime | undefined>()
+    const curSentry = curSentryStore()
 
     socket.value.onmessage = function(event){
-        fetchByTime(<DateTime>dateFrom.value, dateTo.value);
+        fetchByTime(<DateTime>curSentry.from, curSentry.to)
     }
 
     async function fetchByTime(from: DateTime, to: DateTime | undefined) {
         loading.value = true
-        dateFrom.value = from
-        dateTo.value = to
 
         const { data } = await apolloClient.query({
             query: gql`query ($from: String!, $to: String) {

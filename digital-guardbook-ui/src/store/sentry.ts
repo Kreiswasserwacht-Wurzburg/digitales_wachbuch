@@ -10,6 +10,7 @@ export const useSentryStore = defineStore('sentry', () => {
     const loading = ref<Boolean>(false)
     const active = computed(() => sentry.value?.id != null)
     const activeSupervisor = computed(() => sentry.value?.supervisors.find(x => x.end == undefined)?.guard)
+    
 
     async function startSentry(_sentry: SentryStart) {
         const result = await apolloClient.mutate({

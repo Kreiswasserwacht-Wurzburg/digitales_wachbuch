@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue';
+import { curSentryStore } from '../../store/curSentry';
 import type { LogBookEntry } from '../../models/logBook';
 
 const { t, n, d } = useI18n({
@@ -12,6 +13,7 @@ const { t, n, d } = useI18n({
 })
 
 const store = useLogBookStore()
+const curSentry = curSentryStore()
 
 const { logBookEntries, loading } = storeToRefs(store)
 
@@ -20,8 +22,12 @@ const props = defineProps<{
     to?: DateTime
 }>();
 
+
+
 onMounted(() => {
     store.fetchByTime(props.from, props.to)
+    curSentry.from = props.from
+    curSentry.to = props.to
 })
 </script>
 
