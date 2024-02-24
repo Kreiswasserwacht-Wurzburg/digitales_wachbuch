@@ -1,5 +1,6 @@
 {
   "common": {
+    "search": "Suchen",
     "buttons": {
       "submit": "Speichern",
       "cancel": "Abbrechen"
