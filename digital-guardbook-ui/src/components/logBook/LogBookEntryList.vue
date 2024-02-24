@@ -23,22 +23,6 @@ const props = defineProps<{
 onMounted(() => {
     store.fetchByTime(props.from, props.to)
 })
-
-// function formatDate(entry: LogBookEntry): string {
-//     let dt: Date;
-//     if (typeof (entry.time) == typeof (DateTime)) {
-//         dt = entry.time.toJSDate()
-//     }
-//     else if (typeof (entry.time) == typeof ("")) {
-//         dt = DateTime.fromISO(entry.time as unknown as string).toJSDate()
-//     }
-//     else {
-//         return ""
-//     }
-
-//     return d(dt, 'shortDateTime')
-// }
-
 </script>
 
 <template>
@@ -53,7 +37,6 @@ onMounted(() => {
         </thead>
         <tbody v-if="!loading" class="table-group-divider">
             <tr v-for="entry in logBookEntries">
-                <!-- <th scope="row">{{ formatDate(entry) }}</th> -->
                 <th scope="row">{{ d(entry.time.toLocaleString(),'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>
                 <td>{{ entry.message }}</td>

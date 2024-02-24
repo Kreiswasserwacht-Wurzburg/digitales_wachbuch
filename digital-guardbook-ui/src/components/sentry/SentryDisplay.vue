@@ -40,15 +40,6 @@ async function submit(): Promise<void> {
     emit("update:sentry", undefined);
 }
 
-function getDateTime(dt: DateTime | string): Date {
-    if (typeof (dt) == typeof (DateTime)) {
-        return (dt as DateTime).toJSDate();
-    }
-    else {
-        return DateTime.fromISO(dt as string).toJSDate();
-    }
-}
-
 async function saveRegistration(): Promise<void> {
 
     var res = await store.registerSentry({
