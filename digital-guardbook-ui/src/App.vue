@@ -11,7 +11,7 @@ import ThemeSwitcher from '@/components/general/ThemeSwitcher.vue'
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
           <StationLogo />
-          </router-link>
+        </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -19,10 +19,10 @@ import ThemeSwitcher from '@/components/general/ThemeSwitcher.vue'
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link class="nav-link active" to="/">{{ $t("nav.dashboard") }}</router-link>
+              <router-link class="nav-link" to="/">{{ $t("nav.dashboard") }}</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link disabled" to="/personal">{{ $t("nav.staff") }}</router-link>
+              <router-link class="nav-link" :to="{ name: 'staff' }">{{ $t("nav.staff") }}</router-link>
             </li>
             <li class="nav-item disabled">
               <router-link class="nav-link disabled" to="/mission">{{ $t("nav.operation") }}</router-link>
@@ -30,8 +30,8 @@ import ThemeSwitcher from '@/components/general/ThemeSwitcher.vue'
           </ul>
         </div>
         <div class="navbar-text px-2 mx-2" style="border-right: 1px solid #000;">
-            <Clock class="fw-bold" id="clock"></Clock>
-            <ThemeSwitcher />
+          <Clock class="fw-bold" id="clock"></Clock>
+          <ThemeSwitcher />
         </div>
       </div>
     </nav>
