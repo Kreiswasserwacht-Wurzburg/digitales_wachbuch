@@ -1,16 +1,18 @@
 <script setup lang="ts">
 
-import { useMutation } from '@vue/apollo-composable';
-import type { Sentry } from './sentry';
-import gql from 'graphql-tag'
+import type { Sentry } from '@/models/sentry';
+import { useSentryStore } from '@/store/sentry'
 import { DateTime } from 'luxon'
-import { computed } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-icons'
+import { storeToRefs } from 'pinia'
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
 import { useI18n } from 'vue-i18n'
+
+const store = useSentryStore()
+const { activeSupervisor } = storeToRefs(store)
 
 const { t, n, d } = useI18n({
     useScope: 'global'
@@ -24,28 +26,13 @@ const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
 
-const { mutate: finishSentry } = useMutation(gql`
-    mutation ($sentry: SentryFinishType!) {
-        finishSentry(sentry: $sentry)
-    }
-`)
-
-const supervisor = computed(() => {
-    let activeSupervisor = props.sentry.supervisors.find(x => x.end == undefined)?.guard;
-    return `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}`
-})
-
 async function submit(): Promise<void> {
-    var res = await finishSentry({
-        "sentry": {
-            "id": props.sentry.id,
-            "finish": DateTime.now().toString()
-        }
+    var res = await store.finishSentry({
+        id: props.sentry.id,
+        finish: DateTime.now()
     })
 
-    if (res?.errors == undefined) {
-        emit("update:sentry", undefined);
-    }
+    emit("update:sentry", undefined);
 }
 
 function getDateTime(dt: DateTime | string): Date {
@@ -72,14 +59,17 @@ function getDateTime(dt: DateTime | string): Date {
             <tr>
                 <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
                 <td><template v-if="sentry.registration">
-                    {{ d(getDateTime(sentry.registration), "shortDateTime") }} <a
-                            class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
+                        {{ d(getDateTime(sentry.registration), "shortDateTime") }}
+                    </template>
+                    <template v-else><a class="btn btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#registrationModal"><font-awesome-icon
                                 :icon="['fa', 'square-phone-flip']" /></a>
                     </template>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ supervisor }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
-                        data-bs-target="#changeSupervisorModal"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#"
+                        data-bs-toggle="modal" data-bs-target="#changeSupervisorModal"><font-awesome-icon
+                            :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>
         </tbody>

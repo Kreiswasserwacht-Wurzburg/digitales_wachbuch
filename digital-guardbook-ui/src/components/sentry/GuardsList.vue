@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import type { GuardService } from './sentry'
+import type { GuardService } from '@/models/sentry'
 import { DateTime } from 'luxon'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
