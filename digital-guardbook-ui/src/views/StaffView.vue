@@ -9,8 +9,7 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 import type { Person } from '@/models/person';
 import { ref, watch, computed, onMounted } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
-import { watch, computed } from 'vue';
-import { onBeforeRouteLeave } from 'vue-router';
+import ModalDialog from '@/components/dialog/ModalDialog.vue'
 
 library.add(faFloppyDisk)
 
@@ -104,7 +103,7 @@ var removedGuards = computed(() => {
 })
 
 function save() {
-
+    dialog.value?.open()
 }
 </script>
 
@@ -126,4 +125,26 @@ function save() {
             </div>
         </div>
     </main>
+
+    <ModalDialog ref="dialog">
+        <template #title></template>
+        <template #body>
+            Please select a sentry start time for the following added guards:
+
+            <ul v-if="addedGuards">
+                <li v-for="guard in addedGuards">
+                    {{ guard.firstName }} {{ guard.lastName }}
+                </li>
+            </ul>
+
+            <hr />
+            Please select a sentry end time for the following removed guards:
+
+            <ul v-if="removedGuards">
+                <li v-for="guard in removedGuards">
+                    {{ guard.firstName }} {{ guard.lastName }}
+                </li>
+            </ul>
+        </template>
+    </ModalDialog>
 </template>
