@@ -1,0 +1,41 @@
+name: Continuous Build
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        working-directory: ./src
+        run: dotnet restore DigitalGuardBook.csproj
+      - name: Build
+        working-directory: ./src
+        run: dotnet build --no-restore --no-incremental DigitalGuardBook.csproj
+
+        
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
+    - name: Build
+      working-directory: ./digital-guardbook-ui
+      run: |
+        npm ci
+        npm run build
+                
