@@ -1,16 +1,19 @@
 <script setup lang="ts">
 
-import { useMutation } from '@vue/apollo-composable';
-import type { Sentry } from './sentry';
-import gql from 'graphql-tag'
+import type { Sentry } from '@/models/sentry';
+import { useSentryStore } from '@/store/sentry'
 import { DateTime } from 'luxon'
-import { computed } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-icons'
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
 import { useI18n } from 'vue-i18n'
+
+const store = useSentryStore()
+const { activeSupervisor } = storeToRefs(store)
 
 const { t, n, d } = useI18n({
     useScope: 'global'
@@ -24,38 +27,38 @@ const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
 
-const { mutate: finishSentry } = useMutation(gql`
-    mutation ($sentry: SentryFinishType!) {
-        finishSentry(sentry: $sentry)
-    }
-`)
 
-const supervisor = computed(() => {
-    let activeSupervisor = props.sentry.supervisors.find(x => x.end == undefined)?.guard;
-    return `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}`
-})
+const formattedRegistration = ref<string>(<string>props.sentry.registration?.toLocaleString().slice(0,16))
+const prevRegistration = ref<string>(formattedRegistration.value)
 
 async function submit(): Promise<void> {
-    var res = await finishSentry({
-        "sentry": {
-            "id": props.sentry.id,
-            "finish": DateTime.now().toString()
-        }
+    var res = await store.finishSentry({
+        id: props.sentry.id,
+        finish: DateTime.now()
+    })
+
+    emit("update:sentry", undefined);
+}
+
+async function saveRegistration(): Promise<void> {
+
+    var res = await store.registerSentry({
+        id: props.sentry.id,
+        registration: <DateTime>DateTime.fromISO(formattedRegistration.value),
     })
 
     if (res?.errors == undefined) {
-        emit("update:sentry", undefined);
+
+        emit("update:sentry", props.sentry); 
     }
+    prevRegistration.value = formattedRegistration.value
+    document.getElementById('registrationModal-close')?.click();
 }
 
-function getDateTime(dt: DateTime | string): Date {
-    if (typeof (dt) == typeof (DateTime)) {
-        return (dt as DateTime).toJSDate();
-    }
-    else {
-        return DateTime.fromISO(dt as string).toJSDate();
-    }
+async function cancelRegistration(): Promise<void> {
+    formattedRegistration.value = prevRegistration.value
 }
+
 </script>
 
 <template>
@@ -70,15 +73,15 @@ function getDateTime(dt: DateTime | string): Date {
         </thead>
         <tbody>
             <tr>
-                <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
-                <td><template v-if="sentry.registration">
-                    {{ d(getDateTime(sentry.registration), "shortDateTime") }} <a
-                            class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
-                                :icon="['fa', 'square-phone-flip']" /></a>
+                <td>{{ d(sentry.start.toLocaleString(), "shortDateTime") }}</td>
+                <td><template v-if="formattedRegistration">
+                    {{ d(formattedRegistration.toLocaleString(), "shortDateTime") }} 
                     </template>
+                    <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
+                                :icon="['fa', 'square-phone-flip']" /></a>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ supervisor }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
                         data-bs-target="#changeSupervisorModal"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>
@@ -91,17 +94,17 @@ function getDateTime(dt: DateTime | string): Date {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title">Anmeldung bei der ILS</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title">{{ t('sentry.registerControlCentre') }}</h1>
+                    <button type="button" id="registrationModal-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ILS anrufen: <a href="tel:+499311234567">0931 / 1234567</a>
+                    {{ t('sentry.callControlCentre') }}: <a href="tel:+499311234567">0931 / 1234567</a>
                     <hr />
-                    <input type="datetime-local" class="form-control" v-model="sentry.registration" />
+                    <input type="datetime-local" class="form-control" v-model="formattedRegistration"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" @click="cancelRegistration" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('button.close')}}</button>
+                    <button type="button" @click="saveRegistration" class="btn btn-primary">{{ t('button.save') }}</button>
                 </div>
             </div>
         </div>
@@ -111,28 +114,28 @@ function getDateTime(dt: DateTime | string): Date {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title">Wachleiter wechsel</h1>
+                    <h1 class="modal-title">{{ t('sentry.changeSupervisor') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <label for="newSupervisor" class="form-label col-sm-4">Wachleiter</label>
+                        <label for="newSupervisor" class="form-label col-sm-4">{{ t('sentry.supervisor') }}</label>
                         <div class="col-sm-8">
                             <select id="newSupervisor" class="form-select">
-                                <option disabled :value="null">Please select one</option>
+                                <option disabled :value="null">{{ t('general.select') }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="supervisorChangeTime" class="form-label col-sm-4">Ab</label>
+                        <label for="supervisorChangeTime" class="form-label col-sm-4">{{ t('general.from') }}</label>
                         <div class="col-sm-8">
                             <input id="supervisorChangeTime" type="datetime-local" class="form-control" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('button.close')}}</button>
+                    <button type="button" class="btn btn-primary">{{ t('button.save') }}</button>
                 </div>
             </div>
         </div>
