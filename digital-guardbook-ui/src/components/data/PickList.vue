@@ -10,14 +10,16 @@ export interface Props {
   data: any[],
   selection: any[],
   dragDrop: boolean,
-  multiselect: boolean
+  multiselect: boolean,
+  search: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   data: Array<any>,
   selection: Array<any>,
   dragDrop: true,
-  multiselect: false
+  multiselect: false,
+  search: false
 })
 
 const emit = defineEmits<{
@@ -81,7 +83,7 @@ function itemAlreadySelected(item: any): boolean {
           <slot name="sourceTitle"></slot>
         </div>
         <div>
-          <input type="text" class="form-control" :placeholder="t('common.search')" />
+          <input type="text" class="form-control" :placeholder="t('common.search')" v-if="search" />
           <div class="dropzone h-100" :class="{ dragover: dragState.source.dragenter }"
             @dragenter="dragState.source.dragenter = true; $event.preventDefault()"
             @dragleave="dragState.source.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()">
