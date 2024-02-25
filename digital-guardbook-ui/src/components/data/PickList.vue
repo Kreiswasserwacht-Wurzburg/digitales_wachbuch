@@ -1,29 +1,43 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends {id: string}">
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue';
+import { toRef } from 'vue';
 
 const { t, n, d } = useI18n({
   useScope: 'global'
 })
 
-export interface Props {
-  data: any[],
-  selection: any[],
-  dragDrop: boolean,
-  multiselect: boolean,
-  search: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  data: Array<any>,
-  selection: Array<any>,
-  dragDrop: true,
-  multiselect: false,
-  search: false
+const props = defineProps({
+  dataSource: {
+    type: Array<T>,
+    required: true
+  },
+  selection: {
+    type: Array<T>,
+    required: true
+  },
+  dragDrop: {
+    type: Boolean,
+    required: false,
+    default: true
+  },
+  multiselect: {
+    type: Boolean,
+    required: false,
+    default: true
+  },
+  search: {
+    type: Boolean,
+    required: false,
+    default: true
+  },
 })
 
+const selection = toRef(props, 'selection')
+const dataSource = toRef(props, 'dataSource')
+
 const emit = defineEmits<{
-  "value:selection": [value: any[]]
+  "update:selection": [value: Array<T>]
 }>()
 
 const dragState = ref({
@@ -35,37 +49,71 @@ const dragState = ref({
   }
 })
 
-function startDrag(event: DragEvent, item: any) {
-  event.dataTransfer?.setData("key", item.id)
+enum DragSource {
+  Source,
+  Selection
 }
 
-function onDrop(event: DragEvent) {
+function startDrag(event: DragEvent, item: any, src: DragSource) {
+  event.dataTransfer?.setData("key", item.id)
+  event.dataTransfer?.setData("source", DragSource[src])
+
+  switch (src) {
+    case DragSource.Source:
+      event.dataTransfer.dropEffect = "copy"
+      break;
+    case DragSource.Selection:
+      event.dataTransfer.dropEffect = "move"
+      break;
+  }
+}
+
+function onDrop(event: DragEvent, target: DragSource) {
   const key = event.dataTransfer?.getData("key");
-  const item = props.data.find((item) => item.id == key)
+  const src: DragSource = DragSource[event.dataTransfer?.getData("source")]
+
+  if (src === target) {
+    return;
+  }
+
+  const item = dataSource.value.find((item) => item.id == key)
 
   if (item) {
-    addItemToSelection(item)
+    switch (target) {
+      case DragSource.Selection:
+        addItemToSelection(item)
+        dragState.value.target.dragenter = false
+        break;
+      case DragSource.Source:
+        removeItemFromSelection(item)
+        dragState.value.source.dragenter = false
+        break;
+    }
   }
 
-  dragState.value.target.dragenter = false
 }
 
-function addItemToSelection(item: any) {
+function addItemToSelection(item: T) {
   if (!itemAlreadySelected(item)) {
-    props.selection.push(item)
-    emit("value:selection", props.selection)
+    selection.value.push(item)
+    emit('update:selection', selection.value)
   }
 }
 
-function removeItemFromSelection(item: any) {
-  const index = props.selection.findIndex((x) => x.id == item.id)
-  if (index > -1) {
-    props.selection.splice(index, 1)
+function removeItemFromSelection(item: T) {
+  if (selection.value) {
+    const index = selection.value.findIndex((x) => x.id == item.id)
+    if (index > -1) {
+      selection.value.splice(index, 1)
+      emit('update:selection', selection.value)
+    }
   }
 }
 
-function itemAlreadySelected(item: any): boolean {
-  return props.selection.find((x) => x.id == item.id)
+function itemAlreadySelected(item: T): boolean {
+  if (selection.value) {
+    return selection.value.find((x) => x.id == item.id)
+  }
 }
 </script>
 
@@ -86,11 +134,12 @@ function itemAlreadySelected(item: any): boolean {
           <input type="text" class="form-control" :placeholder="t('common.search')" v-if="search" />
           <div class="dropzone h-100" :class="{ dragover: dragState.source.dragenter }"
             @dragenter="dragState.source.dragenter = true; $event.preventDefault()"
-            @dragleave="dragState.source.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()">
+            @dragleave="dragState.source.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()"
+            @drop="onDrop($event, DragSource.Source)">
             <ul class="list-group">
-              <li class="list-group-item" :class="{ 'active': item.selected, 'disabled': itemAlreadySelected(item) }"
-                v-for="item in data" @dblclick="addItemToSelection(item)">
-                <div :data-id="item.id" :draggable="dragDrop" @dragstart="startDrag($event, item)">
+              <li class="list-group-item" :class="{ 'disabled': itemAlreadySelected(item) }" v-for="item in dataSource"
+                @dblclick="addItemToSelection(item)">
+                <div :data-id="item.id" :draggable="dragDrop" @dragstart="startDrag($event, item, DragSource.Source)">
                   <slot name="item" v-bind="item"></slot>
                 </div>
               </li>
@@ -105,10 +154,10 @@ function itemAlreadySelected(item: any): boolean {
         <div class="dropzone h-100" :class="{ dragover: dragState.target.dragenter }"
           @dragenter="dragState.target.dragenter = true; $event.preventDefault()"
           @dragleave="dragState.target.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()"
-          @drop="onDrop($event)">
+          @drop="onDrop($event, DragSource.Selection)">
           <ul class="list-group">
             <li class="list-group-item" v-for="item in selection" @dblclick="removeItemFromSelection(item)">
-              <div :data-id="item.id" :draggable="dragDrop">
+              <div :data-id="item.id" :draggable="dragDrop" @dragstart="startDrag($event, item, DragSource.Selection)">
                 <slot name="item" v-bind="item"></slot>
               </div>
             </li>
