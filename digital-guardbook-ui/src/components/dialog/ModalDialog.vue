@@ -14,18 +14,12 @@ export interface DialogConfig {
     keyboard: boolean
 }
 
-export interface Props {
-    withHeader: boolean,
-    submitCaption: string,
-    cancelCaption: string,
-    autoCloseOnAbort: boolean
-}
 
-const props = withDefaults(defineProps<Props>(), {
-    withHeader: true,
-    submitCaption: 'common.buttons.submit',
-    cancelCaption: 'common.buttons.cancel',
-    autoCloseOnAbort: true
+const props = defineProps({
+    withHeader: { type: Boolean, default: true },
+    submitCaption: { type: String, default: 'common.buttons.submit' },
+    cancelCaption: { type: String, default: 'common.buttons.cancel' },
+    autoCloseOnAbort: { type: Boolean, default: true }
 })
 
 const dialogElem = ref<HTMLElement | null>(null)
@@ -38,7 +32,7 @@ const open = () => {
 const close = () => {
     if (dialogElem.value != null) {
         Modal.getInstance(dialogElem.value)?.hide()
-    }
+            }
 }
 
 defineExpose({
@@ -46,7 +40,7 @@ defineExpose({
 })
 
 onMounted(() => {
-    const config: DialogConfig = {
+const config: DialogConfig = {
         backdrop: 'static',
         focus: true,
         keyboard: true,
