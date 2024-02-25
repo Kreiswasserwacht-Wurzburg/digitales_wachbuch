@@ -29,7 +29,7 @@ const emit = defineEmits<{
 
 
 const formattedRegistration = ref<string>(<string>props.sentry.registration?.toLocaleString().slice(0,16))
-const prevRegistration = formattedRegistration.value
+const prevRegistration = ref<string>(formattedRegistration.value)
 
 async function submit(): Promise<void> {
     var res = await store.finishSentry({
@@ -51,12 +51,12 @@ async function saveRegistration(): Promise<void> {
 
         emit("update:sentry", props.sentry); 
     }
-
+    prevRegistration.value = formattedRegistration.value
     document.getElementById('registrationModal-close')?.click();
 }
 
 async function cancelRegistration(): Promise<void> {
-    formattedRegistration.value = prevRegistration
+    formattedRegistration.value = prevRegistration.value
 }
 
 </script>

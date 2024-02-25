@@ -18,8 +18,6 @@ export const useLogBookStore = defineStore('logBook', () => {
 
     async function fetchByTime(from: DateTime, to: DateTime | undefined) {
         loading.value = true
-        dateFrom.value = from
-        dateTo.value = to
 
         const { data } = await apolloClient.query({
             query: gql`query ($from: String!, $to: String) {
@@ -40,5 +38,5 @@ export const useLogBookStore = defineStore('logBook', () => {
         loading.value = false
     }
 
-    return { logBookEntries, loading, fetchByTime }
+    return { logBookEntries, loading, dateFrom, dateTo, fetchByTime }
 })

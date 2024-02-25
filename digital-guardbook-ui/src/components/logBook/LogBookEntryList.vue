@@ -22,6 +22,8 @@ const props = defineProps<{
 
 onMounted(() => {
     store.fetchByTime(props.from, props.to)
+    store.dateFrom = props.from
+    store.dateTo = props.to
 })
 </script>
 
