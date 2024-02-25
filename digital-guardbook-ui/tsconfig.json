@@ -13,7 +13,10 @@
       "vue-i18n": [
         "../../packages/vue-i18n/src"
       ]
-    }
+    },
+    "types": [
+      "bootstrap"
+    ]
   },
   "include": [
     "src/**/*.ts",
