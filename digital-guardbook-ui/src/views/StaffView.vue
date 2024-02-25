@@ -69,6 +69,38 @@ function onBeforeUnload(ev: BeforeUnloadEvent) {
 
 window.onbeforeunload = onBeforeUnload
 
+function getAddedGuards(): Array<Person> {
+    var result = Array<Person>()
+
+    for (const guard of guards.value) {
+        var item = _pristine.find((x) => x.id == guard.id)
+        if (!item) {
+            result.push(guard)
+        }
+    }
+
+    return result
+}
+
+function getRemovedGuards(): Array<Person> {
+    var result = Array<Person>()
+
+    for (const guard of _pristine) {
+        var item = guards.value.find((x) => x.id == guard.id)
+        if (!item) {
+            result.push(guard)
+        }
+    }
+
+    return result
+}
+
+function save() {
+    var inserts = getAddedGuards()
+    var deletes = getRemovedGuards()
+
+    confirm(`${inserts.length} guards added and ${deletes.length} guards removed`)
+}
 </script>
 
 <template>
@@ -77,7 +109,7 @@ window.onbeforeunload = onBeforeUnload
             <div class="row my-3">
                 <PickList v-model:data="persons" v-model:selection="guards" v-if="!loading && persons">
                     <template #targetTitle>
-                        <button class="float-end btn btn-outline-secondary" type="button"><font-awesome-icon
+                        <button class="float-end btn btn-outline-secondary" type="button" @click="save"><font-awesome-icon
                                 :icon="['fa', 'floppy-disk']" /> </button>
                         <h2>{{ t('sentry.activeGuards') }}</h2>
                         <span class="float-none"></span>
