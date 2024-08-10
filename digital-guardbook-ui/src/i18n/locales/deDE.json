@@ -27,6 +27,11 @@
     "author": "Autor",
     "message": "Text"
   },
+  "guardService": {
+    "guard": "Wachgänger",
+    "start": "Start",
+    "end": "Ende"
+  },
   "sentry": {
     "organisation": "Organisation",
     "supervisor": "Wachleiter",

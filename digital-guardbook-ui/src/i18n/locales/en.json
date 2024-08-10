@@ -27,6 +27,11 @@
     "author": "Author",
     "message": "Message"
   },
+  "guardService": {
+    "guard": "Guard",
+    "start": "Start",
+    "end": "End"
+  },
   "sentry": {
     "organisation": "Organisation",
     "supervisor": "Supervisor",

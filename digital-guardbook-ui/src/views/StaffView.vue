@@ -22,7 +22,7 @@ const sentryStore = useSentryStore()
 const { loading, persons } = storeToRefs(store)
 const dialog = ref<InstanceType<typeof ModalDialog> | null>()
 
-const { guards } = storeToRefs(sentryStore)
+const { guards, activeSupervisor } = storeToRefs(sentryStore)
 
 const localGuardList = ref<Array<Person>>([])
 
@@ -102,6 +102,14 @@ var removedGuards = computed(() => {
     return result
 })
 
+var disabledItems = computed(() => {
+    var result = Array<Person>()
+
+    result.push(activeSupervisor.value)
+
+    return result
+})
+
 function save() {
     dialog.value?.open()
 }
@@ -111,7 +119,7 @@ function save() {
     <main>
         <div class="container-fluid">
             <div class="row my-3">
-                <PickList :dataSource="persons" v-model:selection="localGuardList" v-if="!loading && persons && guards">
+                <PickList :dataSource="persons" v-model:selection="localGuardList" v-model:disabledItems="disabledItems" v-if="!loading && persons && guards">
                     <template #targetTitle>
                         <button class="float-end btn btn-outline-secondary" type="button" @click="save"><font-awesome-icon
                                 :icon="['fa', 'floppy-disk']" /> </button>
@@ -131,20 +139,38 @@ function save() {
         <template #body>
             Please select a sentry start time for the following added guards:
 
-            <ul v-if="addedGuards">
-                <li v-for="guard in addedGuards">
-                    {{ guard.firstName }} {{ guard.lastName }}
-                </li>
-            </ul>
+            <table v-if="addedGuards" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ t('guardService.guard') }}</th>
+                        <th scope="col">{{ t('guardService.start')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="guard in addedGuards">
+                        <th scope="row">{{ guard.firstName }} {{ guard.lastName }}</th>
+                        <td><input type="time" /></td>
+                    </tr>
+                </tbody>
+            </table>
 
             <hr />
             Please select a sentry end time for the following removed guards:
 
-            <ul v-if="removedGuards">
-                <li v-for="guard in removedGuards">
-                    {{ guard.firstName }} {{ guard.lastName }}
-                </li>
-            </ul>
+            <table v-if="removedGuards" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ t('guardService.guard') }}</th>
+                        <th scope="col">{{ t('guardService.end')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="guard in removedGuards">
+                        <th scope="row">{{ guard.firstName }} {{ guard.lastName }}</th>
+                        <td><input type="time" /></td>
+                    </tr>
+                </tbody>
+            </table>
         </template>
     </ModalDialog>
 </template>

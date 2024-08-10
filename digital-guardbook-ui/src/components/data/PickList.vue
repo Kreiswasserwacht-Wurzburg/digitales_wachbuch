@@ -31,10 +31,16 @@ const props = defineProps({
     required: false,
     default: true
   },
+  disabledItems: {
+    type: Array<T>,
+    required: false,
+    default: Array<T>()
+  },
 })
 
 const selection = toRef(props, 'selection')
 const dataSource = toRef(props, 'dataSource')
+const disabledItems = toRef(props, 'disabledItems')
 
 const emit = defineEmits<{
   "update:selection": [value: Array<T>]
@@ -115,6 +121,12 @@ function itemAlreadySelected(item: T): boolean {
     return selection.value.find((x) => x.id == item.id)
   }
 }
+
+function isItemDisabled(item: T): boolean {
+  if (disabledItems.value) {
+    return disabledItems.value.find((x) => x.id == item.id)
+  }
+}
 </script>
 
 <style scoped>
@@ -131,7 +143,9 @@ function itemAlreadySelected(item: T): boolean {
           <slot name="sourceTitle"></slot>
         </div>
         <div>
-          <input type="text" class="form-control" :placeholder="t('common.search')" v-if="search" />
+          <div class="mb-1">
+            <input type="text" class="form-control" :placeholder="t('common.search')" v-if="search" />
+          </div>
           <div class="dropzone h-100" :class="{ dragover: dragState.source.dragenter }"
             @dragenter="dragState.source.dragenter = true; $event.preventDefault()"
             @dragleave="dragState.source.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()"
@@ -156,7 +170,7 @@ function itemAlreadySelected(item: T): boolean {
           @dragleave="dragState.target.dragenter = false; $event.preventDefault()" @dragover="$event.preventDefault()"
           @drop="onDrop($event, DragSource.Selection)">
           <ul class="list-group">
-            <li class="list-group-item" v-for="item in selection" @dblclick="removeItemFromSelection(item)">
+            <li class="list-group-item" :class="{ 'disabled': isItemDisabled(item) }" v-for="item in selection" @dblclick="removeItemFromSelection(item)">
               <div :data-id="item.id" :draggable="dragDrop" @dragstart="startDrag($event, item, DragSource.Selection)">
                 <slot name="item" v-bind="item"></slot>
               </div>
