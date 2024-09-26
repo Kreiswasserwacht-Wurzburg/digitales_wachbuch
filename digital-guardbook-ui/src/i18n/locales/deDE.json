@@ -1,43 +1,38 @@
 {
-    "nav": {
-        "dashboard": "Dashboard",
-        "staff": "Personal",
-        "operation": "Einsatz"
-    },
-    "dashboard": {
-        "weather": {
-          "title": "Wetter",
-          "gust": "Böen",
-          "noWarnings": "Keine Unwetterwarnungen",
-          "from": "Von",
-          "until": "bis"
-        },
-        "controlCentre": "Zuständige Leitstelle"
-    },
-    "logBook": {
-      "title": "Log-Buch",
-      "time": "Zeit",
-      "author": "Autor",
-      "message": "Text"
-    },
-    "sentry": {
-      "organisation": "Organisation",
-      "supervisor": "Wachleiter",
-      "startTime": "Beginn",
-      "startAction": "Wachdienst beginnen",
-      "stopAction": "Wachdienst beenden",
-      "registrationTime": "Anmeldung",
-      "activeGuards": "Aktive Wachmannschaft",
-      "changeSupervisor": "Wachleiter wechel",
-      "registerControlCentre": "Anmeldung bei der ILS",
-      "callControlCentre": "ILS anrufen"
-    },
-    "button": {
-      "save": "Speichern",
-      "close": "Schließen"
-    },
-    "general":{
-      "select": "Bitte auswählen",
-      "from": "Ab"
+  "common": {
+    "buttons": {
+      "submit": "Speichern",
+      "cancel": "Abbrechen"
     }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "staff": "Personal",
+    "operation": "Einsatz"
+  },
+  "dashboard": {
+    "weather": {
+      "title": "Wetter",
+      "gust": "Böen",
+      "noWarnings": "Keine Unwetterwarnungen",
+      "from": "Von",
+      "until": "bis"
+    },
+    "controlCentre": "Zuständige Leitstelle"
+  },
+  "logBook": {
+    "title": "Log-Buch",
+    "time": "Zeit",
+    "author": "Autor",
+    "message": "Text"
+  },
+  "sentry": {
+    "organisation": "Organisation",
+    "supervisor": "Wachleiter",
+    "startTime": "Beginn",
+    "startAction": "Wachdienst beginnen",
+    "stopAction": "Wachdienst beenden",
+    "registrationTime": "Anmeldung",
+    "activeGuards": "Aktive Wachmannschaft"
+  }
 }

@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import Clock from '@/components/date/Clock.vue'
 import StationLogo from '@/components/station/StationLogo.vue'
+import ThemeSwitcher from '@/components/general/ThemeSwitcher.vue'
 </script>
 
 <template>
@@ -30,6 +31,7 @@ import StationLogo from '@/components/station/StationLogo.vue'
         </div>
         <div class="navbar-text px-2 mx-2" style="border-right: 1px solid #000;">
             <Clock class="fw-bold" id="clock"></Clock>
+            <ThemeSwitcher />
         </div>
       </div>
     </nav>

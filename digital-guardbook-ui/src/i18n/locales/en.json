@@ -1,43 +1,38 @@
 {
-    "nav": {
-        "dashboard": "Dashboard",
-        "staff": "Staff",
-        "operation": "Operation"
-    },
-    "dashboard": {
-        "weather": {
-            "title": "Weather",
-            "gust": "Gust",
-            "noWarnings": "No Severe Weather Warnings",
-            "from": "from",
-            "until": "until"
-          },
-        "controlCentre": "Responsible Control Centre"
-    },
-    "logBook": {
-      "title": "Log Book",
-      "time": "Time",
-      "author": "Author",
-      "message": "Message"
-    },
-    "sentry": {
-      "organisation": "Organisation",
-      "supervisor": "Supervisor",
-      "startTime": "Start Time",
-      "startAction": "Start Sentry",
-      "stopAction": "Finish Sentry",
-      "registrationTime": "Registration",
-      "activeGuards": "Active Guards",
-      "changeSupervisor": "Switch Supervisor",
-      "registerControlCentre": "Register at Control Centre",
-      "callControlCentre": "Call Control Centre"
-    },
-    "button": {
-      "save": "Save changes",
-      "close": "Close"
-    },
-    "general":{
-      "select": "Please select",
-      "from": "From"
+  "common": {
+    "buttons": {
+      "submit": "Submit",
+      "cancel": "Cancel"
     }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "staff": "Staff",
+    "operation": "Operation"
+  },
+  "dashboard": {
+    "weather": {
+      "title": "Weather",
+      "gust": "Gust",
+      "noWarnings": "No Severe Weather Warnings",
+      "from": "from",
+      "until": "until"
+    },
+    "controlCentre": "Responsible Control Centre"
+  },
+  "logBook": {
+    "title": "Log Book",
+    "time": "Time",
+    "author": "Author",
+    "message": "Message"
+  },
+  "sentry": {
+    "organisation": "Organisation",
+    "supervisor": "Supervisor",
+    "startTime": "Start Time",
+    "startAction": "Start Sentry",
+    "stopAction": "Finish Sentry",
+    "registrationTime": "Registration",
+    "activeGuards": "Active Guards"
+  }
 }
