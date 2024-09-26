@@ -3,6 +3,10 @@
     "buttons": {
       "submit": "Speichern",
       "cancel": "Abbrechen"
+    },
+    "general":{
+      "select": "Bitte auswählen",
+      "from": "Ab"
     }
   },
   "nav": {
@@ -33,6 +37,9 @@
     "startAction": "Wachdienst beginnen",
     "stopAction": "Wachdienst beenden",
     "registrationTime": "Anmeldung",
-    "activeGuards": "Aktive Wachmannschaft"
+    "activeGuards": "Aktive Wachmannschaft",
+    "changeSupervisor": "Wachleiter wechel",
+    "registerControlCentre": "Anmeldung bei der ILS",
+    "callControlCentre": "ILS anrufen"
   }
 }

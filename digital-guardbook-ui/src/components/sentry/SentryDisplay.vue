@@ -6,12 +6,14 @@ import { DateTime } from 'luxon'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-icons'
 import { storeToRefs } from 'pinia'
+import ModalDialog from '@/components/dialog/ModalDialog.vue'
 import { ref } from 'vue'
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
 import { useI18n } from 'vue-i18n'
-
+const regDialog = ref<InstanceType<typeof ModalDialog> | null>()
+const svSwitchDialog = ref<InstanceType<typeof ModalDialog> | null>()
 const store = useSentryStore()
 const { activeSupervisor } = storeToRefs(store)
 
@@ -29,7 +31,7 @@ const emit = defineEmits<{
 
 
 const formattedRegistration = ref<string>(<string>props.sentry.registration?.toLocaleString().slice(0,16))
-const prevRegistration = ref<string>(formattedRegistration.value)
+const selectedRegistration = ref<string>(formattedRegistration.value)
 
 async function submit(): Promise<void> {
     var res = await store.finishSentry({
@@ -40,23 +42,41 @@ async function submit(): Promise<void> {
     emit("update:sentry", undefined);
 }
 
-async function saveRegistration(): Promise<void> {
-
-    var res = await store.registerSentry({
+function regOnSubmit() {
+  
+  const validation = () => {
+    var ret = store.registerSentry({
         id: props.sentry.id,
-        registration: <DateTime>DateTime.fromISO(formattedRegistration.value),
+        registration: <DateTime>DateTime.fromISO(selectedRegistration.value),
     })
+    return true
+  }
 
-    if (res?.errors == undefined) {
-
-        emit("update:sentry", props.sentry); 
-    }
-    prevRegistration.value = formattedRegistration.value
-    document.getElementById('registrationModal-close')?.click();
+  if (validation()) {
+    formattedRegistration.value = selectedRegistration.value
+    regDialog.value?.close()
+  }
 }
 
-async function cancelRegistration(): Promise<void> {
-    formattedRegistration.value = prevRegistration.value
+function regDialogOpen() {
+  selectedRegistration.value = formattedRegistration.value
+  regDialog.value?.open()
+}
+
+function svSwitchOnSubmit() {
+  
+  const validation = () => {
+    return true
+  }
+
+  if (validation()) {
+    svSwitchDialog.value?.close()
+  }
+}
+
+function svSwitchDialogOpen() {
+
+  svSwitchDialog.value?.open()
 }
 
 </script>
@@ -77,38 +97,17 @@ async function cancelRegistration(): Promise<void> {
                 <td><template v-if="formattedRegistration">
                     {{ d(formattedRegistration.toLocaleString(), "shortDateTime") }} 
                     </template>
-                    <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#registrationModal"><font-awesome-icon
+                    <a class="btn btn-sm" @click="regDialogOpen"><font-awesome-icon
                                 :icon="['fa', 'square-phone-flip']" /></a>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#" data-bs-toggle="modal"
-                        data-bs-target="#changeSupervisorModal"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#" @click="svSwitchDialogOpen"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>
         </tbody>
     </table>
 
     <button type="submit" class="btn btn-primary" @click.prevent="submit()">{{ t('sentry.stopAction') }}</button>
-
-    <div class="modal" id="registrationModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title">{{ t('sentry.registerControlCentre') }}</h1>
-                    <button type="button" id="registrationModal-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {{ t('sentry.callControlCentre') }}: <a href="tel:+499311234567">0931 / 1234567</a>
-                    <hr />
-                    <input type="datetime-local" class="form-control" v-model="formattedRegistration"/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" @click="cancelRegistration" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('button.close')}}</button>
-                    <button type="button" @click="saveRegistration" class="btn btn-primary">{{ t('button.save') }}</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="modal" id="changeSupervisorModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -122,22 +121,51 @@ async function cancelRegistration(): Promise<void> {
                         <label for="newSupervisor" class="form-label col-sm-4">{{ t('sentry.supervisor') }}</label>
                         <div class="col-sm-8">
                             <select id="newSupervisor" class="form-select">
-                                <option disabled :value="null">{{ t('general.select') }}</option>
+                                <option disabled :value="null">{{ t('common.general.select') }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="supervisorChangeTime" class="form-label col-sm-4">{{ t('general.from') }}</label>
+                        <label for="supervisorChangeTime" class="form-label col-sm-4">{{ t('common.general.from') }}</label>
                         <div class="col-sm-8">
                             <input id="supervisorChangeTime" type="datetime-local" class="form-control" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('button.close')}}</button>
-                    <button type="button" class="btn btn-primary">{{ t('button.save') }}</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('common.buttons.cancel')}}</button>
+                    <button type="button" class="btn btn-primary">{{ t('common.buttons.submit') }}</button>
                 </div>
             </div>
         </div>
     </div>
+    <ModalDialog ref="regDialog" @submit="regOnSubmit">
+        <template #title>{{ t('sentry.registerControlCentre') }}</template>
+        <template #body>
+            {{ t('sentry.callControlCentre') }}: <a href="tel:+499311234567">0931 / 1234567</a>
+            <hr />
+            <input type="datetime-local" class="form-control" v-model="selectedRegistration"/>
+        </template>
+    </ModalDialog>
+
+    <ModalDialog ref="svSwitchDialog" @submit="svSwitchOnSubmit">
+        <template #title>{{ t('sentry.changeSupervisor') }}</template>
+        <template #body>
+            <div class="row">
+                <label for="newSupervisor" class="form-label col-sm-4">{{ t('sentry.supervisor') }}</label>
+                <div class="col-sm-8">
+                    <select id="newSupervisor" class="form-select">
+                        <option disabled :value="null">{{ t('common.general.select') }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <label for="supervisorChangeTime" class="form-label col-sm-4">{{ t('common.general.from') }}</label>
+                <div class="col-sm-8">
+                    <input id="supervisorChangeTime" type="datetime-local" class="form-control" />
+                </div>
+            </div>
+        </template>
+    </ModalDialog>
+
 </template>
