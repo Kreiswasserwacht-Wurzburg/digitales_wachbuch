@@ -61,8 +61,13 @@ enum DragSource {
 }
 
 function startDrag(event: DragEvent, item: any, src: DragSource) {
-  event.dataTransfer?.setData("key", item.id)
-  event.dataTransfer?.setData("source", DragSource[src])
+  if (event.dataTransfer == null)
+  {
+    return;
+  }
+
+  event.dataTransfer.setData("key", item.id)
+  event.dataTransfer.setData("source", DragSource[src])
 
   switch (src) {
     case DragSource.Source:
@@ -75,8 +80,14 @@ function startDrag(event: DragEvent, item: any, src: DragSource) {
 }
 
 function onDrop(event: DragEvent, target: DragSource) {
-  const key = event.dataTransfer?.getData("key");
-  const src: DragSource = DragSource[event.dataTransfer?.getData("source")]
+  if (event.dataTransfer == null)
+  {
+    return;
+  }
+
+  const key = event.dataTransfer.getData("key");
+  // @ts-ignore
+  const src: DragSource = DragSource[event.dataTransfer.getData("source")]
 
   if (src === target) {
     return;
@@ -118,14 +129,18 @@ function removeItemFromSelection(item: T) {
 
 function itemAlreadySelected(item: T): boolean {
   if (selection.value) {
-    return selection.value.find((x) => x.id == item.id)
+    return selection.value.find((x) => x.id == item.id) != undefined
   }
+
+  return false;
 }
 
 function isItemDisabled(item: T): boolean {
   if (disabledItems.value) {
-    return disabledItems.value.find((x) => x.id == item.id)
+    return disabledItems.value.find((x) => x.id == item.id) != undefined
   }
+
+  return false;
 }
 </script>
 

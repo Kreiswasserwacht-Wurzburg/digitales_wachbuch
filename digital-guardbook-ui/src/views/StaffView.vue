@@ -34,13 +34,16 @@ onMounted(() => {
     store.fetchAll()
 })
 
-watch(guards, (newValue, oldValue) => {
-    if (!_isPristineSet) {
+watch(guards, (newValue, oldValue) => {    
+    if (!_isPristineSet && newValue) {
         newValue.forEach(val => _pristine.push(Object.assign({}, val)));
         _isPristineSet = true
     }
 
-    localGuardList.value = newValue
+    if (newValue != undefined)
+    {
+        localGuardList.value = newValue
+    }
 })
 
 var isModified = computed(() => {
@@ -105,7 +108,10 @@ var removedGuards = computed(() => {
 var disabledItems = computed(() => {
     var result = Array<Person>()
 
-    result.push(activeSupervisor.value)
+    if (activeSupervisor.value != undefined)
+    {
+        result.push(activeSupervisor.value)
+    }
 
     return result
 })
