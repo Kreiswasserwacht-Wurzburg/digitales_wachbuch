@@ -3,6 +3,10 @@
     "buttons": {
       "submit": "Submit",
       "cancel": "Cancel"
+    },
+    "general":{
+      "select": "Please select",
+      "from": "Begins from"
     }
   },
   "nav": {
@@ -33,6 +37,9 @@
     "startAction": "Start Sentry",
     "stopAction": "Finish Sentry",
     "registrationTime": "Registration",
-    "activeGuards": "Active Guards"
+    "activeGuards": "Active Guards",
+    "changeSupervisor": "Switch Supervisor",
+    "registerControlCenter": "Register at Control Centre",
+    "callControlCenter": "Call Control Centre"
   }
 }

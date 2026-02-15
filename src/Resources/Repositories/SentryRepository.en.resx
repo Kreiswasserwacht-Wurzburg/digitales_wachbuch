@@ -141,4 +141,8 @@
     <value>Supervisor {0} {1} has finished its service.</value>
     <comment/>
   </data>
+  <data name="SentryRegistered" xml:space="preserve">
+    <value>Registered at ILS!</value>
+    <comment/>
+  </data>
 </root>

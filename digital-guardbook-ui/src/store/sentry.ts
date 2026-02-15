@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type { Sentry, SentryStart, SentryFinish } from '@/models/sentry'
+import { DateTime } from 'luxon'
+import type { Sentry, SentryStart, SentryFinish, SentryRegister } from '@/models/sentry'
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 
@@ -9,6 +10,7 @@ export const useSentryStore = defineStore('sentry', () => {
     const loading = ref<Boolean>(false)
     const active = computed(() => sentry.value?.id != null)
     const activeSupervisor = computed(() => sentry.value?.supervisors.find(x => x.end == undefined)?.guard)
+    
 
     async function startSentry(_sentry: SentryStart) {
         const result = await apolloClient.mutate({
@@ -83,8 +85,8 @@ export const useSentryStore = defineStore('sentry', () => {
             }`,
             fetchPolicy: 'no-cache'
         })
-
-        sentry.value = data.activeSentry
+    
+        sentry.value = data.activeSentry;
         loading.value = false
     }
 
@@ -101,5 +103,20 @@ export const useSentryStore = defineStore('sentry', () => {
         })
     }
 
-    return { active, loading, sentry, getActiveSentry, startSentry, finishSentry, activeSupervisor }
+    async function registerSentry(_sentry: SentryRegister) {
+        const result = apolloClient.mutate({
+            mutation: gql`
+                mutation ($sentry: SentryRegisterType!) {
+                    registerSentry(sentry: $sentry)
+                }
+            `,
+            variables: {
+                sentry: _sentry,
+            }
+        })
+
+        return result
+    }
+
+    return { active, loading, sentry, getActiveSentry, startSentry, finishSentry, registerSentry, activeSupervisor }
 })

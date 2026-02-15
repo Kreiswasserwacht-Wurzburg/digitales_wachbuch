@@ -2,6 +2,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
+using DigitalGuardBook.GraphQL.Types;
 
 namespace DigitalGuardBook.Repositories
 {

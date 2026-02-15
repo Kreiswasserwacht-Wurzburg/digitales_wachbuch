@@ -2,7 +2,6 @@
 import { DateTime } from 'luxon';
 import { useLogBookStore } from '@/store/logBook'
 import { storeToRefs } from 'pinia'
-
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue';
 import type { LogBookEntry } from '../../models/logBook';
@@ -12,7 +11,6 @@ const { t, n, d } = useI18n({
 })
 
 const store = useLogBookStore()
-
 const { logBookEntries, loading } = storeToRefs(store)
 
 const props = defineProps<{
@@ -22,23 +20,9 @@ const props = defineProps<{
 
 onMounted(() => {
     store.fetchByTime(props.from, props.to)
+    store.dateFrom = props.from
+    store.dateTo = props.to
 })
-
-function formatDate(entry: LogBookEntry): string {
-    let dt: Date;
-    if (typeof (entry.time) == typeof (DateTime)) {
-        dt = entry.time.toJSDate()
-    }
-    else if (typeof (entry.time) == typeof ("")) {
-        dt = DateTime.fromISO(entry.time as unknown as string).toJSDate()
-    }
-    else {
-        return ""
-    }
-
-    return d(dt, 'shortDateTime')
-}
-
 </script>
 
 <template>
@@ -53,7 +37,7 @@ function formatDate(entry: LogBookEntry): string {
         </thead>
         <tbody v-if="!loading" class="table-group-divider">
             <tr v-for="entry in logBookEntries">
-                <th scope="row">{{ formatDate(entry) }}</th>
+                <th scope="row">{{ d(entry.time.toLocaleString(),'shortDateTime') }}</th>
                 <td>{{ entry.author }}</td>
                 <td>{{ entry.message }}</td>
             </tr>

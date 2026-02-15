@@ -27,7 +27,6 @@ export const useOrganisationStore = defineStore('organisation', () => {
         })
 
         organisations.value = data.organisations
-
         loading.value = false
     }
 

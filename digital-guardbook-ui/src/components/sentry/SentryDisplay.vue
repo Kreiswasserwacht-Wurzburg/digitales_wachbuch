@@ -6,11 +6,14 @@ import { DateTime } from 'luxon'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowsRotate, faSquarePhoneFlip } from '@fortawesome/free-solid-svg-icons'
 import { storeToRefs } from 'pinia'
+import ModalDialog from '@/components/dialog/ModalDialog.vue'
+import { ref } from 'vue'
 
 library.add(faArrowsRotate, faSquarePhoneFlip)
 
 import { useI18n } from 'vue-i18n'
-
+const regDialog = ref<InstanceType<typeof ModalDialog> | null>()
+const svSwitchDialog = ref<InstanceType<typeof ModalDialog> | null>()
 const store = useSentryStore()
 const { activeSupervisor } = storeToRefs(store)
 
@@ -26,6 +29,10 @@ const emit = defineEmits<{
     "update:sentry": [sentry?: Sentry]
 }>()
 
+
+const formattedRegistration = ref<string>(<string>props.sentry.registration?.toLocaleString().slice(0,16))
+const selectedRegistration = ref<string>(formattedRegistration.value)
+
 async function submit(): Promise<void> {
     var res = await store.finishSentry({
         id: props.sentry.id,
@@ -35,14 +42,43 @@ async function submit(): Promise<void> {
     emit("update:sentry", undefined);
 }
 
-function getDateTime(dt: DateTime | string): Date {
-    if (typeof (dt) == typeof (DateTime)) {
-        return (dt as DateTime).toJSDate();
-    }
-    else {
-        return DateTime.fromISO(dt as string).toJSDate();
-    }
+function regOnSubmit() {
+  
+  const validation = () => {
+    var ret = store.registerSentry({
+        id: props.sentry.id,
+        registration: <DateTime>DateTime.fromISO(selectedRegistration.value),
+    })
+    return true
+  }
+
+  if (validation()) {
+    formattedRegistration.value = selectedRegistration.value
+    regDialog.value?.close()
+  }
 }
+
+function regDialogOpen() {
+  selectedRegistration.value = formattedRegistration.value
+  regDialog.value?.open()
+}
+
+function svSwitchOnSubmit() {
+  
+  const validation = () => {
+    return true
+  }
+
+  if (validation()) {
+    svSwitchDialog.value?.close()
+  }
+}
+
+function svSwitchDialogOpen() {
+
+  svSwitchDialog.value?.open()
+}
+
 </script>
 
 <template>
@@ -57,19 +93,15 @@ function getDateTime(dt: DateTime | string): Date {
         </thead>
         <tbody>
             <tr>
-                <td>{{ d(getDateTime(sentry.start), "shortDateTime") }}</td>
-                <td><template v-if="sentry.registration">
-                        {{ d(getDateTime(sentry.registration), "shortDateTime") }}
+                <td>{{ d(sentry.start.toLocaleString(), "shortDateTime") }}</td>
+                <td><template v-if="formattedRegistration">
+                    {{ d(formattedRegistration.toLocaleString(), "shortDateTime") }} 
                     </template>
-                    <template v-else><a class="btn btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#registrationModal"><font-awesome-icon
+                    <a class="btn btn-sm" @click="regDialogOpen"><font-awesome-icon
                                 :icon="['fa', 'square-phone-flip']" /></a>
-                    </template>
                 </td>
                 <td>{{ sentry.organisation?.name }}</td>
-                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#"
-                        data-bs-toggle="modal" data-bs-target="#changeSupervisorModal"><font-awesome-icon
-                            :icon="['fa', 'arrows-rotate']" /></a>
+                <td>{{ `${activeSupervisor?.firstName} ${activeSupervisor?.lastName}` }} <a class="btn btn-sm" href="#" @click="svSwitchDialogOpen"><font-awesome-icon :icon="['fa', 'arrows-rotate']" /></a>
                 </td>
             </tr>
         </tbody>
@@ -77,54 +109,63 @@ function getDateTime(dt: DateTime | string): Date {
 
     <button type="submit" class="btn btn-primary" @click.prevent="submit()">{{ t('sentry.stopAction') }}</button>
 
-    <div class="modal" id="registrationModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title">Anmeldung bei der ILS</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ILS anrufen: <a href="tel:+499311234567">0931 / 1234567</a>
-                    <hr />
-                    <input type="datetime-local" class="form-control" v-model="sentry.registration" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal" id="changeSupervisorModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title">Wachleiter wechsel</h1>
+                    <h1 class="modal-title">{{ t('sentry.changeSupervisor') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <label for="newSupervisor" class="form-label col-sm-4">Wachleiter</label>
+                        <label for="newSupervisor" class="form-label col-sm-4">{{ t('sentry.supervisor') }}</label>
                         <div class="col-sm-8">
                             <select id="newSupervisor" class="form-select">
-                                <option disabled :value="null">Please select one</option>
+                                <option disabled :value="null">{{ t('common.general.select') }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="supervisorChangeTime" class="form-label col-sm-4">Ab</label>
+                        <label for="supervisorChangeTime" class="form-label col-sm-4">{{ t('common.general.from') }}</label>
                         <div class="col-sm-8">
                             <input id="supervisorChangeTime" type="datetime-local" class="form-control" />
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ t('common.buttons.cancel')}}</button>
+                    <button type="button" class="btn btn-primary">{{ t('common.buttons.submit') }}</button>
                 </div>
             </div>
         </div>
     </div>
+    <ModalDialog ref="regDialog" @submit="regOnSubmit">
+        <template #title>{{ t('sentry.registerControlCentre') }}</template>
+        <template #body>
+            {{ t('sentry.callControlCentre') }}: <a href="tel:+499311234567">0931 / 1234567</a>
+            <hr />
+            <input type="datetime-local" class="form-control" v-model="selectedRegistration"/>
+        </template>
+    </ModalDialog>
+
+    <ModalDialog ref="svSwitchDialog" @submit="svSwitchOnSubmit">
+        <template #title>{{ t('sentry.changeSupervisor') }}</template>
+        <template #body>
+            <div class="row">
+                <label for="newSupervisor" class="form-label col-sm-4">{{ t('sentry.supervisor') }}</label>
+                <div class="col-sm-8">
+                    <select id="newSupervisor" class="form-select">
+                        <option disabled :value="null">{{ t('common.general.select') }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <label for="supervisorChangeTime" class="form-label col-sm-4">{{ t('common.general.from') }}</label>
+                <div class="col-sm-8">
+                    <input id="supervisorChangeTime" type="datetime-local" class="form-control" />
+                </div>
+            </div>
+        </template>
+    </ModalDialog>
+
 </template>
