@@ -84,7 +84,6 @@ namespace DigitalGuardBook.Repositories
         public async Task InsertLogBookEntryAsync(string message, DateTimeOffset? time)
         {
             var logBookId = await GetLogBookIdByYearAsync(time?.Year ?? DateTimeOffset.Now.Year);
-            var logBook = await _dataContext.LogBooks.AsQueryable().FirstOrDefaultAsync(x => x.Id == logBookId);
 
             var entry = new LogBookEntry
             {
@@ -93,11 +92,8 @@ namespace DigitalGuardBook.Repositories
                 Time = time ?? DateTimeOffset.Now
             };
 
-            var filter = Builders<LogBook>.Filter
-            .Eq(x => x.Id, logBookId);
-
-            var update = Builders<LogBook>.Update
-            .AddToSet(x => x.Entries, entry);
+            var filter = Builders<LogBook>.Filter.Eq(x => x.Id, logBookId);
+            var update = Builders<LogBook>.Update.AddToSet(x => x.Entries, entry);
 
             await _dataContext.LogBooks.UpdateOneAsync(filter, update);
         }
