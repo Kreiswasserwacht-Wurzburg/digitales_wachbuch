@@ -9,7 +9,7 @@ namespace DigitalGuardBook.GraphQL
 {
     public class DigitalGuardBookMutation : ObjectGraphType
     {
-        public DigitalGuardBookMutation(SentryRepository sentryRepository)
+        public DigitalGuardBookMutation(SentryService sentryService)
         {
             Field<SentryType>("startSentry")
             .Argument<NonNullGraphType<SentryStartType>>("sentry")
@@ -31,7 +31,6 @@ namespace DigitalGuardBook.GraphQL
                     PersonId = x.Guard.Id
                 }).ToList();
 
-
                 guardServices.AddRange(sentry.Supervisors.Select(x => new GuardService
                 {
                     Start = x.Start,
@@ -41,7 +40,7 @@ namespace DigitalGuardBook.GraphQL
 
                 sentry.GuardServices = guardServices;
 
-                return await sentryRepository.StartSentryAsync(sentry);
+                return await sentryService.StartSentryAsync(sentry);
             });
 
             Field<StringGraphType>("finishSentry")
@@ -50,7 +49,7 @@ namespace DigitalGuardBook.GraphQL
             {
                 var sentry = context.GetArgument<Sentry>("sentry");
 
-                await sentryRepository.FinishSentry(sentry.Id, sentry.End.GetValueOrDefault(DateTimeOffset.Now));
+                await sentryService.FinishSentryAsync(sentry.Id, sentry.End.GetValueOrDefault(DateTimeOffset.Now));
 
                 return sentry.Id;
             });

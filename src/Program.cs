@@ -39,6 +39,9 @@ public class Program
         builder.Services.AddSingleton<LogBookRepository>();
         builder.Services.AddSingleton<SentryRepository>();
 
+        // Services
+        builder.Services.AddSingleton<SentryService>();
+
         // Modules
         builder.Services.AddSingleton<ILogBookEventHandler, SentryLogBookEventHandler>();
 
