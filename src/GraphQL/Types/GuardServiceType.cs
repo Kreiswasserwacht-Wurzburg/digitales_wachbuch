@@ -6,7 +6,7 @@ namespace DigitalGuardBook.GraphQL.Types
 {
     public class GuardServiceType : ObjectGraphType<GuardService>
     {
-        public GuardServiceType(PersonRepository personRepository)
+        public GuardServiceType(IPersonRepository personRepository)
         {
             Field(x => x.Start);
             Field(x => x.End, nullable: true);

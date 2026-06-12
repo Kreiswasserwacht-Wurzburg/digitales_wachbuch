@@ -29,18 +29,18 @@ public class Program
         builder.Services.AddSingleton(x => new DigitalGuardBookDataContext(mongoConnectionString));
 
         // Infrastructure
-        builder.Services.AddSingleton<InProcessEventPublisher>();
-        builder.Services.AddSingleton<IEventPublisher>(sp => sp.GetRequiredService<InProcessEventPublisher>());
+        builder.Services.AddSingleton<IInProcessEventPublisher, InProcessEventPublisher>();
+        builder.Services.AddSingleton<IEventPublisher>(sp => sp.GetRequiredService<IInProcessEventPublisher>());
 
         // Repositories
-        builder.Services.AddSingleton<PersonRepository>();
+        builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
         builder.Services.AddSingleton<OrganisationRepository>();
         builder.Services.AddSingleton<StationRepository>();
-        builder.Services.AddSingleton<LogBookRepository>();
-        builder.Services.AddSingleton<SentryRepository>();
+        builder.Services.AddSingleton<ILogBookRepository, LogBookRepository>();
+        builder.Services.AddSingleton<ISentryRepository, SentryRepository>();
 
         // Services
-        builder.Services.AddSingleton<SentryService>();
+        builder.Services.AddSingleton<ISentryService, SentryService>();
 
         // Modules
         builder.Services.AddSingleton<ILogBookEventHandler, SentryLogBookEventHandler>();
@@ -54,7 +54,7 @@ public class Program
 
         var app = builder.Build();
 
-        var eventPublisher = app.Services.GetRequiredService<InProcessEventPublisher>();
+        var eventPublisher = app.Services.GetRequiredService<IInProcessEventPublisher>();
         foreach (var handler in app.Services.GetServices<ILogBookEventHandler>())
         {
             handler.Register(eventPublisher);

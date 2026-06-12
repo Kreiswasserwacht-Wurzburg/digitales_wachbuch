@@ -8,7 +8,7 @@ namespace DigitalGuardBook.GraphQL
 {
     public class DigitalGuardBookQuery : ObjectGraphType
     {
-        public DigitalGuardBookQuery(PersonRepository personRepository, OrganisationRepository organisationRepository, StationRepository stationRepository, SentryRepository sentryRepository, LogBookRepository logBookRepository)
+        public DigitalGuardBookQuery(IPersonRepository personRepository, OrganisationRepository organisationRepository, StationRepository stationRepository, ISentryRepository sentryRepository, ILogBookRepository logBookRepository)
         {
             Field<ListGraphType<PersonType>>("persons").ResolveAsync(async context => await personRepository.AllPersonsAsync());
             Field<ListGraphType<OrganisationType>>("organisations").ResolveAsync(async context => await organisationRepository.AllOrganisationsAsync());

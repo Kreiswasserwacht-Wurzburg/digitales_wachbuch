@@ -5,12 +5,18 @@ using SentryEntity = DigitalGuardBook.Data.Entities.Sentry;
 
 namespace DigitalGuardBook.Modules.Sentry;
 
-public class SentryService
+public interface ISentryService
 {
-    private readonly SentryRepository _sentryRepository;
+    Task<SentryEntity> StartSentryAsync(SentryEntity sentry);
+    Task FinishSentryAsync(string id, DateTimeOffset dateTime);
+}
+
+public class SentryService : ISentryService
+{
+    private readonly ISentryRepository _sentryRepository;
     private readonly IEventPublisher _eventPublisher;
 
-    public SentryService(SentryRepository sentryRepository, IEventPublisher eventPublisher)
+    public SentryService(ISentryRepository sentryRepository, IEventPublisher eventPublisher)
     {
         _sentryRepository = sentryRepository;
         _eventPublisher = eventPublisher;

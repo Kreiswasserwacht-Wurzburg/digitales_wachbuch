@@ -5,7 +5,7 @@ using DigitalGuardBook.Data.Entities;
 
 namespace DigitalGuardBook.Repositories
 {
-    public class LogBookRepository
+    public class LogBookRepository : ILogBookRepository
     {
         private readonly DigitalGuardBookDataContext _dataContext;
         private readonly StationRepository _stationRepository;
@@ -16,7 +16,7 @@ namespace DigitalGuardBook.Repositories
             _stationRepository = stationRepository;
         }
 
-        public async Task<LogBook> GetLogBookAsync(string stationId, int year)
+        public virtual async Task<LogBook> GetLogBookAsync(string stationId, int year)
         {
             var logBook = await _dataContext.LogBooks
             .AsQueryable()
@@ -63,7 +63,7 @@ namespace DigitalGuardBook.Repositories
             return id;
         }
 
-        public async Task<List<LogBookEntry>> GetEntriesForLogBookAsync(DateTimeOffset? from, DateTimeOffset? to)
+        public virtual async Task<List<LogBookEntry>> GetEntriesForLogBookAsync(DateTimeOffset? from, DateTimeOffset? to)
         {
             var logBookId = await GetLogBookIdByYearAsync(from?.Year ?? to?.Year ?? DateTimeOffset.Now.Year);
             var query = _dataContext.LogBooks.AsQueryable().Where(x => x.Id == logBookId)
@@ -81,7 +81,7 @@ namespace DigitalGuardBook.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task InsertLogBookEntryAsync(string message, DateTimeOffset? time)
+        public virtual async Task InsertLogBookEntryAsync(string message, DateTimeOffset? time)
         {
             var logBookId = await GetLogBookIdByYearAsync(time?.Year ?? DateTimeOffset.Now.Year);
 

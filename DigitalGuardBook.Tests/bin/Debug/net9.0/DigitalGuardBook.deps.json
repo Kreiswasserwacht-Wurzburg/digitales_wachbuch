@@ -1,0 +1,258 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "DigitalGuardBook/1.0.0": {
+        "dependencies": {
+          "GraphQL": "8.5.0",
+          "GraphQL.MemoryCache": "8.5.0",
+          "GraphQL.MicrosoftDI": "8.5.0",
+          "GraphQL.Server.Transports.AspNetCore": "8.3.0",
+          "GraphQL.Server.Ui.GraphiQL": "8.3.0",
+          "GraphQL.SystemTextJson": "8.5.0",
+          "MongoDB.Driver": "3.4.3"
+        },
+        "runtime": {
+          "DigitalGuardBook.dll": {}
+        },
+        "resources": {
+          "de-DE/DigitalGuardBook.resources.dll": {
+            "locale": "de-DE"
+          },
+          "en/DigitalGuardBook.resources.dll": {
+            "locale": "en"
+          }
+        }
+      },
+      "DnsClient/1.6.1": {
+        "runtime": {
+          "lib/net5.0/DnsClient.dll": {
+            "assemblyVersion": "1.6.1.0",
+            "fileVersion": "1.6.1.0"
+          }
+        }
+      },
+      "GraphQL/8.5.0": {
+        "dependencies": {
+          "GraphQL-Parser": "9.5.0"
+        },
+        "runtime": {
+          "lib/net6.0/GraphQL.dll": {
+            "assemblyVersion": "8.5.0.0",
+            "fileVersion": "8.5.0.0"
+          }
+        }
+      },
+      "GraphQL-Parser/9.5.0": {
+        "runtime": {
+          "lib/net6.0/GraphQLParser.dll": {
+            "assemblyVersion": "9.5.0.0",
+            "fileVersion": "9.5.0.0"
+          }
+        }
+      },
+      "GraphQL.MemoryCache/8.5.0": {
+        "dependencies": {
+          "GraphQL": "8.5.0"
+        },
+        "runtime": {
+          "lib/net5.0/GraphQL.MemoryCache.dll": {
+            "assemblyVersion": "8.5.0.0",
+            "fileVersion": "8.5.0.0"
+          }
+        }
+      },
+      "GraphQL.MicrosoftDI/8.5.0": {
+        "dependencies": {
+          "GraphQL": "8.5.0"
+        },
+        "runtime": {
+          "lib/net5.0/GraphQL.MicrosoftDI.dll": {
+            "assemblyVersion": "8.5.0.0",
+            "fileVersion": "8.5.0.0"
+          }
+        }
+      },
+      "GraphQL.Server.Transports.AspNetCore/8.3.0": {
+        "dependencies": {
+          "GraphQL.MicrosoftDI": "8.5.0",
+          "GraphQL.SystemTextJson": "8.5.0"
+        },
+        "runtime": {
+          "lib/net8.0/GraphQL.Server.Transports.AspNetCore.dll": {
+            "assemblyVersion": "8.3.0.0",
+            "fileVersion": "8.3.0.0"
+          }
+        }
+      },
+      "GraphQL.Server.Ui.GraphiQL/8.3.0": {
+        "runtime": {
+          "lib/net8.0/GraphQL.Server.Ui.GraphiQL.dll": {
+            "assemblyVersion": "8.3.0.0",
+            "fileVersion": "8.3.0.0"
+          }
+        }
+      },
+      "GraphQL.SystemTextJson/8.5.0": {
+        "dependencies": {
+          "GraphQL": "8.5.0"
+        },
+        "runtime": {
+          "lib/net6.0/GraphQL.SystemTextJson.dll": {
+            "assemblyVersion": "8.5.0.0",
+            "fileVersion": "8.5.0.0"
+          }
+        }
+      },
+      "MongoDB.Bson/3.4.3": {
+        "runtime": {
+          "lib/net6.0/MongoDB.Bson.dll": {
+            "assemblyVersion": "3.4.3.0",
+            "fileVersion": "3.4.3.0"
+          }
+        }
+      },
+      "MongoDB.Driver/3.4.3": {
+        "dependencies": {
+          "DnsClient": "1.6.1",
+          "MongoDB.Bson": "3.4.3",
+          "SharpCompress": "0.30.1",
+          "Snappier": "1.0.0",
+          "ZstdSharp.Port": "0.7.3"
+        },
+        "runtime": {
+          "lib/net6.0/MongoDB.Driver.dll": {
+            "assemblyVersion": "3.4.3.0",
+            "fileVersion": "3.4.3.0"
+          }
+        }
+      },
+      "SharpCompress/0.30.1": {
+        "runtime": {
+          "lib/net5.0/SharpCompress.dll": {
+            "assemblyVersion": "0.30.1.0",
+            "fileVersion": "0.30.1.0"
+          }
+        }
+      },
+      "Snappier/1.0.0": {
+        "runtime": {
+          "lib/net5.0/Snappier.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ZstdSharp.Port/0.7.3": {
+        "runtime": {
+          "lib/net7.0/ZstdSharp.dll": {
+            "assemblyVersion": "0.7.3.0",
+            "fileVersion": "0.7.3.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DigitalGuardBook/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DnsClient/1.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4H/f2uYJOZ+YObZjpY9ABrKZI+JNw3uizp6oMzTXwDw6F+2qIPhpRl/1t68O/6e98+vqNiYGu+lswmwdYUy3gg==",
+      "path": "dnsclient/1.6.1",
+      "hashPath": "dnsclient.1.6.1.nupkg.sha512"
+    },
+    "GraphQL/8.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BZkfH7GVacTZEkyqa4XN9mW12UA/0XYrpEkkrJnNBf0Pqw8CZWQfItLaWgG2C1Ju9YHH1UUG+LmIpo8iMP6pKA==",
+      "path": "graphql/8.5.0",
+      "hashPath": "graphql.8.5.0.nupkg.sha512"
+    },
+    "GraphQL-Parser/9.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5XWJGKHdVi8pyD4P0EglmJmlXEGs0HzvGlEBf3+/Ve1jLYBBKIOkKvY0Ej17b9Kn1bbBxkrmghqbmsMbkLL1nQ==",
+      "path": "graphql-parser/9.5.0",
+      "hashPath": "graphql-parser.9.5.0.nupkg.sha512"
+    },
+    "GraphQL.MemoryCache/8.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wTWcmr+U3iv//5NdnAoV6MkK6Qwh5ZEZ94Zh2Et/v8AN1mAvzqIi4KtJ4cMMcDtE4xu3zNNHPBkPX9lNITA03Q==",
+      "path": "graphql.memorycache/8.5.0",
+      "hashPath": "graphql.memorycache.8.5.0.nupkg.sha512"
+    },
+    "GraphQL.MicrosoftDI/8.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aLPgztBrSHSYLTai1oR3T7mx5Ut8xInVUVcNl8lHEjUz2U+G0Klog8RPebuJI8R6KYzOjwZMOlQ1Ez5wa8zyRA==",
+      "path": "graphql.microsoftdi/8.5.0",
+      "hashPath": "graphql.microsoftdi.8.5.0.nupkg.sha512"
+    },
+    "GraphQL.Server.Transports.AspNetCore/8.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OhRUKb6picOdlkDXI27Y0SfzolAtIrze9jQzBcyeHPichTQgUOBFbDTPsuuUmmmhndBGWSY2DBrk/T2T9PIvgA==",
+      "path": "graphql.server.transports.aspnetcore/8.3.0",
+      "hashPath": "graphql.server.transports.aspnetcore.8.3.0.nupkg.sha512"
+    },
+    "GraphQL.Server.Ui.GraphiQL/8.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-joDqEPjCI21UCga6og6u5UDkc6mWSYZERKIxF45KyA3kL37NnkbVQlS6OSE92bg9twDPWfSG8VnrLFv7JankGQ==",
+      "path": "graphql.server.ui.graphiql/8.3.0",
+      "hashPath": "graphql.server.ui.graphiql.8.3.0.nupkg.sha512"
+    },
+    "GraphQL.SystemTextJson/8.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-u0NpRvSa+si3L8J4pVY2cWm9UdG9yOpDqiW9wIQR+6TW4Et1K+qPVw0+L6yLQbkwBTZand8zI9I36WhX8sST7Q==",
+      "path": "graphql.systemtextjson/8.5.0",
+      "hashPath": "graphql.systemtextjson.8.5.0.nupkg.sha512"
+    },
+    "MongoDB.Bson/3.4.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZB2nCdlWtmDGItkDFh2E2kfYlXaItG414t9Np7CZhpftLypemYnxtdI52H+0b8RPqoUJD7bUvrf598sDTJd5iA==",
+      "path": "mongodb.bson/3.4.3",
+      "hashPath": "mongodb.bson.3.4.3.nupkg.sha512"
+    },
+    "MongoDB.Driver/3.4.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yE6XQiDoFwTH4Xq/STJCbzsz+74RuzCXU45g9gaWFlLyy95xG8utuj+e64uXSbONtzabbp1O/8vfA3/HJXL6Pg==",
+      "path": "mongodb.driver/3.4.3",
+      "hashPath": "mongodb.driver.3.4.3.nupkg.sha512"
+    },
+    "SharpCompress/0.30.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XqD4TpfyYGa7QTPzaGlMVbcecKnXy4YmYLDWrU+JIj7IuRNl7DH2END+Ll7ekWIY8o3dAMWLFDE1xdhfIWD1nw==",
+      "path": "sharpcompress/0.30.1",
+      "hashPath": "sharpcompress.0.30.1.nupkg.sha512"
+    },
+    "Snappier/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rFtK2KEI9hIe8gtx3a0YDXdHOpedIf9wYCEYtBEmtlyiWVX3XlCNV03JrmmAi/Cdfn7dxK+k0sjjcLv4fpHnqA==",
+      "path": "snappier/1.0.0",
+      "hashPath": "snappier.1.0.0.nupkg.sha512"
+    },
+    "ZstdSharp.Port/0.7.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U9Ix4l4cl58Kzz1rJzj5hoVTjmbx1qGMwzAcbv1j/d3NzrFaESIurQyg+ow4mivCgkE3S413y+U9k4WdnEIkRA==",
+      "path": "zstdsharp.port/0.7.3",
+      "hashPath": "zstdsharp.port.0.7.3.nupkg.sha512"
+    }
+  }
+}

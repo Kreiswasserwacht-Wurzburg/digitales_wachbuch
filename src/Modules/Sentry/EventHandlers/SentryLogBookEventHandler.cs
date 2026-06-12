@@ -7,13 +7,13 @@ namespace DigitalGuardBook.Modules.Sentry.EventHandlers;
 
 public sealed class SentryLogBookEventHandler : ILogBookEventHandler
 {
-    private readonly LogBookRepository _logBookRepository;
-    private readonly PersonRepository _personRepository;
+    private readonly ILogBookRepository _logBookRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IStringLocalizer<SentryLogBookEventHandler> _localizer;
 
     public SentryLogBookEventHandler(
-        LogBookRepository logBookRepository,
-        PersonRepository personRepository,
+        ILogBookRepository logBookRepository,
+        IPersonRepository personRepository,
         IStringLocalizer<SentryLogBookEventHandler> localizer)
     {
         _logBookRepository = logBookRepository;
@@ -21,7 +21,7 @@ public sealed class SentryLogBookEventHandler : ILogBookEventHandler
         _localizer = localizer;
     }
 
-    public void Register(InProcessEventPublisher publisher)
+    public void Register(IInProcessEventPublisher publisher)
     {
         publisher.Subscribe<SentryStartedEvent>(HandleSentryStartedAsync);
         publisher.Subscribe<SentryFinishedEvent>(HandleSentryFinishedAsync);

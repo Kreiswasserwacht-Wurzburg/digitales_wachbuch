@@ -6,7 +6,7 @@ using SentryEntity = DigitalGuardBook.Data.Entities.Sentry;
 
 namespace DigitalGuardBook.Modules.Sentry;
 
-public class SentryRepository
+public class SentryRepository : ISentryRepository
 {
     private readonly DigitalGuardBookDataContext _dataContext;
 
@@ -15,26 +15,26 @@ public class SentryRepository
         _dataContext = dataContext;
     }
 
-    public async Task<SentryEntity> GetActiveSentry()
+    public virtual async Task<SentryEntity> GetActiveSentry()
     {
         return await _dataContext.Sentries
             .AsQueryable()
             .FirstOrDefaultAsync(x => !x.End.HasValue);
     }
 
-    public async Task InsertSentryAsync(SentryEntity sentry)
+    public virtual async Task InsertSentryAsync(SentryEntity sentry)
     {
         await _dataContext.Sentries.InsertOneAsync((SentryEntity)sentry);
     }
 
-    public async Task<SentryEntity> GetSentryAsync(string id)
+    public virtual async Task<SentryEntity> GetSentryAsync(string id)
     {
         return await _dataContext.Sentries
             .AsQueryable()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task UpdateSentryEndAsync(string id, DateTimeOffset dateTime)
+    public virtual async Task UpdateSentryEndAsync(string id, DateTimeOffset dateTime)
     {
         var fb = Builders<SentryEntity>.Filter;
         var filter = fb.And(

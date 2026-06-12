@@ -9,7 +9,7 @@ namespace DigitalGuardBook.GraphQL
 {
     public class DigitalGuardBookMutation : ObjectGraphType
     {
-        public DigitalGuardBookMutation(SentryService sentryService)
+        public DigitalGuardBookMutation(ISentryService sentryService)
         {
             Field<SentryType>("startSentry")
             .Argument<NonNullGraphType<SentryStartType>>("sentry")

@@ -6,7 +6,7 @@ namespace DigitalGuardBook.GraphQL.Types
 {
     public class OrganisationType : ObjectGraphType<OrganisationComposed>
     {
-        public OrganisationType(PersonRepository personRepository)
+        public OrganisationType(IPersonRepository personRepository)
         {
             Field(organisation => organisation.Id);
             Field(organisation => organisation.Name);

@@ -5,7 +5,7 @@ using DigitalGuardBook.Data.Entities;
 
 namespace DigitalGuardBook.Repositories
 {
-    public class PersonRepository
+    public class PersonRepository : IPersonRepository
     {
         private readonly DigitalGuardBookDataContext _dataContext;
 
@@ -14,7 +14,7 @@ namespace DigitalGuardBook.Repositories
             _dataContext = dataContext;
         }
 
-        public async Task<IList<PersonComposed>> AllPersonsAsync()
+        public virtual async Task<IList<PersonComposed>> AllPersonsAsync()
         {
             return await _dataContext.Persons
                 .Aggregate()
@@ -26,7 +26,7 @@ namespace DigitalGuardBook.Repositories
                 ).ToListAsync();
         }
 
-        public async Task<IList<PersonComposed>> PersonsAsync(IList<string> ids)
+        public virtual async Task<IList<PersonComposed>> PersonsAsync(IList<string> ids)
         {
             return await _dataContext.Persons
                 .Aggregate()

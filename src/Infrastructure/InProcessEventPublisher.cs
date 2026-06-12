@@ -1,6 +1,6 @@
 namespace DigitalGuardBook.Infrastructure;
 
-public sealed class InProcessEventPublisher : IEventPublisher
+public sealed class InProcessEventPublisher : IInProcessEventPublisher
 {
     private readonly Dictionary<Type, List<Func<object, Task>>> _handlers = new();
 
