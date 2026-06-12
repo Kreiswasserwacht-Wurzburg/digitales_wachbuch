@@ -140,7 +140,7 @@ function save() {
         </div>
     </main>
 
-    <ModalDialog ref="dialog">
+    <ModalDialog ref="dialog" @submit="onSubmit">
         <template #title></template>
         <template #body>
             Please select a sentry start time for the following added guards:

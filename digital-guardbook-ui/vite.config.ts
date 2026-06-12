@@ -12,14 +12,12 @@ export default defineConfig({
       "/weather": {
         target: "https://app-prod-ws.warnwetter.de/v30",
         changeOrigin: true,
-        secure: false,
         rewrite: (path) => path.replace(/^\/weather/, ""),
       },
       "/api": {
         target: "http://localhost:5282/graphql",
         changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/api/, "")
       },
     },
   },

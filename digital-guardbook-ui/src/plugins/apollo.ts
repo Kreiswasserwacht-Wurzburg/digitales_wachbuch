@@ -2,7 +2,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 
 const httpLink = createHttpLink({
-    uri: '/api',
+    uri: 'http://localhost:7026/graphql',
     fetch: (reqInfo: RequestInfo | URL, options: RequestInit | undefined) => {
         return fetch(reqInfo, options)
     },

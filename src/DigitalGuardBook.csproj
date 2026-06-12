@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="7.6.0" />
-    <PackageReference Include="GraphQL.MemoryCache" Version="7.6.0" />
-    <PackageReference Include="GraphQL.MicrosoftDI" Version="7.6.0" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="7.6.0" />
-    <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="7.6.0" />
-    <PackageReference Include="GraphQL.SystemTextJson" Version="7.6.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
+    <PackageReference Include="GraphQL" Version="8.5.0" />
+    <PackageReference Include="GraphQL.MemoryCache" Version="8.5.0" />
+    <PackageReference Include="GraphQL.MicrosoftDI" Version="8.5.0" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.3.0" />
+    <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="8.3.0" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="8.5.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.4.3" />
   </ItemGroup>
 
 </Project>

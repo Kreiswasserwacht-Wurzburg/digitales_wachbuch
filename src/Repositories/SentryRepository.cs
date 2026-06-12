@@ -2,24 +2,20 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
-using Microsoft.Extensions.Localization;
+using DigitalGuardBook.Events;
+using DigitalGuardBook.Infrastructure;
 
 namespace DigitalGuardBook.Repositories
 {
     public class SentryRepository
     {
-        private readonly IStringLocalizer<SentryRepository> _localizer;
-    
         private readonly DigitalGuardBookDataContext _dataContext;
-        private readonly LogBookRepository _logBookRepository;
-        private readonly PersonRepository _personRepository;
+        private readonly IEventPublisher _eventPublisher;
 
-        public SentryRepository(DigitalGuardBookDataContext dataContext, LogBookRepository logBookRepository, PersonRepository personRepository,IStringLocalizer<SentryRepository> localizer)
+        public SentryRepository(DigitalGuardBookDataContext dataContext, IEventPublisher eventPublisher)
         {
             _dataContext = dataContext;
-            _logBookRepository = logBookRepository;
-            _personRepository = personRepository;
-            _localizer = localizer;
+            _eventPublisher = eventPublisher;
         }
 
         public async Task<Sentry> GetActiveSentry()
@@ -32,29 +28,12 @@ namespace DigitalGuardBook.Repositories
         public async Task<Sentry> StartSentryAsync(Sentry sentry)
         {
             await _dataContext.Sentries.InsertOneAsync((Sentry)sentry);
-            await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryStarted"], sentry.Start);
 
-            var personList = await _personRepository.AllPersonsAsync();
-
-            foreach (var service in sentry.GuardServices)
-            {
-                var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
-
-                if (person != null)
-                {
-                    await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["GuardServiceStart"],person.FirstName, person.LastName), sentry.Start);
-                }
-            }
-
-            foreach (var service in sentry.SupervisorServices)
-            {
-                var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
-
-                if (person != null)
-                {
-                    await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["SupervisorServiceStart"],person.FirstName, person.LastName), sentry.Start);
-                }
-            }
+            await _eventPublisher.PublishAsync(new SentryStartedEvent(
+                StartTime: sentry.Start,
+                GuardPersonIds: sentry.GuardServices.Select(s => s.PersonId).ToList(),
+                SupervisorPersonIds: sentry.SupervisorServices.Select(s => s.PersonId).ToList()
+            ));
 
             return sentry;
         }
@@ -70,27 +49,15 @@ namespace DigitalGuardBook.Repositories
         public async Task FinishSentry(string id, DateTimeOffset dateTime)
         {
             var sentry = await GetSentryAsync(id);
-            var personList = await _personRepository.AllPersonsAsync();
 
-            foreach (var service in sentry.GuardServices.Where(x => !x.End.HasValue))
-            {
-                var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
-
-                if (person != null)
-                {
-                    await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["GuardServiceFinish"],person.FirstName, person.LastName), dateTime);
-                }
-            }
-
-            foreach (var service in sentry.SupervisorServices.Where(x => !x.End.HasValue))
-            {
-                var person = personList.FirstOrDefault(x => x.Id == service.PersonId);
-
-                if (person != null)
-                {
-                    await _logBookRepository.InsertLogBookEntryAsync(string.Format(_localizer["SupervisorServiceFinish"],person.FirstName, person.LastName), dateTime);
-                }
-            }
+            var unfinishedGuardIds = sentry.GuardServices
+                .Where(x => !x.End.HasValue)
+                .Select(x => x.PersonId)
+                .ToList();
+            var unfinishedSupervisorIds = sentry.SupervisorServices
+                .Where(x => !x.End.HasValue)
+                .Select(x => x.PersonId)
+                .ToList();
 
             var fb = Builders<Sentry>.Filter;
             var filter = fb.And(
@@ -102,9 +69,13 @@ namespace DigitalGuardBook.Repositories
                 .Set(x => x.End, dateTime)
                 .Set("SupervisorServices.$.End", dateTime)
                 .Set("GuardServices.$.End", dateTime);
-            var res = await _dataContext.Sentries.UpdateOneAsync(filter, update);
+            await _dataContext.Sentries.UpdateOneAsync(filter, update);
 
-            await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryFinished"], dateTime);
+            await _eventPublisher.PublishAsync(new SentryFinishedEvent(
+                FinishTime: dateTime,
+                UnfinishedGuardPersonIds: unfinishedGuardIds,
+                UnfinishedSupervisorPersonIds: unfinishedSupervisorIds
+            ));
         }
     }
 }
