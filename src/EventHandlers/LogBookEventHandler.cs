@@ -23,6 +23,10 @@ public sealed class LogBookEventHandler
 
         publisher.Subscribe<SentryStartedEvent>(HandleSentryStartedAsync);
         publisher.Subscribe<SentryFinishedEvent>(HandleSentryFinishedAsync);
+        publisher.Subscribe<GuardServiceStartedEvent>(HandleGuardServiceStartedAsync);
+        publisher.Subscribe<GuardServiceEndedEvent>(HandleGuardServiceEndedAsync);
+        publisher.Subscribe<SupervisorServiceStartedEvent>(HandleSupervisorServiceStartedAsync);
+        publisher.Subscribe<SupervisorServiceEndedEvent>(HandleSupervisorServiceEndedAsync);
     }
 
     private async Task HandleSentryStartedAsync(SentryStartedEvent e)
@@ -75,5 +79,45 @@ public sealed class LogBookEventHandler
         }
 
         await _logBookRepository.InsertLogBookEntryAsync(_localizer["SentryFinished"], e.FinishTime);
+    }
+
+    private async Task HandleGuardServiceStartedAsync(GuardServiceStartedEvent e)
+    {
+        var persons = await _personRepository.PersonsAsync(new[] { e.PersonId });
+        var person = persons.FirstOrDefault();
+        if (person != null)
+            await _logBookRepository.InsertLogBookEntryAsync(
+                string.Format(_localizer["GuardServiceStart"], person.FirstName, person.LastName),
+                e.StartTime);
+    }
+
+    private async Task HandleGuardServiceEndedAsync(GuardServiceEndedEvent e)
+    {
+        var persons = await _personRepository.PersonsAsync(new[] { e.PersonId });
+        var person = persons.FirstOrDefault();
+        if (person != null)
+            await _logBookRepository.InsertLogBookEntryAsync(
+                string.Format(_localizer["GuardServiceFinish"], person.FirstName, person.LastName),
+                e.EndTime);
+    }
+
+    private async Task HandleSupervisorServiceStartedAsync(SupervisorServiceStartedEvent e)
+    {
+        var persons = await _personRepository.PersonsAsync(new[] { e.PersonId });
+        var person = persons.FirstOrDefault();
+        if (person != null)
+            await _logBookRepository.InsertLogBookEntryAsync(
+                string.Format(_localizer["SupervisorServiceStart"], person.FirstName, person.LastName),
+                e.StartTime);
+    }
+
+    private async Task HandleSupervisorServiceEndedAsync(SupervisorServiceEndedEvent e)
+    {
+        var persons = await _personRepository.PersonsAsync(new[] { e.PersonId });
+        var person = persons.FirstOrDefault();
+        if (person != null)
+            await _logBookRepository.InsertLogBookEntryAsync(
+                string.Format(_localizer["SupervisorServiceFinish"], person.FirstName, person.LastName),
+                e.EndTime);
     }
 }

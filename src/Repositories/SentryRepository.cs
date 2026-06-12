@@ -35,6 +35,22 @@ namespace DigitalGuardBook.Repositories
                 SupervisorPersonIds: sentry.SupervisorServices.Select(s => s.PersonId).ToList()
             ));
 
+            foreach (var guardService in sentry.GuardServices)
+            {
+                await _eventPublisher.PublishAsync(new GuardServiceStartedEvent(
+                    PersonId: guardService.PersonId,
+                    StartTime: guardService.Start
+                ));
+            }
+
+            foreach (var supervisorService in sentry.SupervisorServices)
+            {
+                await _eventPublisher.PublishAsync(new SupervisorServiceStartedEvent(
+                    PersonId: supervisorService.PersonId,
+                    StartTime: supervisorService.Start
+                ));
+            }
+
             return sentry;
         }
 
@@ -50,13 +66,11 @@ namespace DigitalGuardBook.Repositories
         {
             var sentry = await GetSentryAsync(id);
 
-            var unfinishedGuardIds = sentry.GuardServices
+            var unfinishedGuards = sentry.GuardServices
                 .Where(x => !x.End.HasValue)
-                .Select(x => x.PersonId)
                 .ToList();
-            var unfinishedSupervisorIds = sentry.SupervisorServices
+            var unfinishedSupervisors = sentry.SupervisorServices
                 .Where(x => !x.End.HasValue)
-                .Select(x => x.PersonId)
                 .ToList();
 
             var fb = Builders<Sentry>.Filter;
@@ -71,10 +85,26 @@ namespace DigitalGuardBook.Repositories
                 .Set("GuardServices.$.End", dateTime);
             await _dataContext.Sentries.UpdateOneAsync(filter, update);
 
+            foreach (var guardService in unfinishedGuards)
+            {
+                await _eventPublisher.PublishAsync(new GuardServiceEndedEvent(
+                    PersonId: guardService.PersonId,
+                    EndTime: dateTime
+                ));
+            }
+
+            foreach (var supervisorService in unfinishedSupervisors)
+            {
+                await _eventPublisher.PublishAsync(new SupervisorServiceEndedEvent(
+                    PersonId: supervisorService.PersonId,
+                    EndTime: dateTime
+                ));
+            }
+
             await _eventPublisher.PublishAsync(new SentryFinishedEvent(
                 FinishTime: dateTime,
-                UnfinishedGuardPersonIds: unfinishedGuardIds,
-                UnfinishedSupervisorPersonIds: unfinishedSupervisorIds
+                UnfinishedGuardPersonIds: unfinishedGuards.Select(x => x.PersonId).ToList(),
+                UnfinishedSupervisorPersonIds: unfinishedSupervisors.Select(x => x.PersonId).ToList()
             ));
         }
     }
