@@ -1,26 +1,28 @@
-using DigitalGuardBook.Events;
+using DigitalGuardBook.Modules.Sentry.Events;
 using DigitalGuardBook.Infrastructure;
 using DigitalGuardBook.Repositories;
 using Microsoft.Extensions.Localization;
 
-namespace DigitalGuardBook.EventHandlers;
+namespace DigitalGuardBook.Modules.Sentry.EventHandlers;
 
-public sealed class LogBookEventHandler
+public sealed class SentryLogBookEventHandler : ILogBookEventHandler
 {
     private readonly LogBookRepository _logBookRepository;
     private readonly PersonRepository _personRepository;
-    private readonly IStringLocalizer<LogBookEventHandler> _localizer;
+    private readonly IStringLocalizer<SentryLogBookEventHandler> _localizer;
 
-    public LogBookEventHandler(
-        InProcessEventPublisher publisher,
+    public SentryLogBookEventHandler(
         LogBookRepository logBookRepository,
         PersonRepository personRepository,
-        IStringLocalizer<LogBookEventHandler> localizer)
+        IStringLocalizer<SentryLogBookEventHandler> localizer)
     {
         _logBookRepository = logBookRepository;
         _personRepository = personRepository;
         _localizer = localizer;
+    }
 
+    public void Register(InProcessEventPublisher publisher)
+    {
         publisher.Subscribe<SentryStartedEvent>(HandleSentryStartedAsync);
         publisher.Subscribe<SentryFinishedEvent>(HandleSentryFinishedAsync);
         publisher.Subscribe<GuardServiceStartedEvent>(HandleGuardServiceStartedAsync);

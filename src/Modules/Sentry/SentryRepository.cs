@@ -2,13 +2,14 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
-using DigitalGuardBook.Events;
+using DigitalGuardBook.Modules.Sentry.Events;
 using DigitalGuardBook.Infrastructure;
+using SentryEntity = DigitalGuardBook.Data.Entities.Sentry;
 
-namespace DigitalGuardBook.Repositories
+namespace DigitalGuardBook.Modules.Sentry;
+
+public class SentryRepository
 {
-    public class SentryRepository
-    {
         private readonly DigitalGuardBookDataContext _dataContext;
         private readonly IEventPublisher _eventPublisher;
 
@@ -18,16 +19,16 @@ namespace DigitalGuardBook.Repositories
             _eventPublisher = eventPublisher;
         }
 
-        public async Task<Sentry> GetActiveSentry()
+        public async Task<SentryEntity> GetActiveSentry()
         {
             return await _dataContext.Sentries
             .AsQueryable()
             .FirstOrDefaultAsync(x => !x.End.HasValue);
         }
 
-        public async Task<Sentry> StartSentryAsync(Sentry sentry)
+        public async Task<SentryEntity> StartSentryAsync(SentryEntity sentry)
         {
-            await _dataContext.Sentries.InsertOneAsync((Sentry)sentry);
+            await _dataContext.Sentries.InsertOneAsync((SentryEntity)sentry);
 
             await _eventPublisher.PublishAsync(new SentryStartedEvent(
                 StartTime: sentry.Start,
@@ -54,7 +55,7 @@ namespace DigitalGuardBook.Repositories
             return sentry;
         }
 
-        private async Task<Sentry> GetSentryAsync(string id)
+        private async Task<SentryEntity> GetSentryAsync(string id)
         {
 
             return await _dataContext.Sentries
@@ -73,13 +74,13 @@ namespace DigitalGuardBook.Repositories
                 .Where(x => !x.End.HasValue)
                 .ToList();
 
-            var fb = Builders<Sentry>.Filter;
+            var fb = Builders<SentryEntity>.Filter;
             var filter = fb.And(
                 fb.Eq(x => x.Id, id),
                 fb.ElemMatch(x => x.SupervisorServices, x => !x.End.HasValue),
                 fb.ElemMatch(x => x.GuardServices, x => !x.End.HasValue)
             );
-            UpdateDefinition<Sentry> update = Builders<Sentry>.Update
+            UpdateDefinition<SentryEntity> update = Builders<SentryEntity>.Update
                 .Set(x => x.End, dateTime)
                 .Set("SupervisorServices.$.End", dateTime)
                 .Set("GuardServices.$.End", dateTime);
@@ -108,4 +109,3 @@ namespace DigitalGuardBook.Repositories
             ));
         }
     }
-}

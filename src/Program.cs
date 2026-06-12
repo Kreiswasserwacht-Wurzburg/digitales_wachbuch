@@ -4,7 +4,8 @@ using GraphQL.MicrosoftDI;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Repositories;
 using DigitalGuardBook.GraphQL;
-using DigitalGuardBook.EventHandlers;
+using DigitalGuardBook.Modules.Sentry;
+using DigitalGuardBook.Modules.Sentry.EventHandlers;
 using DigitalGuardBook.Infrastructure;
 
 namespace DigitalGuardBook;
@@ -38,8 +39,8 @@ public class Program
         builder.Services.AddSingleton<LogBookRepository>();
         builder.Services.AddSingleton<SentryRepository>();
 
-        // Event handlers
-        builder.Services.AddSingleton<LogBookEventHandler>();
+        // Modules
+        builder.Services.AddSingleton<ILogBookEventHandler, SentryLogBookEventHandler>();
 
 
         // Add GraphQL
@@ -50,7 +51,11 @@ public class Program
 
         var app = builder.Build();
 
-        app.Services.GetRequiredService<LogBookEventHandler>();
+        var eventPublisher = app.Services.GetRequiredService<InProcessEventPublisher>();
+        foreach (var handler in app.Services.GetServices<ILogBookEventHandler>())
+        {
+            handler.Register(eventPublisher);
+        }
 
         app.UseRequestLocalization(new RequestLocalizationOptions
         {
