@@ -15,31 +15,8 @@ namespace DigitalGuardBook.GraphQL
             .Argument<NonNullGraphType<SentryStartType>>("sentry")
             .ResolveAsync(async context =>
             {
-                var sentry = context.GetArgument<SentryComposed>("sentry");
-                sentry.OrganisationId = sentry.Organisation.Id;
-                var guardServices = sentry.Guards.Select(x => new GuardService
-                {
-                    Start = x.Start,
-                    End = x.End,
-                    PersonId = x.Guard.Id
-                }).ToList();
-
-                sentry.SupervisorServices = sentry.Supervisors.Select(x => new GuardService
-                {
-                    Start = x.Start,
-                    End = x.End,
-                    PersonId = x.Guard.Id
-                }).ToList();
-
-                guardServices.AddRange(sentry.Supervisors.Select(x => new GuardService
-                {
-                    Start = x.Start,
-                    End = x.End,
-                    PersonId = x.Guard.Id
-                }));
-
-                sentry.GuardServices = guardServices;
-
+                var input = context.GetArgument<SentryComposed>("sentry");
+                var sentry = SentryMapper.MapStartSentryInput(input);
                 return await sentryService.StartSentryAsync(sentry);
             });
 
