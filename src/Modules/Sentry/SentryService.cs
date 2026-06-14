@@ -24,6 +24,12 @@ public class SentryService : ISentryService
 
     public async Task<SentryEntity> StartSentryAsync(SentryEntity sentry)
     {
+        var activeSentry = await _sentryRepository.GetActiveSentry();
+        if (activeSentry != null)
+            throw new InvalidOperationException(
+                $"Cannot start a new sentry while sentry '{activeSentry.Id}' is active. " +
+                $"Finish the active sentry first.");
+
         await _sentryRepository.InsertSentryAsync(sentry);
 
         await _eventPublisher.PublishAsync(new SentryStartedEvent(
