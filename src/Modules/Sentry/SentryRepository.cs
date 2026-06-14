@@ -15,7 +15,7 @@ public class SentryRepository : ISentryRepository
         _dataContext = dataContext;
     }
 
-    public virtual async Task<SentryEntity> GetActiveSentry()
+    public async Task<SentryEntity> GetActiveSentry()
     {
         return await _dataContext.Sentries
             .AsQueryable()

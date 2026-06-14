@@ -14,7 +14,7 @@ namespace DigitalGuardBook.Repositories
             _dataContext = dataContext;
         }
 
-        public virtual async Task<IList<PersonComposed>> AllPersonsAsync()
+        public async Task<IList<PersonComposed>> AllPersonsAsync()
         {
             return await _dataContext.Persons
                 .Aggregate()
@@ -26,7 +26,7 @@ namespace DigitalGuardBook.Repositories
                 ).ToListAsync();
         }
 
-        public virtual async Task<IList<PersonComposed>> PersonsAsync(IList<string> ids)
+        public async Task<IList<PersonComposed>> PersonsAsync(IList<string> ids)
         {
             return await _dataContext.Persons
                 .Aggregate()
