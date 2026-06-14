@@ -26,7 +26,7 @@ public class Program
         });
 
         var mongoConnectionString = builder.Configuration.GetConnectionString("MongoConnection") ?? throw new InvalidOperationException("MongoConnection configuration is missing");
-        builder.Services.AddSingleton(x => new DigitalGuardBookDataContext(mongoConnectionString));
+        builder.Services.AddSingleton(x => new DigitalGuardBookDataContext(mongoConnectionString, x.GetService<ILoggerFactory>()));
 
         // Infrastructure
         builder.Services.AddSingleton<IInProcessEventPublisher, InProcessEventPublisher>();

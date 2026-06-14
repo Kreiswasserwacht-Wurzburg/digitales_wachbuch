@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
+using Microsoft.Extensions.Logging;
 using DigitalGuardBook.Data.Entities;
 
 namespace DigitalGuardBook.Data
@@ -17,12 +18,13 @@ namespace DigitalGuardBook.Data
 
         private readonly IMongoDatabase _database;
 
-        public DigitalGuardBookDataContext(string connectionString)
+        public DigitalGuardBookDataContext(string connectionString, ILoggerFactory? loggerFactory = null)
         {
+            var logger = loggerFactory?.CreateLogger<DigitalGuardBookDataContext>();
             var settings = MongoClientSettings.FromConnectionString(connectionString);
             settings.ClusterConfigurator = builder => builder.Subscribe<CommandStartedEvent>(started =>
             {
-                Console.WriteLine("MongoDB Command: " + started.Command);
+                logger?.LogDebug("MongoDB Command: {Command}", started.Command);
             });
 
             var client = new MongoClient(settings);
