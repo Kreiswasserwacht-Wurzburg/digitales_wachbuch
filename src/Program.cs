@@ -2,10 +2,13 @@ using GraphQL;
 using GraphQL.Types;
 using GraphQL.MicrosoftDI;
 using DigitalGuardBook.Data;
-using DigitalGuardBook.Repositories;
 using DigitalGuardBook.GraphQL;
 using DigitalGuardBook.Modules.Sentry;
 using DigitalGuardBook.Modules.Sentry.EventHandlers;
+using DigitalGuardBook.Modules.Person;
+using DigitalGuardBook.Modules.Organisation;
+using DigitalGuardBook.Modules.Station;
+using DigitalGuardBook.Modules.LogBook;
 using DigitalGuardBook.Infrastructure;
 
 namespace DigitalGuardBook;

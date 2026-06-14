@@ -1,6 +1,5 @@
 using DigitalGuardBook.Data.Entities;
 using DigitalGuardBook.GraphQL.Types;
-using DigitalGuardBook.Repositories;
 using DigitalGuardBook.Modules.Sentry;
 using GraphQL;
 using GraphQL.Types;

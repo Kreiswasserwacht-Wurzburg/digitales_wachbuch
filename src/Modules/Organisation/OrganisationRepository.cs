@@ -2,8 +2,10 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
+using OrganisationEntity = DigitalGuardBook.Data.Entities.Organisation;
+using PersonEntity = DigitalGuardBook.Data.Entities.Person;
 
-namespace DigitalGuardBook.Repositories
+namespace DigitalGuardBook.Modules.Organisation
 {
     public class OrganisationRepository : IOrganisationRepository
     {
@@ -18,19 +20,19 @@ namespace DigitalGuardBook.Repositories
         {
             return await _dataContext.Organisations
                 .Aggregate()
-                .Lookup<Organisation, Person, OrganisationComposed>(
+                .Lookup<OrganisationEntity, PersonEntity, OrganisationComposed>(
                     _dataContext.Persons,
                     organisation => organisation.TechnicalLeadIds,
                     person => person.Id,
                     organisationComposed => organisationComposed.TechnicalLeads
                 )
-                .Lookup<OrganisationComposed, Person, OrganisationComposed>(
+                .Lookup<OrganisationComposed, PersonEntity, OrganisationComposed>(
                     _dataContext.Persons,
                     organisation => organisation.MemberIds,
                     person => person.Id,
                     organisationComposed => organisationComposed.Members
                 )
-                .Lookup<OrganisationComposed, Organisation, OrganisationComposed>(
+                .Lookup<OrganisationComposed, OrganisationEntity, OrganisationComposed>(
                     _dataContext.Organisations,
                     organisation => organisation.SubOrganisationIds,
                     organisation => organisation.Id,
@@ -44,19 +46,19 @@ namespace DigitalGuardBook.Repositories
             return await _dataContext.Organisations
                 .Aggregate()
                 .Match(organisation => organisation.Id == id)
-                .Lookup<Organisation, Person, OrganisationComposed>(
+                .Lookup<OrganisationEntity, PersonEntity, OrganisationComposed>(
                     _dataContext.Persons,
                     organisation => organisation.TechnicalLeadIds,
                     person => person.Id,
                     organisationComposed => organisationComposed.TechnicalLeads
                 )
-                .Lookup<OrganisationComposed, Person, OrganisationComposed>(
+                .Lookup<OrganisationComposed, PersonEntity, OrganisationComposed>(
                     _dataContext.Persons,
                     organisation => organisation.MemberIds,
                     person => person.Id,
                     organisationComposed => organisationComposed.Members
                 )
-                .Lookup<OrganisationComposed, Organisation, OrganisationComposed>(
+                .Lookup<OrganisationComposed, OrganisationEntity, OrganisationComposed>(
                     _dataContext.Organisations,
                     organisation => organisation.SubOrganisationIds,
                     organisation => organisation.Id,

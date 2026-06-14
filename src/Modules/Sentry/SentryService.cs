@@ -2,7 +2,8 @@ using Microsoft.Extensions.Logging;
 using DigitalGuardBook.Data.Entities;
 using DigitalGuardBook.Modules.Sentry.Events;
 using DigitalGuardBook.Infrastructure;
-using DigitalGuardBook.Repositories;
+using DigitalGuardBook.Modules.Person;
+using DigitalGuardBook.Modules.Organisation;
 using SentryEntity = DigitalGuardBook.Data.Entities.Sentry;
 
 namespace DigitalGuardBook.Modules.Sentry;

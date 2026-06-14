@@ -1,5 +1,5 @@
 using DigitalGuardBook.Data.Entities;
-using DigitalGuardBook.Repositories;
+using DigitalGuardBook.Modules.Organisation;
 using GraphQL.Types;
 
 namespace DigitalGuardBook.GraphQL.Types

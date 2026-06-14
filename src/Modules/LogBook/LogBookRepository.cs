@@ -2,8 +2,10 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
+using DigitalGuardBook.Modules.Station;
+using LogBookEntity = DigitalGuardBook.Data.Entities.LogBook;
 
-namespace DigitalGuardBook.Repositories
+namespace DigitalGuardBook.Modules.LogBook
 {
     public class LogBookRepository : ILogBookRepository
     {
@@ -16,7 +18,7 @@ namespace DigitalGuardBook.Repositories
             _stationRepository = stationRepository;
         }
 
-        public async Task<LogBook> GetLogBookAsync(string stationId, int year)
+        public async Task<LogBookEntity> GetLogBookAsync(string stationId, int year)
         {
             var logBook = await _dataContext.LogBooks
             .AsQueryable()
@@ -24,7 +26,7 @@ namespace DigitalGuardBook.Repositories
 
             if (logBook == null)
             {
-                logBook = new LogBook
+                logBook = new LogBookEntity
                 {
                     Entries = new List<LogBookEntry>(),
                     StationId = stationId,
@@ -48,7 +50,7 @@ namespace DigitalGuardBook.Repositories
 
             if (id == null)
             {
-                var logBook = new LogBook
+                var logBook = new LogBookEntity
                 {
                     Entries = new List<LogBookEntry>(),
                     StationId = stationId,
@@ -92,8 +94,8 @@ namespace DigitalGuardBook.Repositories
                 Time = time ?? DateTimeOffset.Now
             };
 
-            var filter = Builders<LogBook>.Filter.Eq(x => x.Id, logBookId);
-            var update = Builders<LogBook>.Update.AddToSet(x => x.Entries, entry);
+            var filter = Builders<LogBookEntity>.Filter.Eq(x => x.Id, logBookId);
+            var update = Builders<LogBookEntity>.Update.AddToSet(x => x.Entries, entry);
 
             await _dataContext.LogBooks.UpdateOneAsync(filter, update);
         }

@@ -2,8 +2,10 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DigitalGuardBook.Data;
 using DigitalGuardBook.Data.Entities;
+using PersonEntity = DigitalGuardBook.Data.Entities.Person;
+using OrganisationEntity = DigitalGuardBook.Data.Entities.Organisation;
 
-namespace DigitalGuardBook.Repositories
+namespace DigitalGuardBook.Modules.Person
 {
     public class PersonRepository : IPersonRepository
     {
@@ -18,7 +20,7 @@ namespace DigitalGuardBook.Repositories
         {
             return await _dataContext.Persons
                 .Aggregate()
-                .Lookup<Person, Organisation, PersonComposed>(
+                .Lookup<PersonEntity, OrganisationEntity, PersonComposed>(
                     _dataContext.Organisations,
                     person => person.OrganisationIds,
                     organisation => organisation.Id,
@@ -31,7 +33,7 @@ namespace DigitalGuardBook.Repositories
             return await _dataContext.Persons
                 .Aggregate()
                 .Match(person => ids.Contains(person.Id))
-                .Lookup<Person, Organisation, PersonComposed>(
+                .Lookup<PersonEntity, OrganisationEntity, PersonComposed>(
                         _dataContext.Organisations,
                         person => person.OrganisationIds,
                         organisation => organisation.Id,

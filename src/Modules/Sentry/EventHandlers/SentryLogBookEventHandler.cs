@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Logging;
 using DigitalGuardBook.Modules.Sentry.Events;
 using DigitalGuardBook.Infrastructure;
-using DigitalGuardBook.Repositories;
+using DigitalGuardBook.Modules.LogBook;
+using DigitalGuardBook.Modules.Person;
 using Microsoft.Extensions.Localization;
 
 namespace DigitalGuardBook.Modules.Sentry.EventHandlers;

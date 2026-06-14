@@ -1,6 +1,9 @@
 using DigitalGuardBook.GraphQL.Types;
-using DigitalGuardBook.Repositories;
 using DigitalGuardBook.Modules.Sentry;
+using DigitalGuardBook.Modules.Person;
+using DigitalGuardBook.Modules.Organisation;
+using DigitalGuardBook.Modules.Station;
+using DigitalGuardBook.Modules.LogBook;
 using GraphQL;
 using GraphQL.Types;
 

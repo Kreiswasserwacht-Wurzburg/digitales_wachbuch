@@ -1,6 +1,7 @@
 using DigitalGuardBook.Data.Entities;
+using PersonEntity = DigitalGuardBook.Data.Entities.Person;
 
-namespace DigitalGuardBook.Repositories;
+namespace DigitalGuardBook.Modules.Person;
 
 public interface IPersonRepository
 {

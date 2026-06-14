@@ -1,6 +1,7 @@
 using DigitalGuardBook.Data.Entities;
+using OrganisationEntity = DigitalGuardBook.Data.Entities.Organisation;
 
-namespace DigitalGuardBook.Repositories;
+namespace DigitalGuardBook.Modules.Organisation;
 
 public interface IOrganisationRepository
 {
