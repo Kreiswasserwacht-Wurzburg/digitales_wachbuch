@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using DigitalGuardBook.Data.Entities;
 using DigitalGuardBook.Modules.Sentry.Events;
 using DigitalGuardBook.Infrastructure;
@@ -9,15 +10,20 @@ public class SentryService : ISentryService
 {
     private readonly ISentryRepository _sentryRepository;
     private readonly IEventPublisher _eventPublisher;
+    private readonly ILogger<SentryService> _logger;
 
-    public SentryService(ISentryRepository sentryRepository, IEventPublisher eventPublisher)
+    public SentryService(ISentryRepository sentryRepository, IEventPublisher eventPublisher, ILogger<SentryService> logger)
     {
         _sentryRepository = sentryRepository;
         _eventPublisher = eventPublisher;
+        _logger = logger;
     }
 
     public async Task<SentryEntity> StartSentryAsync(SentryEntity sentry)
     {
+        _logger.LogInformation("Starting sentry {SentryId} with {GuardCount} guards and {SupervisorCount} supervisors",
+            sentry.Id, sentry.GuardServices.Count, sentry.SupervisorServices.Count);
+
         var activeSentry = await _sentryRepository.GetActiveSentry();
         if (activeSentry != null)
             throw new InvalidOperationException(
@@ -25,6 +31,7 @@ public class SentryService : ISentryService
                 $"Finish the active sentry first.");
 
         await _sentryRepository.InsertSentryAsync(sentry);
+        _logger.LogInformation("Sentry {SentryId} started successfully", sentry.Id);
 
         await _eventPublisher.PublishAsync(new SentryStartedEvent(
             StartTime: sentry.Start,
@@ -53,6 +60,8 @@ public class SentryService : ISentryService
 
     public async Task FinishSentryAsync(string id, DateTimeOffset dateTime)
     {
+        _logger.LogInformation("Finishing sentry {SentryId}", id);
+
         var sentry = await _sentryRepository.GetSentryAsync(id);
         if (sentry == null)
             throw new SentryNotFoundException(id);
@@ -61,6 +70,8 @@ public class SentryService : ISentryService
         var unfinishedSupervisors = sentry.SupervisorServices.Where(x => !x.End.HasValue).ToList();
 
         await _sentryRepository.UpdateSentryEndAsync(id, dateTime);
+        _logger.LogInformation("Sentry {SentryId} finished with {UnfinishedGuardCount} unfinished guards and {UnfinishedSupervisorCount} unfinished supervisors",
+            id, unfinishedGuards.Count, unfinishedSupervisors.Count);
 
         foreach (var guardService in unfinishedGuards)
         {

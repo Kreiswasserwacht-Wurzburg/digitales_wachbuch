@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using DigitalGuardBook.Modules.Sentry.Events;
 using DigitalGuardBook.Infrastructure;
 using DigitalGuardBook.Repositories;
@@ -10,15 +11,18 @@ public sealed class SentryLogBookEventHandler : ILogBookEventHandler
     private readonly ILogBookRepository _logBookRepository;
     private readonly IPersonRepository _personRepository;
     private readonly IStringLocalizer<SentryLogBookEventHandler> _localizer;
+    private readonly ILogger<SentryLogBookEventHandler> _logger;
 
     public SentryLogBookEventHandler(
         ILogBookRepository logBookRepository,
         IPersonRepository personRepository,
-        IStringLocalizer<SentryLogBookEventHandler> localizer)
+        IStringLocalizer<SentryLogBookEventHandler> localizer,
+        ILogger<SentryLogBookEventHandler> logger)
     {
         _logBookRepository = logBookRepository;
         _personRepository = personRepository;
         _localizer = localizer;
+        _logger = logger;
     }
 
     public void Register(IInProcessEventPublisher publisher)
@@ -100,8 +104,14 @@ public sealed class SentryLogBookEventHandler : ILogBookEventHandler
         var persons = await _personRepository.PersonsAsync(new[] { personId });
         var person = persons.FirstOrDefault();
         if (person != null)
+        {
             await _logBookRepository.InsertLogBookEntryAsync(
                 string.Format(_localizer[localizationKey], person.FirstName, person.LastName),
                 time);
+        }
+        else
+        {
+            _logger.LogWarning("Person {PersonId} not found when handling {LocalizationKey} event", personId, localizationKey);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using DigitalGuardBook.Data.Entities;
 using DigitalGuardBook.Infrastructure;
 using DigitalGuardBook.Modules.Sentry.EventHandlers;
@@ -14,6 +15,7 @@ public class SentryLogBookEventHandlerTests
     private readonly Mock<ILogBookRepository> _mockLogBookRepository;
     private readonly Mock<IPersonRepository> _mockPersonRepository;
     private readonly Mock<IStringLocalizer<SentryLogBookEventHandler>> _mockLocalizer;
+    private readonly Mock<ILogger<SentryLogBookEventHandler>> _mockLogger;
     private readonly SentryLogBookEventHandler _handler;
 
     public SentryLogBookEventHandlerTests()
@@ -21,11 +23,13 @@ public class SentryLogBookEventHandlerTests
         _mockLogBookRepository = new Mock<ILogBookRepository>();
         _mockPersonRepository = new Mock<IPersonRepository>();
         _mockLocalizer = new Mock<IStringLocalizer<SentryLogBookEventHandler>>();
+        _mockLogger = new Mock<ILogger<SentryLogBookEventHandler>>();
 
         _handler = new SentryLogBookEventHandler(
             _mockLogBookRepository.Object,
             _mockPersonRepository.Object,
-            _mockLocalizer.Object
+            _mockLocalizer.Object,
+            _mockLogger.Object
         );
     }
 

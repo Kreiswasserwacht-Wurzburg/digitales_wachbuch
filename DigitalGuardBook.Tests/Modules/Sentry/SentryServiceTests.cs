@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using DigitalGuardBook.Data.Entities;
 using DigitalGuardBook.Infrastructure;
 using DigitalGuardBook.Modules.Sentry;
@@ -16,7 +17,8 @@ public class SentryServiceTests
         // Arrange & Act
         var mockRepository = new Mock<ISentryRepository>();
         var mockPublisher = new Mock<IEventPublisher>();
-        var service = new SentryService(mockRepository.Object, mockPublisher.Object);
+        var mockLogger = new Mock<ILogger<SentryService>>();
+        var service = new SentryService(mockRepository.Object, mockPublisher.Object, mockLogger.Object);
 
         // Assert
         Assert.NotNull(service);
@@ -28,7 +30,8 @@ public class SentryServiceTests
         // Arrange
         var mockRepository = new Mock<ISentryRepository>();
         var mockPublisher = new Mock<IEventPublisher>();
-        var service = new SentryService(mockRepository.Object, mockPublisher.Object);
+        var mockLogger = new Mock<ILogger<SentryService>>();
+        var service = new SentryService(mockRepository.Object, mockPublisher.Object, mockLogger.Object);
 
         var sentry = new SentryEntity
         {
@@ -57,7 +60,8 @@ public class SentryServiceTests
         // Arrange
         var mockRepository = new Mock<ISentryRepository>();
         var mockPublisher = new Mock<IEventPublisher>();
-        var service = new SentryService(mockRepository.Object, mockPublisher.Object);
+        var mockLogger = new Mock<ILogger<SentryService>>();
+        var service = new SentryService(mockRepository.Object, mockPublisher.Object, mockLogger.Object);
 
         var sentryId = "test-id";
         var finishTime = DateTimeOffset.Now;
@@ -91,7 +95,8 @@ public class SentryServiceTests
         // Arrange
         var mockRepository = new Mock<ISentryRepository>();
         var mockPublisher = new Mock<IEventPublisher>();
-        var service = new SentryService(mockRepository.Object, mockPublisher.Object);
+        var mockLogger = new Mock<ILogger<SentryService>>();
+        var service = new SentryService(mockRepository.Object, mockPublisher.Object, mockLogger.Object);
 
         var sentryId = "test-id";
         var finishTime = DateTimeOffset.Now;
