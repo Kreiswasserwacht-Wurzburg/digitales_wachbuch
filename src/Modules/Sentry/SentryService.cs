@@ -54,6 +54,8 @@ public class SentryService : ISentryService
     public async Task FinishSentryAsync(string id, DateTimeOffset dateTime)
     {
         var sentry = await _sentryRepository.GetSentryAsync(id);
+        if (sentry == null)
+            throw new SentryNotFoundException(id);
 
         var unfinishedGuards = sentry.GuardServices.Where(x => !x.End.HasValue).ToList();
         var unfinishedSupervisors = sentry.SupervisorServices.Where(x => !x.End.HasValue).ToList();
