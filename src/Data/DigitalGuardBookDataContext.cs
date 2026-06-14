@@ -30,8 +30,17 @@ namespace DigitalGuardBook.Data
 
             if (!client.ListDatabaseNames().ToList().Contains("DigitalGuardBook"))
             {
-                Task.Run(async () => await SeedData());
-            };
+                try
+                {
+                    SeedData().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException(
+                        "Failed to seed the DigitalGuardBook database. Check the MongoDB connection and permissions.",
+                        ex);
+                }
+            }
         }
 
         private async Task SeedData()
