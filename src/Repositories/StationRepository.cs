@@ -5,7 +5,7 @@ using DigitalGuardBook.Data.Entities;
 
 namespace DigitalGuardBook.Repositories
 {
-    public class StationRepository
+    public class StationRepository : IStationRepository
     {
         private readonly DigitalGuardBookDataContext _dataContext;
 

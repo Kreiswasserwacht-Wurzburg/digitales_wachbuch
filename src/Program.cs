@@ -34,8 +34,8 @@ public class Program
 
         // Repositories
         builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
-        builder.Services.AddSingleton<OrganisationRepository>();
-        builder.Services.AddSingleton<StationRepository>();
+        builder.Services.AddSingleton<IOrganisationRepository, OrganisationRepository>();
+        builder.Services.AddSingleton<IStationRepository, StationRepository>();
         builder.Services.AddSingleton<ILogBookRepository, LogBookRepository>();
         builder.Services.AddSingleton<ISentryRepository, SentryRepository>();
 

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DigitalGuardBook.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a4ac040cb34a6d2230e692d33c174eb3f616b767")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd4941dea7236eba1d0c45f4e5bd590c85a757c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("DigitalGuardBook.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DigitalGuardBook.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

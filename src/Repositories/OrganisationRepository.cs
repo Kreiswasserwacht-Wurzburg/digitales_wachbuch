@@ -5,7 +5,7 @@ using DigitalGuardBook.Data.Entities;
 
 namespace DigitalGuardBook.Repositories
 {
-    public class OrganisationRepository
+    public class OrganisationRepository : IOrganisationRepository
     {
         private readonly DigitalGuardBookDataContext _dataContext;
 
