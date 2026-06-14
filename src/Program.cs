@@ -5,10 +5,12 @@ using DigitalGuardBook.Data;
 using DigitalGuardBook.GraphQL;
 using DigitalGuardBook.Modules.Sentry;
 using DigitalGuardBook.Modules.Sentry.EventHandlers;
+using DigitalGuardBook.Modules.Sentry.Queries;
 using DigitalGuardBook.Modules.Person;
 using DigitalGuardBook.Modules.Organisation;
 using DigitalGuardBook.Modules.Station;
 using DigitalGuardBook.Modules.LogBook;
+using DigitalGuardBook.Modules.LogBook.Queries;
 using DigitalGuardBook.Infrastructure;
 
 namespace DigitalGuardBook;
@@ -44,6 +46,10 @@ public class Program
 
         // Services
         builder.Services.AddSingleton<ISentryService, SentryService>();
+
+        // Query Handlers
+        builder.Services.AddSingleton<GetLogBookEntriesQueryHandler>();
+        builder.Services.AddSingleton<GetActiveSentryQueryHandler>();
 
         // Modules
         builder.Services.AddSingleton<ILogBookEventHandler, SentryLogBookEventHandler>();
