@@ -32,7 +32,7 @@
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
-    "@intlify/unplugin-vue-i18n": "^6.0.8",
+    "@intlify/unplugin-vue-i18n": "^11.2.4",
     "@tsconfig/node18": "^18.2.6",
     "@types/bootstrap": "^5.2.11",
     "@types/luxon": "^3.7.3",
