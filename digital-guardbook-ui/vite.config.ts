@@ -5,26 +5,28 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'node:path'
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
     proxy: {
-      "/weather": {
-        target: "https://app-prod-ws.warnwetter.de/v30",
+      '/weather': {
+        target: 'https://app-prod-ws.warnwetter.de/v30',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/weather/, ""),
+        rewrite: (path) => path.replace(/^\/weather/, '')
       },
-      "/api": {
-        target: "http://localhost:5282/graphql",
+      '/api': {
+        target: 'http://localhost:5282/graphql',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "")
-      },
-    },
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
   plugins: [
     vue(),
     VueI18nPlugin({
-      include: path.resolve(__dirname, "src/i18n/locales/**")
+      include: path.resolve(__dirname, 'src/i18n/locales/**')
     })
   ],
   resolve: {
