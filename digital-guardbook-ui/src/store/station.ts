@@ -4,6 +4,10 @@ import type { Station } from '@/models/station'
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 
+interface FetchResult {
+  station: Station
+}
+
 export const useStationStore = defineStore('station', () => {
   const station = ref<Station>()
   const loading = ref<boolean>(false)
@@ -16,7 +20,7 @@ export const useStationStore = defineStore('station', () => {
   async function fetch() {
     loading.value = true
 
-    const { data } = await apolloClient.query({
+    const { data } = await apolloClient.query<FetchResult>({
       query: gql`
         query {
           station {
@@ -31,7 +35,7 @@ export const useStationStore = defineStore('station', () => {
       `
     })
 
-    station.value = (data as any).station
+    station.value = data!.station
 
     loading.value = false
   }
