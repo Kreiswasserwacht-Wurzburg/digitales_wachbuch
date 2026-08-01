@@ -6,8 +6,6 @@ import LogBookEntryList from '@/components/logBook/LogBookEntryList.vue'
 import { useSentryStore } from '@/store/sentry'
 import { storeToRefs } from 'pinia'
 
-// const sentry: Ref<Sentry | null> = ref(null)
-
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue'
 
