@@ -34,7 +34,7 @@ onMounted(() => {
   store.fetchAll()
 })
 
-watch(guards, (newValue, oldValue) => {
+watch(guards, (newValue, _oldValue) => {
   if (!_isPristineSet && newValue) {
     newValue.forEach((val) => _pristine.push(Object.assign({}, val)))
     _isPristineSet = true
@@ -67,7 +67,7 @@ const isModified = computed(() => {
   return false
 })
 
-onBeforeRouteLeave((to, from) => {
+onBeforeRouteLeave((_to, _from) => {
   return confirm('Do you really want to leave? you have unsaved changes!')
 })
 
@@ -166,7 +166,7 @@ function onSubmit() {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="guard in addedGuards">
+          <tr v-for="guard in addedGuards" :key="guard.id">
             <th scope="row">{{ guard.firstName }} {{ guard.lastName }}</th>
             <td><input type="time" /></td>
           </tr>
@@ -184,7 +184,7 @@ function onSubmit() {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="guard in removedGuards">
+          <tr v-for="guard in removedGuards" :key="guard.id">
             <th scope="row">{{ guard.firstName }} {{ guard.lastName }}</th>
             <td><input type="time" /></td>
           </tr>
