@@ -5,31 +5,31 @@ import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 
 export const useOrganisationStore = defineStore('organisation', () => {
-    const organisations = ref<Organisation[]>()
-    const loading = ref<Boolean>(false)
+  const organisations = ref<Organisation[]>()
+  const loading = ref<boolean>(false)
 
-    async function fetchAll() {
-        loading.value = true
-        const { data } = await apolloClient.query({
-            query: gql`
-                query {
-                    organisations {
-                        id
-                        name
-                        members {
-                            id
-                            firstName
-                            lastName
-                        }
-                    }
-                }
-            `
-        })
+  async function fetchAll() {
+    loading.value = true
+    const { data } = await apolloClient.query({
+      query: gql`
+        query {
+          organisations {
+            id
+            name
+            members {
+              id
+              firstName
+              lastName
+            }
+          }
+        }
+      `
+    })
 
-        organisations.value = data.organisations
+    organisations.value = (data as any).organisations
 
-        loading.value = false
-    }
+    loading.value = false
+  }
 
-    return { organisations, loading, fetchAll }
+  return { organisations, loading, fetchAll }
 })
