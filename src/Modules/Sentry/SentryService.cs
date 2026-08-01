@@ -131,4 +131,63 @@ public class SentryService : ISentryService
                 throw new PersonNotFoundException(personId);
         }
     }
+
+    public async Task<SentryEntity> AddGuardAsync(string sentryId, GuardService guard)
+    {
+        _logger.LogInformation("Adding guard {PersonId} to sentry {SentryId}", guard.PersonId, sentryId);
+
+        var sentry = await _sentryRepository.GetSentryAsync(sentryId);
+        if (sentry == null)
+            throw new SentryNotFoundException(sentryId);
+
+        if (sentry.End.HasValue)
+            throw new InvalidOperationException("Cannot add a guard to a finished sentry.");
+
+        var persons = await _personRepository.PersonsAsync(new List<string> { guard.PersonId });
+        if (!persons.Any())
+            throw new PersonNotFoundException(guard.PersonId);
+
+        var existingGuard = sentry.GuardServices.FirstOrDefault(g => g.PersonId == guard.PersonId && !g.End.HasValue);
+        if (existingGuard != null)
+            throw new InvalidOperationException($"Guard {guard.PersonId} is already assigned to this sentry.");
+
+        await _sentryRepository.AddGuardAsync(sentryId, guard);
+        _logger.LogInformation("Guard {PersonId} added to sentry {SentryId}", guard.PersonId, sentryId);
+
+        await _eventPublisher.PublishAsync(new GuardServiceStartedEvent(
+            PersonId: guard.PersonId,
+            StartTime: guard.Start
+        ));
+
+        var updatedSentry = await _sentryRepository.GetSentryAsync(sentryId);
+        return updatedSentry;
+    }
+
+    public async Task<SentryEntity> RemoveGuardAsync(string sentryId, string personId, DateTimeOffset end)
+    {
+        _logger.LogInformation("Removing guard {PersonId} from sentry {SentryId}", personId, sentryId);
+
+        var sentry = await _sentryRepository.GetSentryAsync(sentryId);
+        if (sentry == null)
+            throw new SentryNotFoundException(sentryId);
+
+        var guardService = sentry.GuardServices.FirstOrDefault(g => g.PersonId == personId && !g.End.HasValue);
+        if (guardService == null)
+            throw new InvalidOperationException($"Guard {personId} is not currently assigned to this sentry.");
+
+        var activeSupervisor = sentry.SupervisorServices.FirstOrDefault(s => s.PersonId == personId && !s.End.HasValue);
+        if (activeSupervisor != null)
+            throw new InvalidOperationException("Cannot remove the active supervisor as a guard.");
+
+        await _sentryRepository.RemoveGuardAsync(sentryId, personId, end);
+        _logger.LogInformation("Guard {PersonId} removed from sentry {SentryId}", personId, sentryId);
+
+        await _eventPublisher.PublishAsync(new GuardServiceEndedEvent(
+            PersonId: personId,
+            EndTime: end
+        ));
+
+        var updatedSentry = await _sentryRepository.GetSentryAsync(sentryId);
+        return updatedSentry;
+    }
 }

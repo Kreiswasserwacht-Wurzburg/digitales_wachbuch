@@ -9,6 +9,7 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 import type { Person } from '@/models/person'
 import { ref, watch, computed, onMounted } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
+import { DateTime } from 'luxon'
 import ModalDialog from '@/components/dialog/ModalDialog.vue'
 
 library.add(faFloppyDisk)
@@ -119,14 +120,67 @@ const disabledItems = computed(() => {
   return result
 })
 
+const addTimes = ref<Record<string, string>>({})
+const removeTimes = ref<Record<string, string>>({})
+
+function initializeTimesForDialog() {
+  const now = DateTime.now().toISO()
+  addedGuards.value.forEach((guard) => {
+    if (!addTimes.value[guard.id]) {
+      addTimes.value[guard.id] = now
+    }
+  })
+  removedGuards.value.forEach((guard) => {
+    if (!removeTimes.value[guard.id]) {
+      removeTimes.value[guard.id] = now
+    }
+  })
+}
+
 function save() {
+  initializeTimesForDialog()
   dialog.value?.open()
 }
 
-function onSubmit() {
-  // Validate that changes can be persisted
-  // TODO: Add API call to persist added/removed guards to the sentry
-  dialog.value?.close()
+async function onSubmit() {
+  if (!sentryStore.sentry) return
+
+  try {
+    for (const guard of addedGuards.value) {
+      const startTime = addTimes.value[guard.id]
+      if (startTime) {
+        await sentryStore.addGuard({
+          sentryId: sentryStore.sentry.id,
+          start: DateTime.fromISO(startTime),
+          guard: { id: guard.id }
+        })
+      }
+    }
+
+    for (const guard of removedGuards.value) {
+      const endTime = removeTimes.value[guard.id]
+      if (endTime) {
+        await sentryStore.removeGuard({
+          sentryId: sentryStore.sentry.id,
+          personId: guard.id,
+          end: DateTime.fromISO(endTime)
+        })
+      }
+    }
+
+    _pristine.splice(0)
+    if (sentryStore.guards) {
+      sentryStore.guards.forEach((val) => _pristine.push(Object.assign({}, val)))
+    }
+    _isPristineSet = true
+    localGuardList.value = sentryStore.guards ?? []
+    addTimes.value = {}
+    removeTimes.value = {}
+
+    dialog.value?.close()
+  } catch (err) {
+    console.error('Failed to save guard changes:', err)
+  }
 }
 </script>
 
@@ -168,7 +222,7 @@ function onSubmit() {
         <tbody>
           <tr v-for="guard in addedGuards" :key="guard.id">
             <th scope="row">{{ guard.firstName }} {{ guard.lastName }}</th>
-            <td><input type="time" /></td>
+            <td><input type="datetime-local" v-model="addTimes[guard.id]" class="form-control" /></td>
           </tr>
         </tbody>
       </table>
@@ -186,7 +240,7 @@ function onSubmit() {
         <tbody>
           <tr v-for="guard in removedGuards" :key="guard.id">
             <th scope="row">{{ guard.firstName }} {{ guard.lastName }}</th>
-            <td><input type="time" /></td>
+            <td><input type="datetime-local" v-model="removeTimes[guard.id]" class="form-control" /></td>
           </tr>
         </tbody>
       </table>

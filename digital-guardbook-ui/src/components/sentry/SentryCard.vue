@@ -61,7 +61,7 @@ onMounted(() => {
         </svg>
         {{ t('sentry.activeGuards') }}
 
-        <GuardsList v-model:guards="sentry.guards" />
+        <GuardsList :sentryId="sentry.id" :guards="sentry.guards" />
       </div>
     </div>
   </div>

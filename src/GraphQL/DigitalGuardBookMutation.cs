@@ -29,6 +29,27 @@ namespace DigitalGuardBook.GraphQL
 
                 return sentry.Id;
             });
+
+            Field<SentryType>("addGuard")
+            .Argument<NonNullGraphType<AddGuardType>>("guard")
+            .ResolveAsync(async context =>
+            {
+                var input = context.GetArgument<dynamic>("guard");
+                var guardService = new GuardService
+                {
+                    Start = input["start"],
+                    PersonId = input["guard"]["id"]
+                };
+                return await sentryService.AddGuardAsync(input["sentryId"], guardService);
+            });
+
+            Field<SentryType>("removeGuard")
+            .Argument<NonNullGraphType<RemoveGuardType>>("guard")
+            .ResolveAsync(async context =>
+            {
+                var input = context.GetArgument<dynamic>("guard");
+                return await sentryService.RemoveGuardAsync(input["sentryId"], input["personId"], input["end"]);
+            });
         }
     }
 }

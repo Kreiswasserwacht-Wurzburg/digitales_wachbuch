@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type { Sentry, SentryStart, SentryFinish } from '@/models/sentry'
+import type { Sentry, SentryStart, SentryFinish, AddGuard, RemoveGuard } from '@/models/sentry'
 import apolloClient from '@/plugins/apollo'
 import gql from 'graphql-tag'
 
@@ -33,6 +33,14 @@ interface StartSentryResult {
 
 interface GetActiveSentryResult {
   activeSentry: SentryResponse
+}
+
+interface AddGuardResult {
+  addGuard: SentryResponse
+}
+
+interface RemoveGuardResult {
+  removeGuard: SentryResponse
 }
 
 export const useSentryStore = defineStore('sentry', () => {
@@ -162,6 +170,100 @@ export const useSentryStore = defineStore('sentry', () => {
     }
   }
 
+  async function addGuard(guard: AddGuard) {
+    try {
+      error.value = null
+      const result = await apolloClient.mutate<AddGuardResult>({
+        mutation: gql`
+          mutation ($guard: AddGuardType!) {
+            addGuard(guard: $guard) {
+              id
+              start
+              end
+              registration
+              organisation {
+                name
+              }
+              supervisors {
+                start
+                end
+                guard {
+                  firstName
+                  lastName
+                }
+              }
+              guards {
+                start
+                end
+                guard {
+                  id
+                  firstName
+                  lastName
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          guard
+        }
+      })
+
+      sentry.value = result.data!.addGuard as unknown as Sentry
+      return result.data!.addGuard as unknown as Sentry
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Failed to add guard'
+      throw err
+    }
+  }
+
+  async function removeGuard(guard: RemoveGuard) {
+    try {
+      error.value = null
+      const result = await apolloClient.mutate<RemoveGuardResult>({
+        mutation: gql`
+          mutation ($guard: RemoveGuardType!) {
+            removeGuard(guard: $guard) {
+              id
+              start
+              end
+              registration
+              organisation {
+                name
+              }
+              supervisors {
+                start
+                end
+                guard {
+                  firstName
+                  lastName
+                }
+              }
+              guards {
+                start
+                end
+                guard {
+                  id
+                  firstName
+                  lastName
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          guard
+        }
+      })
+
+      sentry.value = result.data!.removeGuard as unknown as Sentry
+      return result.data!.removeGuard as unknown as Sentry
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Failed to remove guard'
+      throw err
+    }
+  }
+
   return {
     active,
     loading,
@@ -170,6 +272,8 @@ export const useSentryStore = defineStore('sentry', () => {
     getActiveSentry,
     startSentry,
     finishSentry,
+    addGuard,
+    removeGuard,
     activeSupervisor,
     guards
   }

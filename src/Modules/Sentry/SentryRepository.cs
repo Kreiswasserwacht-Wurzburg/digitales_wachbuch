@@ -49,4 +49,27 @@ public class SentryRepository : ISentryRepository
 
         await _dataContext.Sentries.UpdateOneAsync(filter, update);
     }
+
+    public virtual async Task AddGuardAsync(string sentryId, GuardService guard)
+    {
+        var fb = Builders<SentryEntity>.Filter;
+        var filter = fb.Eq(x => x.Id, sentryId);
+        var update = Builders<SentryEntity>.Update
+            .Push(x => x.GuardServices, guard);
+
+        await _dataContext.Sentries.UpdateOneAsync(filter, update);
+    }
+
+    public virtual async Task RemoveGuardAsync(string sentryId, string personId, DateTimeOffset end)
+    {
+        var fb = Builders<SentryEntity>.Filter;
+        var filter = fb.And(
+            fb.Eq(x => x.Id, sentryId),
+            fb.ElemMatch(x => x.GuardServices, g => g.PersonId == personId && !g.End.HasValue)
+        );
+        var update = Builders<SentryEntity>.Update
+            .Set("GuardServices.$.End", end);
+
+        await _dataContext.Sentries.UpdateOneAsync(filter, update);
+    }
 }
